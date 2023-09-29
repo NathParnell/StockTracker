@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace StockTrackerCommon.Database
 {
-
     public static class StockTrackerDbContextSeedData
     {
         static object synchlock = new object();

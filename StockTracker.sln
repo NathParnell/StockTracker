@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34004.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTrackerServer", "StockTrackerServer\StockTrackerServer.csproj", "{04999EF0-00EF-4E3A-8F97-D20FFA304D9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrackerServer", "StockTrackerServer\StockTrackerServer.csproj", "{04999EF0-00EF-4E3A-8F97-D20FFA304D9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTrackerCommon", "StockTrackerCommon\StockTrackerCommon.csproj", "{A9E71D32-FC6D-43F2-84FB-9DAEB6D670F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrackerCommon", "StockTrackerCommon\StockTrackerCommon.csproj", "{A9E71D32-FC6D-43F2-84FB-9DAEB6D670F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker", "StockTracker\StockTracker.csproj", "{D59E624F-C73B-4D55-BC8A-614DB0652B4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A9E71D32-FC6D-43F2-84FB-9DAEB6D670F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E71D32-FC6D-43F2-84FB-9DAEB6D670F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E71D32-FC6D-43F2-84FB-9DAEB6D670F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D59E624F-C73B-4D55-BC8A-614DB0652B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D59E624F-C73B-4D55-BC8A-614DB0652B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D59E624F-C73B-4D55-BC8A-614DB0652B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D59E624F-C73B-4D55-BC8A-614DB0652B4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,6 +15,7 @@ var services = scope.ServiceProvider;
 
 try
 {
+    //goto the run method in the ServerApp class
     services.GetRequiredService<ServerApp>().Run(args);
 }
 catch (Exception e)
@@ -30,6 +31,7 @@ IHostBuilder CreateHostBuilder(string[] strings)
         .ConfigureServices((_, services) =>
         {
             services.AddSingleton<IDataService, DataService>();
+            services.AddSingleton<IServerTransportService, TransportServiceServer>();
             services.AddSingleton<ServerApp>();
         });
 }

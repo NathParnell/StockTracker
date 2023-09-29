@@ -8,6 +8,8 @@ using StockTrackerCommon.Models;
 
 namespace StockTrackerCommon.Database
 {
+
+    //Entity Framework Db Context for Stock Tracker
     public class StockTrackerDbContext : DbContext
     {
         public StockTrackerDbContext(DbContextOptions<StockTrackerDbContext> options)
@@ -15,13 +17,6 @@ namespace StockTrackerCommon.Database
         {
             this.EnsureSeedData();
         }
-
-        protected override void OnConfiguring
-        (DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseInMemoryDatabase(databaseName: "AuthorDb");
-        }
-
 
         public DbSet<User> Users { get; set; }
     }

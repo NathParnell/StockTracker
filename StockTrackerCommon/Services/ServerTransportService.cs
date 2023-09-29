@@ -13,8 +13,14 @@ using System.Runtime.InteropServices;
 
 namespace StockTrackerCommon.Services
 {
-    public class TransportServiceServer : IServerTransportService
+    public class ServerTransportService : IServerTransportService
     {
+        IRequestService _requestService;
+
+        public ServerTransportService(IRequestService requestService) 
+        {
+            _requestService = requestService;
+        }
 
         /// <summary>
         /// We constantly listen for clients and whenever a new client is created,
@@ -54,10 +60,10 @@ namespace StockTrackerCommon.Services
                 string dataReceived = ReadClientRequest(ref tcpClient, nwStream);
 
                 //process Message and perform actions
-                Thread.Sleep(1000);
+                string response = _requestService.ProcessRequest(dataReceived);
 
                 //Provide Response to the Client
-                WriteClientResponse(nwStream, "Hello there client");
+                WriteClientResponse(nwStream, response);
 
                 // Close the TCP connection
                 tcpClient.Close();

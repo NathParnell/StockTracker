@@ -23,5 +23,18 @@ namespace StockTrackerCommon.Services
         }
 
         public async Task<IEnumerable<User>> GetAllUsers() => await _context.Users.ToListAsync();
+
+        public async Task<User> GetUserByUsername(string username)
+        {
+            try
+            {
+                return await _context.Users.FirstOrDefaultAsync(user => user.Username == username);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
+        }
     }
 }

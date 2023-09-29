@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace StockTrackerCommon.Services.Infrastructure
 {
-    public interface IDataService
+    public interface IUserService
     {
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User> GetUserByUsername(string username);
+        User CurrentUser { get; }
+        void SetCurrentUser(User user = null);
+        User RequestLogin(string username, string password);
+
     }
 }

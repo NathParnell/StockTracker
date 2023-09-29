@@ -23,44 +23,15 @@ catch (Exception e)
     Console.WriteLine(e.Message);
 }
 
-
-
 IHostBuilder CreateHostBuilder(string[] strings)
 {
     return Host.CreateDefaultBuilder()
         .ConfigureServices((_, services) =>
         {
             services.AddSingleton<IDataService, DataService>();
-            services.AddSingleton<IServerTransportService, TransportServiceServer>();
+            services.AddSingleton<IServerTransportService, ServerTransportService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IRequestService, RequestService>();
             services.AddSingleton<ServerApp>();
         });
 }
-
-
-
-//class Program
-//{ 
-
-
-//    static async Task Main(string[] args)
-//    {
-//        var serviceProvider = new ServiceCollection()
-//                  .AddSingleton<IDataService, DataService>()
-//                  .BuildServiceProvider();
-
-//        var service = serviceProvider.GetService<IDataService>();
-
-
-//        var users = service.GetAllUsers().Result;
-
-//        foreach ( var user in users )
-//        {
-//            Console.WriteLine($"user : {user.UserName}");
-//        }
-
-
-
-//    }
-
-
-//}

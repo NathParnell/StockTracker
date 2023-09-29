@@ -47,25 +47,25 @@ namespace StockTrackerCommon.Database
                 new User
                 {
                     UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    UserName = "Salon1",
+                    Username = "Salon1",
                     Password = "1234"
                 },
                 new User
                 {
                     UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    UserName = "Salon2",
+                    Username = "Salon2",
                     Password = "1234"
                 },
                 new User
                 {
                     UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    UserName = "Salon3",
+                    Username = "Salon3",
                     Password = "1234"
                 },
                 new User
                 {
                     UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    UserName = "SalonSupplier",
+                    Username = "SalonSupplier",
                     Password = "1234"
                 }
             };

@@ -51,7 +51,7 @@ namespace StockTrackerCommon.Services
             //Response response = JsonSerializer.Deserialize<Response>(jsonResponse);
             //User user = JsonSerializer.Deserialize<List<User>>(response.Data.ToString())[0];
 
-            User user = (User)ResponseDeserializingHelper.DeserializeResponse(jsonResponse).First();
+            User user = ResponseDeserializingHelper.DeserializeResponse<User>(jsonResponse).First();
 
             //set the current user to be the user who has just logged into the system
             SetCurrentUser(user);

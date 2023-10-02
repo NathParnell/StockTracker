@@ -1,6 +1,6 @@
 ﻿using StockTrackerCommon.Models;
-using StockTrackerCommon.Services;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTrackerServer.Services;
+using StockTrackerServer.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;

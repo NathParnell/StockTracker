@@ -13,9 +13,6 @@ namespace StockTrackerCommon.Models
         [JsonPropertyName("responseId")]
         public string ResponseId { get; set; }
 
-        [JsonPropertyName("type")]
-        public string Type { get; set; }
-
         [JsonPropertyName("data")]
         public object Data { get; set; }
     }

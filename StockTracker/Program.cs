@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using StockTracker.UserControls;
-using StockTrackerCommon.Services.Infrastructure;
-using StockTrackerCommon.Services;
+using StockTracker.Services.Infrastructure;
+using StockTracker.Services;
 
 namespace StockTracker
 {
@@ -38,7 +38,6 @@ namespace StockTracker
                     services.AddTransient<ctrLogin>();
                     services.AddSingleton<IClientTransportService, ClientTransportService>();
                     services.AddSingleton<IUserService, UserService>();
-                    //services.AddSingleton<IUserService, UserService>();
                 });
         }
 

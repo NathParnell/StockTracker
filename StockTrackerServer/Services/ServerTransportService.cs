@@ -1,6 +1,6 @@
 ﻿using NetMQ;
 using NetMQ.Sockets;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTrackerServer.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 
-namespace StockTrackerCommon.Services
+namespace StockTrackerServer.Services
 {
     public class ServerTransportService : IServerTransportService
     {
@@ -49,17 +49,17 @@ namespace StockTrackerCommon.Services
         }
 
         /// <summary>
-        /// Client Handler handles any requests made by a client
+        /// Client Handler thread which handles any requests made by a client
         /// </summary>
         /// <param name="tcpClient"></param>
         public void TcpClientHandlerThread(TcpClient tcpClient)
         {
             using (NetworkStream nwStream = tcpClient.GetStream())
             {
-                // Read Message
+                // Read Message from client
                 string dataReceived = ReadClientRequest(ref tcpClient, nwStream);
 
-                //process Message and perform actions
+                //process Message and perform actions and get the prepared response
                 string response = _requestService.ProcessRequest(dataReceived);
 
                 //Provide Response to the Client
@@ -70,7 +70,7 @@ namespace StockTrackerCommon.Services
             } 
         }
 
-        #region "Read to and from TCP Client methods"
+        #region "Read from and Write to the TCP Client methods"
         /// <summary>
         /// method which just reads a string from the TCPStream
         /// </summary>
@@ -81,7 +81,6 @@ namespace StockTrackerCommon.Services
         {
             byte[] buffer = new byte[tcpClient.ReceiveBufferSize];
             int bytesRead = nwStream.Read(buffer, 0, tcpClient.ReceiveBufferSize);
-
 
             string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
             Console.WriteLine("Received : " + dataReceived);
@@ -96,8 +95,8 @@ namespace StockTrackerCommon.Services
         /// <param name="responseMessage"></param>
         public void WriteClientResponse(NetworkStream nwStream, string responseMessage)
         {
-            byte[]  helloResponse = Encoding.Default.GetBytes(responseMessage);  //conversion string => byte array
-            nwStream.Write(helloResponse, 0, helloResponse.Length);
+            byte[] encodedResponse = Encoding.Default.GetBytes(responseMessage);
+            nwStream.Write(encodedResponse, 0, encodedResponse.Length);
         }
 
         #endregion

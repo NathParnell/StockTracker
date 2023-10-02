@@ -1,6 +1,6 @@
 ﻿using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTrackerServer.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace StockTrackerCommon.Services
+namespace StockTrackerServer.Services
 {
     public class RequestService : IRequestService
     {
@@ -20,6 +20,14 @@ namespace StockTrackerCommon.Services
             _authenticationService = authenticationService;
         }
 
+        /// <summary>
+        /// Method takes in a JSON string and we deserialize it into our Response object. From this we can get the name of the Method
+        /// in which we intend to call from the request, for example "ValidateLogin"
+        /// We pass the methods an object array, and we interpret the data within the method#
+        /// From this method we get provided with another JSON string which we return
+        /// </summary>
+        /// <param name="jsonRequestString"></param>
+        /// <returns></returns>
         public string ProcessRequest(string jsonRequestString)
         {
             Request request = JsonSerializer.Deserialize<Request>(jsonRequestString);
@@ -36,6 +44,13 @@ namespace StockTrackerCommon.Services
             return response;
         }
 
+        /// <summary>
+        /// Method which takes an object array and turns it into a username and password
+        /// With this information we call our AuthenticateUser method which returns the user who has just logged in (or null if invalid user creds)
+        /// We then create and return a user authentication response 
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
         public string ValidateLogin(object[] requestObject)
         {
             Request request = (Request)requestObject[0];

@@ -1,6 +1,6 @@
 ﻿using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTracker.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace StockTrackerCommon.Services
+namespace StockTracker.Services
 {
     public class UserService : IUserService
     {
@@ -48,9 +48,7 @@ namespace StockTrackerCommon.Services
             if (String.IsNullOrEmpty(jsonResponse))
                 return null;
 
-            //Response response = JsonSerializer.Deserialize<Response>(jsonResponse);
-            //User user = JsonSerializer.Deserialize<List<User>>(response.Data.ToString())[0];
-
+            //deserialize the JSON as a list of users and get the first (and only) User
             User user = ResponseDeserializingHelper.DeserializeResponse<User>(jsonResponse).First();
 
             //set the current user to be the user who has just logged into the system

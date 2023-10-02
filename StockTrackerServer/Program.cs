@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StockTrackerCommon.Services;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTrackerServer.Services;
+using StockTrackerServer.Services.Infrastructure;
 using StockTrackerServer;
 using System;
 using System.Linq;

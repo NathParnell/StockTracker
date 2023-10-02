@@ -21,12 +21,12 @@ namespace StockTrackerCommon.Helpers
         {
             Response response = JsonSerializer.Deserialize<Response>(jsonResponseString);
 
-            //ensure that we are provided woth a response by the server
+            //Ensure that we are provided wth a response by the server
             if (response.Data == null)
                 return null;
 
-            TModel[] deserializedObject = JsonSerializer.Deserialize<TModel[]>(response.Data.ToString());
-            return deserializedObject;
+            //This deserializes the object into the type passed through as TModel
+            return JsonSerializer.Deserialize<TModel[]>(response.Data.ToString()); 
         }
     }
 }

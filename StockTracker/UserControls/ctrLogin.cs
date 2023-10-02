@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
-using StockTrackerCommon.Services;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTracker.Services;
+using StockTracker.Services.Infrastructure;
 
 namespace StockTracker.UserControls
 {
@@ -28,6 +28,9 @@ namespace StockTracker.UserControls
             _userService = userService;
         }
 
+        /// <summary>
+        /// upon initialising we need to make sure that the textboxes are empty
+        /// </summary>
         public void Init()
         {
             txtUsername.Text = String.Empty;

@@ -12,4 +12,8 @@
     <PackageReference Include="SequentialGuidGenerator" Version="1.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Infrastructure\" />
+  </ItemGroup>
+
 </Project>

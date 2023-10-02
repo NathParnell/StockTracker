@@ -1,12 +1,12 @@
 ﻿using StockTrackerCommon.Models;
-using StockTrackerCommon.Services.Infrastructure;
+using StockTrackerServer.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTrackerCommon.Services
+namespace StockTrackerServer.Services
 {
     public class AuthenticationService : IAuthenticationService
     {

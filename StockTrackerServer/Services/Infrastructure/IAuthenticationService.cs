@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTrackerCommon.Services.Infrastructure
+namespace StockTrackerServer.Services.Infrastructure
 {
     public interface IAuthenticationService
     {

@@ -1,4 +1,5 @@
 ﻿using StockTracker.Services.Infrastructure;
+using StockTrackerCommon.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,13 @@ namespace StockTracker.Services
 
             using (NetworkStream nwStream = tcpClient.GetStream())
             {
-                WriteRequestToServer(nwStream, jsonRequest);
-                jsonResponse = ReadResponseFromServer(ref tcpClient, nwStream);
+                //Encrypt the request and send the request to the server
+                WriteRequestToServer(nwStream, EncryptionHelper.Encrypt(jsonRequest));
+                //Receive the response from the server and decrypt the message
+                jsonResponse = EncryptionHelper.Decrypt(ReadResponseFromServer(ref tcpClient, nwStream));
             }
             return jsonResponse;
         }
-
 
         #region "Writing to and Reading From the TCP Server methods"
         /// <summary>

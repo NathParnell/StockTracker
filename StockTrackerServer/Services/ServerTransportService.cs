@@ -1,15 +1,8 @@
-﻿using NetMQ;
-using NetMQ.Sockets;
+﻿using StockTrackerCommon.Helpers;
 using StockTrackerServer.Services.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Sockets;
 using System.Net;
-using System.Net.Http;
-using System.Runtime.InteropServices;
+using System.Net.Sockets;
+using System.Text;
 
 namespace StockTrackerServer.Services
 {
@@ -56,14 +49,14 @@ namespace StockTrackerServer.Services
         {
             using (NetworkStream nwStream = tcpClient.GetStream())
             {
-                // Read Message from client
-                string dataReceived = ReadClientRequest(ref tcpClient, nwStream);
+                // Read Message from client and Decrypt the message
+                string dataReceived = EncryptionHelper.Decrypt(ReadClientRequest(ref tcpClient, nwStream));
 
                 //process Message and perform actions and get the prepared response
                 string response = _requestService.ProcessRequest(dataReceived);
 
-                //Provide Response to the Client
-                WriteClientResponse(nwStream, response);
+                //Encrypt response and send Response to the Client
+                WriteClientResponse(nwStream, EncryptionHelper.Encrypt(response));
 
                 // Close the TCP connection
                 tcpClient.Close();

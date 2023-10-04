@@ -8,6 +8,8 @@ using StockTrackerServer.Services.Infrastructure;
 using IHost host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
 
+log4net.Config.XmlConfigurator.Configure(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "log4net.config"));
+
 var services = scope.ServiceProvider;
 
 try

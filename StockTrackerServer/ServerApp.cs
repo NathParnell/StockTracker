@@ -14,8 +14,12 @@ namespace StockTrackerServer
 {
     public class ServerApp
     {
-        private readonly IServerTransportService _transportServiceServer;   
-        
+        //Set up Logger
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(typeof(ServerApp));
+
+        //define services
+        private readonly IServerTransportService _transportServiceServer;
+
         public ServerApp(IServerTransportService transportServiceServer) 
         {
             _transportServiceServer = transportServiceServer;
@@ -27,7 +31,7 @@ namespace StockTrackerServer
         /// <param name="args"></param>
         public void Run(string[] args)
         {
-            Console.WriteLine("SERVER--------");
+            logger.Info("Run(), Server Started");
 
             Thread listenerThread = new Thread(() => _transportServiceServer.ListenThread());
             listenerThread.Start();

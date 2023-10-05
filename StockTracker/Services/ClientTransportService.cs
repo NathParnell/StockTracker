@@ -14,8 +14,8 @@ namespace StockTracker.Services
     {
 
         /// <summary>
-        /// Method which oversees the sending and receiving a message to and from the Server.
-        /// Returns a Json String response
+        /// Method which oversees the sending and receiving a message to and from the Server using System.Net.Sockets.
+        /// Returns a Json String of the response
         /// </summary>
         /// <param name="jsonRequest"></param>
         /// <returns></returns>

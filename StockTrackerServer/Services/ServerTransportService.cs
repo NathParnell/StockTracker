@@ -10,7 +10,7 @@ namespace StockTrackerServer.Services
     public class ServerTransportService : IServerTransportService
     {
         //Set up Logger
-        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(typeof(ServerTransportService));
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(ServerTransportService));
 
         //define services
         private readonly IRequestService _requestService;
@@ -28,18 +28,18 @@ namespace StockTrackerServer.Services
         {
             var listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
-            logger.Info("ListenThread(), Listening for TCP Clients...");
 
             // Continuously loop to allow for further clients
             while (true)
             {
                 // Wait for an incoming TCP Connection
+                Logger.Info("ListenThread(), Listening for TCP Clients...");
                 var tcpClient = listener.AcceptTcpClient();
 
                 // Ensure that we have a Connected TCP Client
                 if (tcpClient != null)
                 {
-                    logger.Info($"ListenThread(), Server connected to Client : {tcpClient.Client.RemoteEndPoint.ToString()}");
+                    Logger.Info($"ListenThread(), Server connected to Client : {tcpClient.Client.RemoteEndPoint.ToString()}");
                     Thread tcpClientHandlerThread = new Thread(() => TcpClientHandlerThread(tcpClient));
                     tcpClientHandlerThread.Start();
                 }
@@ -54,25 +54,27 @@ namespace StockTrackerServer.Services
         {
             using (NetworkStream nwStream = tcpClient.GetStream())
             {
+                string clientIpAddress = tcpClient.Client.RemoteEndPoint.ToString();
+
                 // Read Message from client
                 string encryptedRequest = ReadClientRequest(ref tcpClient, nwStream);
-                logger.Info($"TcpClientHandlerThread(), Server had received encrypted Request from client " +
-                    $"{tcpClient.Client.RemoteEndPoint.ToString()}: {encryptedRequest} ");
+                Logger.Info($"TcpClientHandlerThread(), Server had received encrypted request from client " +
+                    $"{clientIpAddress}: {encryptedRequest} ");
 
                 //Decrypt request from client
                 string decryptedRequest = EncryptionHelper.Decrypt(encryptedRequest);
-                logger.Info($"TcpClientHandlerThread(), The request decrypted from client " +
-                    $"{tcpClient.Client.RemoteEndPoint.ToString()}: {decryptedRequest}");
+                Logger.Info($"TcpClientHandlerThread(), The request decrypted from client " +
+                    $"{clientIpAddress}: {decryptedRequest}");
 
                 //process Message and perform actions and get the prepared response
-                string decryptedResponse = _requestService.ProcessRequest(decryptedRequest);
-                logger.Info($"TcpClientHandlerThread(), The unencrypted response we will send to the client " +
-                    $"{tcpClient.Client.RemoteEndPoint.ToString()}: {decryptedRequest}");              
+                string decryptedResponse = _requestService.ProcessRequest(decryptedRequest, ref clientIpAddress);
+                Logger.Info($"TcpClientHandlerThread(), The unencrypted response we will send to the client " +
+                    $"{clientIpAddress}: {decryptedRequest}");              
 
                 //Encrypt response for client
                 string encryptedResponse = EncryptionHelper.Encrypt(decryptedResponse);
-                logger.Info($"TcpClientHandlerThread(), the encrypted response we will send to the client " +
-                    $"{tcpClient.Client.RemoteEndPoint.ToString()}: {encryptedResponse}");
+                Logger.Info($"TcpClientHandlerThread(), the encrypted response we will send to the client " +
+                    $"{clientIpAddress}: {encryptedResponse}");
 
                 //Send encrypted response to client
                 WriteClientResponse(nwStream, encryptedResponse);

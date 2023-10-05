@@ -12,6 +12,9 @@ namespace StockTrackerCommon.Models
         [JsonPropertyName("requestId")]
         public string RequestId { get; set; }
 
+        [JsonPropertyName("clientIp")]
+        public string ClientIp { get; set; }
+
         [JsonPropertyName("method")]
         public string Method { get; set; }
 

@@ -23,24 +23,27 @@ namespace StockTrackerServer.Services
         /// <summary>
         /// Method takes in a JSON string and we deserialize it into our Response object. From this we can get the name of the Method
         /// in which we intend to call from the request, for example "ValidateLogin"
-        /// We pass the methods an object array, and we interpret the data within the method#
+        /// We pass the methods an object array, and we interpret the data within the method
         /// From this method we get provided with another JSON string which we return
         /// </summary>
         /// <param name="jsonRequestString"></param>
         /// <returns></returns>
-        public string ProcessRequest(string jsonRequestString)
+        public string ProcessRequest(string jsonRequestString, ref string clientIpAddress)
         {
+            string response = String.Empty;
+
             Request request = JsonSerializer.Deserialize<Request>(jsonRequestString);
-            string response;
 
-            MethodInfo methodInfo = this.GetType().GetMethod(request.Method);
-            if (methodInfo != null)
+            if (request != null)
             {
-                response = methodInfo.Invoke(this, new object[] { new object[] { request } }).ToString();
-            }
-            else
-                response = string.Empty;
+                clientIpAddress = request.ClientIp;
 
+                MethodInfo methodInfo = this.GetType().GetMethod(request.Method);
+                if (methodInfo != null)
+                {
+                    response = methodInfo.Invoke(this, new object[] { new object[] { request } }).ToString();
+                }
+            }
             return response;
         }
 

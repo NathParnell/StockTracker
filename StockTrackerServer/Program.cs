@@ -28,7 +28,8 @@ IHostBuilder CreateHostBuilder(string[] strings)
         .ConfigureServices((_, services) =>
         {
             services.AddSingleton<IDataService, DataService>();
-            services.AddSingleton<IServerTransportService, ServerTransportService>();
+            services.AddSingleton<IServerTransportService, NetmqServerTransportService>();
+            //services.AddSingleton<IServerTransportService, ServerTransportService>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IRequestService, RequestService>();
             services.AddSingleton<ServerApp>();

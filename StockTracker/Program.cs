@@ -36,7 +36,8 @@ namespace StockTracker
                 .ConfigureServices((context, services) => {
                     services.AddTransient<frmStockTracker>();
                     services.AddTransient<ctrLogin>();
-                    services.AddSingleton<IClientTransportService, ClientTransportService>();
+                    services.AddSingleton<IClientTransportService, NetmqClientTransportService>();
+                    //services.AddSingleton<IClientTransportService, ClientTransportService>();
                     services.AddSingleton<IUserService, UserService>();
                 });
         }

@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,6 +24,7 @@ namespace StockTrackerCommon.Helpers
             var request = new Request
             {
                 RequestId = Taikandi.SequentialGuid.NewGuid().ToString(),
+                ClientIp = GetPrivateIpAddress(),
                 Method = methodName,
                 Data = data
             };
@@ -39,5 +43,46 @@ namespace StockTrackerCommon.Helpers
             object[] data = new object[] { username, password };
             return CreateRequest(methodName, data);
         }
+
+
+        #region "Get IP Address"
+        /// <summary>
+        /// We need to get the client's PUBLIC ip address if we want the server and clients to be able 
+        /// to communicate on different networks
+        /// </summary>
+        /// <returns></returns>
+        private static string GetPublicIpAddress()
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                //use this third party service to get the client's public ip address
+                string ipApiUrl = "https://api.ipify.org?format=text";
+                HttpResponseMessage response = httpClient.GetAsync(ipApiUrl).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string ip = response.Content.ReadAsStringAsync().Result;
+                    return ip.Trim();
+                }
+                else
+                {
+                    throw new Exception("Failed to retrieve public IP address.");
+                }
+            }
+        }
+
+        private static string GetPrivateIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+        #endregion
     }
 }

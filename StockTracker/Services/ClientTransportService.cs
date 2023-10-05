@@ -19,9 +19,11 @@ namespace StockTracker.Services
         /// </summary>
         /// <param name="jsonRequest"></param>
         /// <returns></returns>
-        public string TcpHandler(string jsonRequest)
+        public string TcpHandler(string decryptedRequest)
         {
-            string jsonResponse = String.Empty;
+            string decryptedResponse = String.Empty;
+            
+            //Create a Tcp client and connect to the Remote endpoint of the server
             TcpClient tcpClient = new TcpClient();
             IPAddress serverIp = IPAddress.Parse("127.0.0.1");
             tcpClient.Connect(serverIp, 5000);
@@ -29,11 +31,15 @@ namespace StockTracker.Services
             using (NetworkStream nwStream = tcpClient.GetStream())
             {
                 //Encrypt the request and send the request to the server
-                WriteRequestToServer(nwStream, EncryptionHelper.Encrypt(jsonRequest));
+                string encryptedRequest = EncryptionHelper.Encrypt(decryptedRequest);
+                WriteRequestToServer(nwStream, encryptedRequest);
+
                 //Receive the response from the server and decrypt the message
-                jsonResponse = EncryptionHelper.Decrypt(ReadResponseFromServer(ref tcpClient, nwStream));
+                string encryptedResponse = ReadResponseFromServer(ref tcpClient, nwStream);
+                decryptedResponse = EncryptionHelper.Decrypt(encryptedResponse);
             }
-            return jsonResponse;
+
+            return decryptedResponse;
         }
 
         #region "Writing to and Reading From the TCP Server methods"

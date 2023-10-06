@@ -83,7 +83,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
-                Logger.Warn($"TcpClientHandlerThread(), Error: {ex.Message}");
+                Logger.Warn($"TcpClientHandlerThread(), Error: {ex.Message}", ex);
             }
         }
 
@@ -109,7 +109,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
-                Logger.Warn($"ReadClientRequest(), Error: {ex.Message}");
+                Logger.Warn($"ReadClientRequest(), Error: {ex.Message}", ex);
             }
 
             return null;
@@ -136,7 +136,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
-                Logger.Warn($"WriteClientResponse(), Error: {ex.Message}");
+                Logger.Warn($"WriteClientResponse(), Error: {ex.Message}", ex);
             }
         }
         #endregion

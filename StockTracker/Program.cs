@@ -13,11 +13,13 @@ namespace StockTracker
 
 
         /// <summary>
-        ///  The main entry point for the application.
+        /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            log4net.Config.XmlConfigurator.Configure(new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "log4net.config"));
+
             var host = CreateHostBuilder().Build();
             ServiceProvider = host.Services;
 
@@ -27,7 +29,8 @@ namespace StockTracker
         }
 
         /// <summary>
-        /// I used this https://stackoverflow.com/questions/70475830/how-to-use-dependency-injection-in-winforms to help with the implementation of dependency injection in Winforms
+        /// I have used this https://stackoverflow.com/questions/70475830/how-to-use-dependency-injection-in-winforms 
+        /// to help with the implementation of dependency injection in Winforms
         /// </summary>
         /// <returns></returns>
         static IHostBuilder CreateHostBuilder()

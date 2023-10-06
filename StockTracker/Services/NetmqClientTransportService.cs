@@ -13,6 +13,9 @@ namespace StockTracker.Services
 {
     public class NetmqClientTransportService : IClientTransportService
     {
+        //Setup logger
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(NetmqClientTransportService));
+
         /// <summary>
         /// Method which oversees the sending and receiving a message to and from the Server using NetMQ
         /// Returns a Json String of the response
@@ -21,30 +24,50 @@ namespace StockTracker.Services
         /// <returns></returns>
         public string TcpHandler(string decryptedRequest)
         {
-            string decryptedResponse = String.Empty;
-
-            using (var requestSocket = new RequestSocket())
-            using (var responseSocket = new ResponseSocket())
+            try
             {
-                requestSocket.Connect("tcp://127.0.0.1:5556");
+                string decryptedResponse = String.Empty;
 
-                //encrypt and send the request to the server
-                string encryptedRequest = EncryptionHelper.Encrypt(decryptedRequest);
-                requestSocket.SendFrame(encryptedRequest);
-                string requestConfirmation = requestSocket.ReceiveFrameString();
-                //log confirmation...
+                using (var requestSocket = new RequestSocket())
+                using (var responseSocket = new ResponseSocket())
+                {
+                    requestSocket.Connect("tcp://127.0.0.1:5556");
 
+                    Logger.Info($"TcpHandler(), The unencrypted request we will send to the client: " +
+                        $"{decryptedRequest}");
 
-                responseSocket.Bind("tcp://*:5555");
+                    //encrypt the request
+                    string encryptedRequest = EncryptionHelper.Encrypt(decryptedRequest);
+                    Logger.Info($"The encrypted request we will send to the client:" +
+                        $"{encryptedRequest} ");
 
-                //receive and decrypt response from the server
-                string encryptedResponse = responseSocket.ReceiveFrameString();
-                decryptedResponse = EncryptionHelper.Decrypt(encryptedResponse);
-                responseSocket.SendFrame("Message received by client");
-                //log response...?
+                    //Send the request to the Server
+                    requestSocket.SendFrame(encryptedRequest);
+                    string requestConfirmation = requestSocket.ReceiveFrameString();
+                    Logger.Info($"TcpHandler(), {requestConfirmation}");
+
+                    responseSocket.Bind("tcp://*:5555");
+
+                    //Receive response from the server and provide server with confirmation receipt
+                    string encryptedResponse = responseSocket.ReceiveFrameString();
+                    responseSocket.SendFrame("Message received by client");
+                    Logger.Info($"TcpHandler(), Client has received encrypted response from server: " +
+                        $"{encryptedResponse}");
+
+                    //Decrypt response from server
+                    decryptedResponse = EncryptionHelper.Decrypt(encryptedResponse);
+                    Logger.Info($"TcpHandler(), The decrypted response from the server :" +
+                        $"{decryptedResponse}");
+                }
+
+                return decryptedResponse;
             }
-
-            return decryptedResponse;
+            catch (Exception ex)
+            {
+                Logger.Warn($"TcpClientHandlerThread(), Error: {ex.Message}", ex);
+                return null;
+            }
         }
+
     }
 }

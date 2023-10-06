@@ -1,4 +1,5 @@
-﻿using StockTracker.Services.Infrastructure;
+﻿using log4net.Repository.Hierarchy;
+using StockTracker.Services.Infrastructure;
 using StockTrackerCommon.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace StockTracker.Services
 {
     public class ClientTransportService : IClientTransportService
     {
+        //Setup logger
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(ClientTransportService));
 
         /// <summary>
         /// Method which oversees the sending and receiving a message to and from the Server using System.Net.Sockets.
@@ -30,13 +33,26 @@ namespace StockTracker.Services
 
             using (NetworkStream nwStream = tcpClient.GetStream())
             {
-                //Encrypt the request and send the request to the server
+                Logger.Info($"TcpHandler(), The unencrypted request we will send to the client: " +
+                        $"{decryptedRequest}");
+
+                //Encrypt the request
                 string encryptedRequest = EncryptionHelper.Encrypt(decryptedRequest);
+                Logger.Info($"The encrypted request we will send to the client:" +
+                        $"{encryptedRequest} ");
+
+                //Send the request to the Server
                 WriteRequestToServer(nwStream, encryptedRequest);
 
-                //Receive the response from the server and decrypt the message
+                //Receive the encrypted response from the server
                 string encryptedResponse = ReadResponseFromServer(ref tcpClient, nwStream);
+                Logger.Info($"TcpHandler(), Client has received encrypted response from server: " +
+                        $"{encryptedResponse}");
+
+                //Decrypt response from the server
                 decryptedResponse = EncryptionHelper.Decrypt(encryptedResponse);
+                Logger.Info($"TcpHandler(), The decrypted response from the server :" +
+                        $"{decryptedResponse}");
             }
 
             return decryptedResponse;

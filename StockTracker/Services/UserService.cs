@@ -12,6 +12,10 @@ namespace StockTracker.Services
 {
     public class UserService : IUserService
     {
+        //setup logger
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(UserService));
+
+        //define services
         private readonly IClientTransportService _clientTransportService;
 
         public UserService(IClientTransportService clientTransportService)
@@ -53,6 +57,10 @@ namespace StockTracker.Services
 
             //set the current user to be the user who has just logged into the system
             SetCurrentUser(user);
+
+            if (this.CurrentUser != null)
+                Logger.Info($"RequestLogin(), User: {this.CurrentUser.Username} has logged into the system"); 
+
             return user;
         }
     }

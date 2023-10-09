@@ -19,6 +19,7 @@ namespace StockTracker.UserControls
 {
     public partial class ctrLogin : UserControl
     {
+        //Define Services
         private readonly IUserService _userService;
 
         public ctrLogin(IUserService userService)
@@ -47,7 +48,7 @@ namespace StockTracker.UserControls
             }
 
             User user = _userService.RequestLogin(txtUsername.Text, txtPassword.Text);
-
+          
 
         }
     }

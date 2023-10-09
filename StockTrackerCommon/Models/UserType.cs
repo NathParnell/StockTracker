@@ -9,6 +9,7 @@ namespace StockTrackerCommon.Models
     public enum UserType
     {
         Supplier = 1,
-        Customer = 2
+        Customer = 2,
+        Administrator = 3
     }
 }

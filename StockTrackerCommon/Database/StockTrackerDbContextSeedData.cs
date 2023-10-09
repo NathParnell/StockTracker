@@ -18,19 +18,23 @@ namespace StockTrackerCommon.Database
         /// </summary>
         public static void EnsureSeedData(this StockTrackerDbContext context)
         {
-            if (!seeded && context.Users.Count() == 0)
+            //Ensure that we dont already have a mock db
+            if (!seeded)
             {
                 lock (synchlock)
                 {
-                    if (!seeded)
-                    {
-                        var users = GenerateUsers();
+                    var users = GenerateUsers();
+                    var productCategories = GenerateProductCategories();
+                    var products = GenerateProducts();
+                    var stock = GenerateStock();
 
-                        context.Users.AddRange(users);
+                    context.Users.AddRange(users);
+                    context.Products.AddRange(products);
+                    context.ProductCategories.AddRange(productCategories);
+                    context.Stock.AddRange(stock);
 
-                        context.SaveChanges();
-                        seeded = true;
-                    }
+                    context.SaveChanges();
+                    seeded = true;
                 }
             }
         }
@@ -46,30 +50,178 @@ namespace StockTrackerCommon.Database
             {
                 new User
                 {
-                    UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    Username = "Salon1",
-                    Password = "1234"
+                    UserId = "3369956f-abed-42e1-9d99-08dbc77c7200",
+                    Username = "PizzaShop1",
+                    Password = "1234",
+                    UserType = UserType.Customer,
+                    CountryCode = "UK"
                 },
                 new User
                 {
-                    UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    Username = "Salon2",
-                    Password = "1234"
+                    UserId = "838895f6-76b0-40fb-9d9a-08dbc77c7200",
+                    Username = "PizzaShop2",
+                    Password = "1234",
+                    UserType = UserType.Customer,
+                    CountryCode = "UK"
                 },
                 new User
                 {
-                    UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    Username = "Salon3",
-                    Password = "1234"
+                    UserId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    Username = "PizzaShop3",
+                    Password = "1234",
+                    UserType = UserType.Customer,
+                    CountryCode = "US"
                 },
                 new User
                 {
-                    UserId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                    Username = "SalonSupplier",
-                    Password = "1234"
+                    UserId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    Username = "PizzaShopSupplier",
+                    Password = "1234",
+                    UserType = UserType.Supplier,
+                    CountryCode = "UK"
                 }
             };
         }
+
+        /// <summary>
+        /// This method generates Product Categories for the mock database
+        /// </summary>
+        /// <returns></returns>
+        private static ProductCategory[] GenerateProductCategories()
+        {
+            return new ProductCategory[]
+            {
+                new ProductCategory
+                {
+                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200",
+                    ProductCategoryName = "Pizza Bases"
+                },
+                new ProductCategory
+                {
+                    ProductCategoryId = "7f897028-cf37-452f-9da7-08dbc77c7200",
+                    ProductCategoryName = "Pizza Sauce"
+                },
+                new ProductCategory
+                {
+                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200",
+                    ProductCategoryName = "Cheese"
+                },
+                new ProductCategory
+                {
+                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200",
+                    ProductCategoryName = "Toppings"
+                },
+                new ProductCategory
+                {
+                    ProductCategoryId = "46689ea1-a123-493d-9db0-08dbc77c7200",
+                    ProductCategoryName = "Oil"
+                }
+            };
+        }
+
+        /// <summary>
+        /// This method generates Products for the mock database
+        /// </summary>
+        /// <returns></returns>
+        private static Product[] GenerateProducts()
+        {
+            return new Product[]
+            {
+                new Product
+                {
+                    ProductId = "682ab1ad-0e81-465b-9dbf-08dbc77c7200",
+                    ProductName = "Stuffed Crust Pizza Bases",
+                    ProductDescription = "12 Pizza Bases",
+                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200"
+                },
+                new Product
+                {
+                    ProductId = "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200",
+                    ProductName = "Small Pepperoni",
+                    ProductDescription = "2 Kilos",
+                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
+                },
+                new Product
+                {
+                    ProductId = "ca0eb2ef-2d0c-4ec3-9dba-08dbc77c7200",
+                    ProductName = "Large Pepperoni",
+                    ProductDescription = "5 Kilos",
+                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
+                },
+                new Product
+                {
+                    ProductId = "82ba46be-2ddd-443c-9db8-08dbc77c7200",
+                    ProductName = "Garlic Oil",
+                    ProductDescription = "2 Kilo",
+                    ProductCategoryId = "46689ea1-a123-493d-9db0-08dbc77c7200"
+                },
+                new Product
+                {
+                    ProductId = "850bc9f5-8138-4f5f-9d9f-08dbc77c7200",
+                    ProductName = "Tomato Pizza Sauce",
+                    ProductDescription = "2 Litres",
+                    ProductCategoryId = "7f897028-cf37-452f-9da7-08dbc77c7200",
+                },
+                new Product
+                {
+                    ProductId = "a85c0fa1-5a29-4b0e-9db3-08dbc77c7200",
+                    ProductName = "Large Mozzerella",
+                    ProductDescription = "2 Kilo",
+                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
+                },
+                new Product
+                {
+                    ProductId = "c4f8a7eb-fe76-41d5-9db5-08dbc77c7200",
+                    ProductName = "Small Mozzerella",
+                    ProductDescription = "500 grams",
+                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
+                }
+            };
+        }
+
+        /// <summary>
+        /// This method generates Stock for the mock database
+        /// </summary>
+        /// <returns></returns>
+        private static Stock[] GenerateStock()
+        {
+            return new Stock[]
+            {
+                new Stock
+                {
+                    StockId = "23271213-d265-477c-d148-08dbc80689ae",
+                    ProductId = "a85c0fa1-5a29-4b0e-9db3-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    StockQuantity = 1000,
+                    StockPrice = 12.50m
+                },
+                new Stock
+                {
+                    StockId = "c14d0153-4801-4ab9-d145-08dbc80689ae",
+                    ProductId = "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    StockQuantity = 200,
+                    StockPrice = 15.50m
+                },
+                new Stock
+                {
+                    StockId = "602012e6-a458-4923-d141-08dbc80689ae",
+                    ProductId = "850bc9f5-8138-4f5f-9d9f-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    StockQuantity = 500,
+                    StockPrice = 10.50m
+                },
+                new Stock
+                {
+                    StockId = "fd0ce5b9-8a96-4713-d143-08dbc80689ae",
+                    ProductId = "682ab1ad-0e81-465b-9dbf-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    StockQuantity = 800,
+                    StockPrice = 5.00m
+                }
+            };
+        }
+
         #endregion
     }
 }

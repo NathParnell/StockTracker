@@ -59,7 +59,9 @@ namespace StockTracker.Services
             SetCurrentUser(user);
 
             if (this.CurrentUser != null)
-                Logger.Info($"RequestLogin(), User: {this.CurrentUser.Username} has logged into the system"); 
+                Logger.Info($"RequestLogin(), User: {this.CurrentUser.Username} has logged into the system");
+            else
+                Logger.Info($"RequestLogin(), User login attempt failed");
 
             return user;
         }

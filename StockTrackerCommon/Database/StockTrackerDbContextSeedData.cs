@@ -19,22 +19,25 @@ namespace StockTrackerCommon.Database
         public static void EnsureSeedData(this StockTrackerDbContext context)
         {
             //Ensure that we dont already have a mock db
-            if (!seeded)
+            if (!seeded && context.Users.Count() == 0 && context.Products.Count() == 0 && context.ProductCategories.Count() == 0 && context.Stock.Count() == 0)
             {
                 lock (synchlock)
                 {
-                    var users = GenerateUsers();
-                    var productCategories = GenerateProductCategories();
-                    var products = GenerateProducts();
-                    var stock = GenerateStock();
+                    if (!seeded)
+                    {
+                        var users = GenerateUsers();
+                        var productCategories = GenerateProductCategories();
+                        var products = GenerateProducts();
+                        var stock = GenerateStock();
 
-                    context.Users.AddRange(users);
-                    context.Products.AddRange(products);
-                    context.ProductCategories.AddRange(productCategories);
-                    context.Stock.AddRange(stock);
+                        context.Users.AddRange(users);
+                        context.Products.AddRange(products);
+                        context.ProductCategories.AddRange(productCategories);
+                        context.Stock.AddRange(stock);
 
-                    context.SaveChanges();
-                    seeded = true;
+                        context.SaveChanges();
+                        seeded = true;
+                    }
                 }
             }
         }
@@ -66,7 +69,7 @@ namespace StockTrackerCommon.Database
                 },
                 new User
                 {
-                    UserId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    UserId = "46eb954d-2224-4290-4499-08dbc9a79af4",
                     Username = "PizzaShop3",
                     Password = "1234",
                     UserType = UserType.Customer,

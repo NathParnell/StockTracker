@@ -1,15 +1,18 @@
 ﻿@page "/"
 
-<h1>Login</h1>
 
-<div class="login">
-    <label for="loginUsername">Username:</label>
-    <input type="text" id="loginUsername" required @bind="_username" />
-
-    <label>Password:</label>
-    <input type="password" id="loginPassword" required @bind="_password" />
-
-    <button type="button" @onclick="Login">Login</button>
-    <p>@_loginPrompt</p>
-
+<div class="loginPage">
+    <h1>Login</h1>
+    <div class="loginContainer">
+        <span class="loginField">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" required @bind="_username" />
+        </span>
+        <span class="loginField">
+            <label>Password:</label>
+            <input type="password" id="loginPassword" required @bind="_password" />
+        </span>
+        <button type="button" @onclick="Login">Login</button>
+        <p>@_loginPrompt</p>
+    </div>
 </div>

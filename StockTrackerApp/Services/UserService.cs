@@ -23,15 +23,24 @@ namespace StockTrackerApp.Services
             _clientTransportService = clientTransportService;
         }
 
+
+        //Define public variables 
         public User CurrentUser { get; private set; }
+        public bool IsLoggedIn { get; private set; } = false;
+
 
         /// <summary>
         /// Method which sets the Current User variable to manage the user on the client side
+        /// Method also sets the IsLoggedIn variable, which assists in managing the state of the app
         /// </summary>
         /// <param name="user"></param>
         public void SetCurrentUser(User user = null)
         {
             CurrentUser = user;
+            if (CurrentUser == null)
+                IsLoggedIn = false;
+            else
+                IsLoggedIn = true;
         }
 
 

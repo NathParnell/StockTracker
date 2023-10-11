@@ -68,4 +68,9 @@
       <ProjectReference Include="..\StockTrackerCommon\StockTrackerCommon.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Components\CustomerComponents\" />
+      <Folder Include="Components\SupplierComponents\" />
+    </ItemGroup>
+
 </Project>

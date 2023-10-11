@@ -60,7 +60,7 @@ namespace StockTrackerApp.Pages
                 Init();
             }
             else
-                _navManager.NavigateTo("FetchData");
+                _navManager.NavigateTo("Home");
         }
     }
 }

@@ -133,50 +133,71 @@ namespace StockTrackerCommon.Database
                 new Product
                 {
                     ProductId = "682ab1ad-0e81-465b-9dbf-08dbc77c7200",
-                    ProductName = "Stuffed Crust Pizza Bases",
-                    ProductDescription = "12 Pizza Bases",
+                    ProductCode = "123456",
+                    ProductName = "12 Stuffed Crust Pizza Bases",
+                    ProductBrand = "Warburtons",
+                    ProductSize = 1.2,
+                    ProductMeasurementUnit = MeasurementUnit.Kg,
                     ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200"
                 },
                 new Product
                 {
                     ProductId = "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200",
+                    ProductCode = "234567",
                     ProductName = "Small Pepperoni",
-                    ProductDescription = "2 Kilos",
+                    ProductBrand = "Yorkshire Meat Company",
+                    ProductSize = 2,
+                    ProductMeasurementUnit = MeasurementUnit.Kg,
                     ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
                 },
                 new Product
                 {
                     ProductId = "ca0eb2ef-2d0c-4ec3-9dba-08dbc77c7200",
+                    ProductCode = "345678",
                     ProductName = "Large Pepperoni",
-                    ProductDescription = "5 Kilos",
+                    ProductBrand = "Yorkshire Meat Company",
+                    ProductSize = 5,
+                    ProductMeasurementUnit = MeasurementUnit.Kg,
                     ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
                 },
                 new Product
                 {
                     ProductId = "82ba46be-2ddd-443c-9db8-08dbc77c7200",
+                    ProductCode = "456789",
                     ProductName = "Garlic Oil",
-                    ProductDescription = "2 Kilo",
+                    ProductBrand = "Flora",
+                    ProductSize = 500,
+                    ProductMeasurementUnit = MeasurementUnit.ml,
                     ProductCategoryId = "46689ea1-a123-493d-9db0-08dbc77c7200"
                 },
                 new Product
                 {
                     ProductId = "850bc9f5-8138-4f5f-9d9f-08dbc77c7200",
+                    ProductCode = "567890",
                     ProductName = "Tomato Pizza Sauce",
-                    ProductDescription = "2 Litres",
+                    ProductBrand = "Dolmio",
+                    ProductSize = 2,
+                    ProductMeasurementUnit = MeasurementUnit.l,
                     ProductCategoryId = "7f897028-cf37-452f-9da7-08dbc77c7200",
                 },
                 new Product
                 {
                     ProductId = "a85c0fa1-5a29-4b0e-9db3-08dbc77c7200",
+                    ProductCode = "678901",
                     ProductName = "Large Mozzerella",
-                    ProductDescription = "2 Kilo",
+                    ProductBrand = "Cathedral",
+                    ProductSize = 2,
+                    ProductMeasurementUnit = MeasurementUnit.Kg,
                     ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
                 },
                 new Product
                 {
                     ProductId = "c4f8a7eb-fe76-41d5-9db5-08dbc77c7200",
+                    ProductCode = "789012",
                     ProductName = "Small Mozzerella",
-                    ProductDescription = "500 grams",
+                    ProductBrand = "Cathedral",
+                    ProductSize = 500,
+                    ProductMeasurementUnit = MeasurementUnit.g,
                     ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
                 }
             };

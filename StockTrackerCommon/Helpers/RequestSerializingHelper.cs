@@ -1,13 +1,7 @@
 ﻿using StockTrackerCommon.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace StockTrackerCommon.Helpers
 {
@@ -41,6 +35,42 @@ namespace StockTrackerCommon.Helpers
         {
             string methodName = "ValidateLogin";
             object[] data = new object[] { username, password };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a get stock by supplier request
+        /// </summary>
+        /// <param name="supplierId"></param>
+        /// <returns></returns>
+        public static string CreateGetStockBySupplierRequest(string supplierId)
+        {
+            string methodName = "RetrieveStockBySupplierId";
+            object[] data = new object[] { supplierId };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a get products by product ids request 
+        /// </summary>
+        /// <param name="productIds"></param>
+        /// <returns></returns>
+        public static string CreateGetProductsByProductIdsRequest(List<string> productIds)
+        {
+            string methodName = "RetrieveProductsByProductIds";
+            object[] data = new object[] { productIds };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a get product categories by product category ids request 
+        /// </summary>
+        /// <param name="categoryIds"></param>
+        /// <returns></returns>
+        public static string CreateGetProductCategoriesByProductCategoryIDsRequest(List<string> categoryIds)
+        {
+            string methodName = "RetrieveProductCategoriesByProductCategoryIds";
+            object[] data = new object[] { categoryIds };
             return CreateRequest(methodName, data);
         }
 

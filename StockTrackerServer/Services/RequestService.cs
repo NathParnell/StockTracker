@@ -13,11 +13,14 @@ namespace StockTrackerServer.Services
 {
     public class RequestService : IRequestService
     {
-        IAuthenticationService _authenticationService;
+        //define services
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IDataService _dataService;
 
-        public RequestService(IAuthenticationService authenticationService)
+        public RequestService(IAuthenticationService authenticationService, IDataService dataService)
         {
             _authenticationService = authenticationService;
+            _dataService = dataService;
         }
 
         /// <summary>
@@ -60,7 +63,56 @@ namespace StockTrackerServer.Services
             List<string> parameters = JsonSerializer.Deserialize<List<string>>(request.Data.ToString());
             User user = _authenticationService.AuthenticateUser(parameters[0], parameters[1]);
             //need to make a response with this
-            return ResponseSerializingHelper.CreateUserAuthenticationResponse(user);
+            return ResponseSerializingHelper.CreateResponse(user);
         }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a supplier id
+        /// With this information we make a call to the data service to retrieve the stock of a supplier with the aforementioned supplier id
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveStockBySupplierId(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> parameters = JsonSerializer.Deserialize<List<string>>(request.Data.ToString());
+            List<Stock> stock = _dataService.GetStockBySupplierId(parameters[0]).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(stock);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array and converts it in to a list of strings which are product ids.
+        /// With this information we make a call to the data service to retrieve the products with the product ids we pass through
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveProductsByProductIds(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> parameters = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<Product> products = _dataService.GetProductsByProductIds(parameters).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(products);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array and converts it in to a list of strings which are product category ids.
+        /// With this information we make a call to the data service to retrieve the product categories with the product category ids we pass through
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveProductCategoriesByProductCategoryIds(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> parameters = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<ProductCategory> productCategories = _dataService.GetProductCategoriesByProductCategoryIds(parameters).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(productCategories);
+        }
+
     }
 }

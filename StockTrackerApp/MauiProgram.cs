@@ -28,6 +28,7 @@ namespace StockTrackerApp
 
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<ISupplierService, SupplierService>();
             builder.Services.AddSingleton<IClientTransportService, NetmqClientTransportService>();
 
             return builder.Build();

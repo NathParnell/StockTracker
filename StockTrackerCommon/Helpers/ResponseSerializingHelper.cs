@@ -11,20 +11,14 @@ namespace StockTrackerCommon.Helpers
     public static class ResponseSerializingHelper
     {
         //accepts the data which we want to pass through to the client
-        public static string CreateResponse(object[] data)
+        public static string CreateResponse<TModel>(TModel data)
         {
             var response = new Response 
             { 
                 ResponseId = Taikandi.SequentialGuid.NewGuid().ToString(),
-                Data = data
+                Data = new object[] { data }
             };
             return JsonSerializer.Serialize(response);
-        }
-
-        public static string CreateUserAuthenticationResponse(User user)
-        {
-            object[] data = new object[] { user };
-            return CreateResponse(data);
         }
 
     }

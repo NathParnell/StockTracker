@@ -9,7 +9,10 @@ namespace StockTrackerServer.Services.Infrastructure
 {
     public interface IDataService
     {
-        Task<IEnumerable<User>> GetAllUsers();
+        Task<List<User>> GetAllUsers();
         Task<User> GetUserByUsername(string username);
+        Task<List<Stock>> GetStockBySupplierId(string supplierId);
+        Task<List<Product>> GetProductsByProductIds(List<string> productIds);
+        Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
     }
 }

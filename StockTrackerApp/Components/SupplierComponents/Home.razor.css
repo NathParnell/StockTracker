@@ -1,0 +1,14 @@
+table{
+    width:80%;
+    margin:auto;
+    justify-content:space-between;
+    text-align:center;
+}
+
+tr, th {
+    border: 1px solid black;
+}
+
+th{
+    text-align:center;
+}

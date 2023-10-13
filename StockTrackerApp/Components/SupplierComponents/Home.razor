@@ -10,5 +10,19 @@
         <th>Price Per Unit</th>
         <th>Quantity</th>
     </tr>
-    
+    @foreach(StockTrackerCommon.Models.Stock stockItem in _stock)
+    {
+        var product = _products.FirstOrDefault(prod => prod.ProductId == stockItem.ProductId);
+
+        <tr>
+            <td>@_productCategories.FirstOrDefault(cat => cat.ProductCategoryId == product.ProductCategoryId).ProductCategoryName</td>
+            <td>@product.ProductCode</td>
+            <td>@product.ProductName</td>
+            <td>@product.ProductBrand</td>
+            <td>@(product.ProductSize.ToString() + product.ProductMeasurementUnit.ToString())</td>
+            <td>@stockItem.StockPrice</td>
+            <td>@stockItem.StockQuantity</td>
+        </tr>
+    }
+
 </table>

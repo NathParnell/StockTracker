@@ -1,11 +1,11 @@
 table{
-    width:80%;
+    width:90%;
     margin:auto;
     justify-content:space-between;
     text-align:center;
 }
 
-tr, th {
+tr, th, td {
     border: 1px solid black;
 }
 

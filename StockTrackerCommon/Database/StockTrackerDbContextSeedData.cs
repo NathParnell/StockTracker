@@ -223,6 +223,14 @@ namespace StockTrackerCommon.Database
             {
                 new Stock
                 {
+                    StockId = "23def5d7-9aa6-4820-5439-08dbcc265888",
+                    ProductId = "2fd902fc-90f1-40ef-5435-08dbcc265888",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    StockQuantity = 200,
+                    StockPrice = 7.50m
+                },
+                new Stock
+                {
                     StockId = "23271213-d265-477c-d148-08dbc80689ae",
                     ProductId = "a85c0fa1-5a29-4b0e-9db3-08dbc77c7200",
                     SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",

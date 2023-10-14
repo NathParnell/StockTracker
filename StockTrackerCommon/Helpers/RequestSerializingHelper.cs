@@ -25,6 +25,8 @@ namespace StockTrackerCommon.Helpers
             return JsonSerializer.Serialize(request);
         }
 
+        #region "Create Requests"
+
         /// <summary>
         /// Creates a JSON string of a Validate Login Request
         /// </summary>
@@ -74,6 +76,19 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data);
         }
 
+        /// <summary>
+        /// Creates a JSON string of a delete stock by stock id request 
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
+        public static string CreateDeleteStockByStockIdRequest(string stockId)
+        {
+            string methodName = "DeleteStockItemByStockId";
+            object[] data = new object[] { stockId };
+            return CreateRequest(methodName, data);
+        }
+
+        #endregion
 
         #region "Get IP Address"
         /// <summary>

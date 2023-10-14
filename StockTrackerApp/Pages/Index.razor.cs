@@ -14,6 +14,7 @@ namespace StockTrackerApp.Pages
         //Inject Services
         [Inject]
         private IUserService _userService { get; set; }
+
         [Inject]
         private NavigationManager _navManager { get; set; }
 

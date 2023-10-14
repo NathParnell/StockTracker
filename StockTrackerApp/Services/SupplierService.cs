@@ -22,6 +22,7 @@ namespace StockTrackerApp.Services
             _clientTransportService = clientTransportService;
         }
 
+        #region "Get Methods"
         public List<Stock> GetStockBySupplier(string supplierId)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetStockBySupplierRequest(supplierId));
@@ -57,6 +58,21 @@ namespace StockTrackerApp.Services
             List<ProductCategory> productCategories = ResponseDeserializingHelper.DeserializeResponse<List<ProductCategory>>(jsonResponse).First().ToList();
             return productCategories;
         }
+        #endregion
+
+        #region "Delete Methods"
+        public bool DeleteStockByStockID(string stockId)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDeleteStockByStockIdRequest(stockId));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return false;
+
+            bool deleteConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+            return deleteConfirmation;
+        }
+        #endregion
 
     }
 }

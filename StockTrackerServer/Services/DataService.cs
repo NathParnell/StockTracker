@@ -72,5 +72,22 @@ namespace StockTrackerServer.Services
         }
 
         #endregion
+
+        #region "Delete Methods"
+        
+        public async Task<bool> DeleteStockByStockId(string stockId)
+        {
+            var itemToDelete = _context.Stock.Find(stockId); // Replace YourEntities with your actual DbSet name
+
+            if (itemToDelete != null)
+            {
+                _context.Stock.Remove(itemToDelete);
+                _context.SaveChanges(); // Save the changes to delete the entity
+                return true;
+            }
+            return false;
+        }
+        
+        #endregion
     }
 }

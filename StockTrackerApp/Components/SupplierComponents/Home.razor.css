@@ -9,6 +9,18 @@ tr, th, td {
     border: 1px solid black;
 }
 
+td{
+    cursor:pointer;
+}
+
 th{
     text-align:center;
+}
+
+.selectedRow{
+    background-color:lightblue;
+}
+
+.unselectedRow{
+    background-color:transparent;
 }

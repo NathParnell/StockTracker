@@ -66,6 +66,7 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(user);
         }
 
+        #region "Get Methods"
         /// <summary>
         /// Method which takes in an object array and turns it into a supplier id
         /// With this information we make a call to the data service to retrieve the stock of a supplier with the aforementioned supplier id
@@ -76,8 +77,8 @@ namespace StockTrackerServer.Services
         public string RetrieveStockBySupplierId(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
-            List<string> parameters = JsonSerializer.Deserialize<List<string>>(request.Data.ToString());
-            List<Stock> stock = _dataService.GetStockBySupplierId(parameters[0]).Result;
+            string supplierId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            List<Stock> stock = _dataService.GetStockBySupplierId(supplierId).Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(stock);
         }
@@ -92,8 +93,8 @@ namespace StockTrackerServer.Services
         public string RetrieveProductsByProductIds(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
-            List<string> parameters = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
-            List<Product> products = _dataService.GetProductsByProductIds(parameters).Result;
+            List<string> productIds = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<Product> products = _dataService.GetProductsByProductIds(productIds).Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(products);
         }
@@ -108,11 +109,25 @@ namespace StockTrackerServer.Services
         public string RetrieveProductCategoriesByProductCategoryIds(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
-            List<string> parameters = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
-            List<ProductCategory> productCategories = _dataService.GetProductCategoriesByProductCategoryIds(parameters).Result;
+            List<string> categoryIds = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<ProductCategory> productCategories = _dataService.GetProductCategoriesByProductCategoryIds(categoryIds).Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(productCategories);
         }
+        #endregion
+
+        #region "Delete Methods"
+        public string DeleteStockItemByStockId(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string stockId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            bool deleteConfirmation = _dataService.DeleteStockByStockId(stockId).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(deleteConfirmation);
+
+        }
+
+        #endregion
 
     }
 }

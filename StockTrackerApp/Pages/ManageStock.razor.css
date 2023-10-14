@@ -1,0 +1,9 @@
+.manageStockContainer{
+    display:flex;
+    flex-direction:column;
+    width:80%;
+}
+
+p{
+    margin:auto;
+}

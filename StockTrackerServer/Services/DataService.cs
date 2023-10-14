@@ -21,7 +21,11 @@ namespace StockTrackerServer.Services
         }
 
         #region "Get Methods"
+        #region "Get All Methods"
         public async Task<List<User>> GetAllUsers() => await _context.Users.ToListAsync();
+        public async Task<List<ProductCategory>> GetAllProductCategories() => await _context.ProductCategories.ToListAsync();
+        public async Task<List<Product>> GetAllProducts() => await _context.Products.ToListAsync();
+        #endregion
 
         public async Task<User> GetUserByUsername(string username)
         {

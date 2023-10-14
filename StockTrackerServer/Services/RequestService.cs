@@ -100,6 +100,20 @@ namespace StockTrackerServer.Services
         }
 
         /// <summary>
+        /// Method which takes in an object array which is empty and not used (Conforms with the other methods)
+        /// We make a call to the data service which retrieves all of the available products
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveAllProducts(object[] requestObject)
+        {
+            List<Product> products = _dataService.GetAllProducts().Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(products);
+        }
+
+        /// <summary>
         /// Method which takes in an object array and converts it in to a list of strings which are product category ids.
         /// With this information we make a call to the data service to retrieve the product categories with the product category ids we pass through
         /// We then create and return our response
@@ -111,6 +125,20 @@ namespace StockTrackerServer.Services
             Request request = (Request)requestObject[0];
             List<string> categoryIds = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
             List<ProductCategory> productCategories = _dataService.GetProductCategoriesByProductCategoryIds(categoryIds).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(productCategories);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array which is empty and not used (Conforms with the other methods)
+        /// We make a call to the data service which retrieves all of the available product categories
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveAllProductCategories(object[] requestObject)
+        {
+            List<ProductCategory> productCategories = _dataService.GetAllProductCategories().Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(productCategories);
         }

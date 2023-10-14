@@ -10,7 +10,11 @@ namespace StockTrackerServer.Services.Infrastructure
     public interface IDataService
     {
         #region "Get Methods"
+        #region "Get All Methods"
         Task<List<User>> GetAllUsers();
+        Task<List<ProductCategory>> GetAllProductCategories();
+        Task<List<Product>> GetAllProducts();
+        #endregion
         Task<User> GetUserByUsername(string username);
         Task<List<Stock>> GetStockBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);

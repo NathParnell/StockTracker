@@ -27,4 +27,5 @@
     }
 
 </table>
-<button type="button" hidden="@(!_isStockSelected)" @onclick="() => DeleteClicked()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
+<button type="button" id="deleteStockButton" hidden="@(!_isStockSelected)" @onclick="() => DeleteStockClicked()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
+<button type="button" id="addStockButton" @onclick="() => AddStockClicked()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>

@@ -47,6 +47,18 @@ namespace StockTrackerApp.Services
             return products;
         }
 
+        public List<Product> GetAllProducts()
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductsRequest());
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return null;
+
+            List<Product> products = ResponseDeserializingHelper.DeserializeResponse<List<Product>>(jsonResponse).First().ToList();
+            return products;
+        }
+
         public List<ProductCategory> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductCategoriesByProductCategoryIDsRequest(productCategoryIds));
@@ -58,6 +70,19 @@ namespace StockTrackerApp.Services
             List<ProductCategory> productCategories = ResponseDeserializingHelper.DeserializeResponse<List<ProductCategory>>(jsonResponse).First().ToList();
             return productCategories;
         }
+
+        public List<ProductCategory> GetAllProductCategories()
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductCategoriesRequest());
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return null;
+
+            List<ProductCategory> productCategories = ResponseDeserializingHelper.DeserializeResponse<List<ProductCategory>>(jsonResponse).First().ToList();
+            return productCategories;
+        }
+
         #endregion
 
         #region "Delete Methods"

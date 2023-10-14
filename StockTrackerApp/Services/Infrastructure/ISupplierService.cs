@@ -12,7 +12,9 @@ namespace StockTrackerApp.Services.Infrastructure
         #region "Get Methods"
         List<Stock> GetStockBySupplier(string supplierId);
         List<Product> GetProductsByProductIds(List<string> productIds);
+        List<Product> GetAllProducts();
         List<ProductCategory> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
+        List<ProductCategory> GetAllProductCategories();
 
         #endregion
 

@@ -65,6 +65,18 @@ namespace StockTrackerCommon.Helpers
         }
 
         /// <summary>
+        /// Creates a JSON string of a get all products request 
+        /// </summary>
+        /// <param name="categoryIds"></param>
+        /// <returns></returns>
+        public static string CreateGetAllProductsRequest()
+        {
+            string methodName = "RetrieveAllProducts";
+            object[] data = new object[] { };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
         /// Creates a JSON string of a get product categories by product category ids request 
         /// </summary>
         /// <param name="categoryIds"></param>
@@ -73,6 +85,18 @@ namespace StockTrackerCommon.Helpers
         {
             string methodName = "RetrieveProductCategoriesByProductCategoryIds";
             object[] data = new object[] { categoryIds };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a get all product categories request 
+        /// </summary>
+        /// <param name="categoryIds"></param>
+        /// <returns></returns>
+        public static string CreateGetAllProductCategoriesRequest()
+        {
+            string methodName = "RetrieveAllProductCategories";
+            object[] data = new object[] { };
             return CreateRequest(methodName, data);
         }
 

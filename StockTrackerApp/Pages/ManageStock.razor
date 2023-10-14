@@ -1,0 +1,25 @@
+﻿@page "/ManageStock"
+
+<h3>ManageStock</h3>
+
+
+<div class="manageStockContainer">
+    <div class="manageStockField">
+        <p>Category</p>
+        <InputSelect id="category" @bind-Value="_selectedProductCategoryId">
+            @foreach(var category in _productCategories)
+            {
+                <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
+            }        
+        </InputSelect>
+    </div>
+    <div class="manageStockField">
+        <p>Product</p>
+        <InputSelect id="product" @bind-Value="_selectedProductCategoryId">
+            @foreach (var category in _productCategories)
+            {
+                <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
+            }
+        </InputSelect>
+    </div>
+</div>

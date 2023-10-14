@@ -40,10 +40,10 @@ namespace StockTrackerApp.Components.SupplierComponents
 
         protected override async Task OnInitializedAsync()
         {
-            Init();
+            GetStockInformation();
         }
 
-        private async Task Init()
+        private async Task GetStockInformation()
         {
             //Get all of the stock which belongs to the current user (the supplier)
             _stock = _supplierService.GetStockBySupplier(_userService.CurrentUser.UserId);
@@ -72,7 +72,7 @@ namespace StockTrackerApp.Components.SupplierComponents
         /// Creates a popup asking if user would like to delete the selected stock item
         /// if yes, the stock item is deleted and we rerender the page
         /// </summary>
-        private async void DeleteClicked()
+        private async void DeleteStockClicked()
         {
             bool confirmed = await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to delete this Stock Item?");
             if (confirmed)
@@ -83,7 +83,11 @@ namespace StockTrackerApp.Components.SupplierComponents
                     _navManager.NavigateTo("Home", true);
                 }
             }
+        }
 
+        private async void AddStockClicked()
+        {
+            _navManager.NavigateTo("ManageStock", true);
         }
 
     }

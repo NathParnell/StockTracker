@@ -59,6 +59,7 @@ namespace StockTrackerApp.Pages
             string prompt = _supplierService.ValidateAndAddProduct(_newProduct, _existingProducts, _productCategories);
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
+            _navManager.NavigateTo("AddProduct", true);
         }
 
     }

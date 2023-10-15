@@ -5,3 +5,7 @@
     background: #d9b99b;
     justify-content:space-evenly
 }
+
+.link {
+    cursor: pointer;
+}

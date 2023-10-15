@@ -39,7 +39,7 @@ namespace StockTrackerApp.Pages
 
         private async Task AddProduct()
         {
-            _navManager.NavigateTo("AddProduct");
+            _navManager.NavigateTo("AddProduct", true);
         }
 
     }

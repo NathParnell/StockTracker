@@ -127,7 +127,11 @@ namespace StockTrackerApp.Services
 
             if (isProductValid == true)
             {
-                return "Product Added Successfully";
+                newProduct.ProductId = Taikandi.SequentialGuid.NewGuid().ToString();
+                if (AddProduct(newProduct))
+                    return "Product Added Successfully";
+                else
+                    return "Error Adding Product";
             }
             else
             {

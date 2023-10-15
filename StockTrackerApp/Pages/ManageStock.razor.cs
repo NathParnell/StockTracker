@@ -15,6 +15,9 @@ namespace StockTrackerApp.Pages
         [Inject]
         private ISupplierService _supplierService { get; set; }
 
+        [Inject]
+        private NavigationManager _navManager { get; set; }
+
         //define variables
         private List<ProductCategory> _productCategories = new List<ProductCategory>();
         private List<Product> _products = new List<Product>();
@@ -32,6 +35,11 @@ namespace StockTrackerApp.Pages
         {
             _productCategories = _supplierService.GetAllProductCategories();
             _products = _supplierService.GetAllProducts();
+        }
+
+        private async Task AddProduct()
+        {
+            _navManager.NavigateTo("AddProduct");
         }
 
     }

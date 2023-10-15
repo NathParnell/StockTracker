@@ -112,7 +112,16 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data);
         }
 
+        public static string CreateAddProduct(Product product)
+        {
+            string methodName = "AddProduct";
+            object[] data = new object[] { product };
+            return CreateRequest(methodName, data);
+        }
+
         #endregion
+
+
 
         #region "Get IP Address"
         /// <summary>

@@ -91,7 +91,23 @@ namespace StockTrackerServer.Services
             }
             return false;
         }
-        
+
+        #endregion
+
+        #region "Add Methods"
+        public async Task<bool> AddProduct(Product product)
+        {
+            try
+            {
+                _context.Products.Add(product);
+                _context.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }

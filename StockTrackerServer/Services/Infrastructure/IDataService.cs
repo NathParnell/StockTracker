@@ -24,5 +24,9 @@ namespace StockTrackerServer.Services.Infrastructure
         #region "Delete Methods"
         Task<bool> DeleteStockByStockId(string stockId);
         #endregion
+
+        #region "Add Methods"
+        Task<bool> AddProduct(Product product);
+        #endregion
     }
 }

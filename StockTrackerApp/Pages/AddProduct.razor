@@ -1,0 +1,44 @@
+﻿@page "/AddProduct";
+@using StockTrackerCommon.Models;
+
+<h3>AddProduct</h3>
+
+<div class="addProductContainer">
+    <div class="addProductField">
+        <p>Category</p>
+        <InputSelect id="productCategory" @bind-Value="_newProduct.ProductCategoryId">
+            <option value="">Select a category</option>
+            @foreach (var category in _productCategories)
+            {
+                <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
+            }
+        </InputSelect>
+    </div>
+    <div class="addProductField">
+        <p>Product Name</p>
+        <InputText id="productName" @bind-Value="_newProduct.ProductName"/>
+    </div>
+    <div class="addProductField">
+        <p>Product Code</p>
+        <InputText id="productCode" @bind-Value="_newProduct.ProductCode" />
+    </div>
+    <div class="addProductField">
+        <p>Product Brand</p>
+        <InputText id="productBrand" @bind-Value="_newProduct.ProductBrand" />
+    </div>
+    <div class="addProductField">
+        <p>Product Size</p>
+        <InputText id="productSize" @bind-Value="_size" />
+    </div>
+    <div class="addProductField">
+        <p>Product Measurement Unit</p>
+        <InputSelect id="productUnit" @bind-Value="_measurementUnit">
+            <option value="">Select a meaurement unit</option>
+            @foreach (var unit in Enum.GetValues(typeof(ProductMeasurementUnit)))
+            {
+                <option value="@unit">@unit</option>
+            }
+        </InputSelect>
+    </div>
+    <button type="button" @onclick="() => Add()">Hello there</button>
+</div>

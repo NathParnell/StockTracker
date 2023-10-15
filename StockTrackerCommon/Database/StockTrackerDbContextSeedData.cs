@@ -137,7 +137,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "24 Stuffed Crust Pizza Bases",
                     ProductBrand = "Warburtons",
                     ProductSize = 2.4,
-                    ProductMeasurementUnit = MeasurementUnit.Kg,
+                    ProductMeasurementUnit = ProductMeasurementUnit.Kg,
                     ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200"
                 },
                 new Product
@@ -147,7 +147,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "12 Stuffed Crust Pizza Bases",
                     ProductBrand = "Warburtons",
                     ProductSize = 1.2,
-                    ProductMeasurementUnit = MeasurementUnit.Kg,
+                    ProductMeasurementUnit = ProductMeasurementUnit.Kg,
                     ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200"
                 },
                 new Product
@@ -157,7 +157,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Small Pepperoni",
                     ProductBrand = "Yorkshire Meat Company",
                     ProductSize = 2,
-                    ProductMeasurementUnit = MeasurementUnit.Kg,
+                    ProductMeasurementUnit = ProductMeasurementUnit.Kg,
                     ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
                 },
                 new Product
@@ -167,7 +167,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Large Pepperoni",
                     ProductBrand = "Yorkshire Meat Company",
                     ProductSize = 5,
-                    ProductMeasurementUnit = MeasurementUnit.Kg,
+                    ProductMeasurementUnit = ProductMeasurementUnit.Kg,
                     ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
                 },
                 new Product
@@ -177,7 +177,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Garlic Oil",
                     ProductBrand = "Flora",
                     ProductSize = 500,
-                    ProductMeasurementUnit = MeasurementUnit.ml,
+                    ProductMeasurementUnit = ProductMeasurementUnit.ml,
                     ProductCategoryId = "46689ea1-a123-493d-9db0-08dbc77c7200"
                 },
                 new Product
@@ -187,7 +187,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Tomato Pizza Sauce",
                     ProductBrand = "Dolmio",
                     ProductSize = 2,
-                    ProductMeasurementUnit = MeasurementUnit.l,
+                    ProductMeasurementUnit = ProductMeasurementUnit.l,
                     ProductCategoryId = "7f897028-cf37-452f-9da7-08dbc77c7200",
                 },
                 new Product
@@ -197,7 +197,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Large Mozzerella",
                     ProductBrand = "Cathedral",
                     ProductSize = 2,
-                    ProductMeasurementUnit = MeasurementUnit.Kg,
+                    ProductMeasurementUnit = ProductMeasurementUnit.Kg,
                     ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
                 },
                 new Product
@@ -207,7 +207,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Small Mozzerella",
                     ProductBrand = "Cathedral",
                     ProductSize = 500,
-                    ProductMeasurementUnit = MeasurementUnit.g,
+                    ProductMeasurementUnit = ProductMeasurementUnit.g,
                     ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
                 }
             };

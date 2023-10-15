@@ -16,12 +16,12 @@ namespace StockTrackerCommon.Models
         public string ProductName { get; set; }
         public string ProductBrand { get; set; }
         public double ProductSize { get ; set; }
-        public MeasurementUnit ProductMeasurementUnit { get; set; }
+        public ProductMeasurementUnit? ProductMeasurementUnit { get; set; }
         public string ProductCategoryId { get; set; }
 
     }
 
-    public enum MeasurementUnit
+    public enum ProductMeasurementUnit
     {
         Kg = 0,
         g = 1,

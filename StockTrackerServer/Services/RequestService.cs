@@ -157,5 +157,18 @@ namespace StockTrackerServer.Services
 
         #endregion
 
+        #region "Add Methods"
+        
+        public string AddProduct(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            Product product = JsonSerializer.Deserialize<List<Product>>(request.Data.ToString()).First();
+            bool addConfirmation = _dataService.AddProduct(product).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(addConfirmation);
+        }
+
+        #endregion
+
     }
 }

@@ -1,52 +1,62 @@
 ﻿@page "/ManageProduct";
 @using StockTrackerCommon.Models;
 
-<h3>AddProduct</h3>
-
 <div class="addProductContainer">
-    <div class="addProductField">
-        <p>Category</p>
-        <InputSelect id="productCategory" @bind-Value="_newProduct.ProductCategoryId">
-            <option value="">Select a category</option>
-            @foreach (var category in _productCategories)
-            {
-                <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
-            }
-        </InputSelect>
+    <h1>Add Product</h1>
+    <div class="addProductFieldRow">
+        <div class="addProductFieldSmall">
+            <label for="productCategory">Category</label>
+            <div>
+                <InputSelect id="productCategory" @bind-Value="_newProduct.ProductCategoryId">
+                    <option value="">Select a category</option>
+                    @foreach (var category in _productCategories)
+                    {
+                        <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
+                    }
+                </InputSelect>
+                <span type="button" @onclick="() => AddProduct()" class="oi oi-plus" aria-hidden="true"></span>
+            </div>
+        </div>
+        <div class="addProductFieldSmall">
+            <label for="productName">Product Name</label>
+            <InputText id="productName" @bind-Value="_newProduct.ProductName"/>
+        </div>
     </div>
-    <div class="addProductField">
-        <p>Product Name</p>
-        <InputText id="productName" @bind-Value="_newProduct.ProductName"/>
+    <div class="addProductFieldRow">
+        <div class="addProductFieldSmall">
+            <label for="productCode">Product Code</label>
+            <InputText id="productCode" @bind-Value="_newProduct.ProductCode" />
+        </div>
+        <div class="addProductFieldSmall">
+            <label for="productBrand">Product Brand</label>
+            <InputText id="productBrand" @bind-Value="_newProduct.ProductBrand" />
+        </div>
     </div>
-    <div class="addProductField">
-        <p>Product Code</p>
-        <InputText id="productCode" @bind-Value="_newProduct.ProductCode" />
+    <div class="addProductFieldRow">
+        <div class="addProductFieldSmall">
+            <label for="productPrice">Product Price (£)</label>
+            <InputNumber id="productPrice" format="N2" step="0.01" min="0.01" @bind-Value="_newProduct.Price" />
+        </div>
+        <div class="addProductFieldSmall">
+            <label for="productQuantity">Product Quantity</label>
+            <InputNumber id="productQuantity" min="0" format="D" @bind-Value="_newProduct.ProductQuantity" />
+        </div>
     </div>
-    <div class="addProductField">
-        <p>Product Brand</p>
-        <InputText id="productBrand" @bind-Value="_newProduct.ProductBrand" />
-    </div>
-    <div class="addProductField">
-        <p>Product Price (£)</p>
-        <InputNumber id="productPrice" format="N2" step="0.01" min="0.01" @bind-Value="_newProduct.Price" />
-    </div>
-    <div class="addProductField">
-        <p>Product Quantity</p>
-        <InputNumber id="productQuantity" min="0" format="D" @bind-Value="_newProduct.ProductQuantity" />
-    </div>
-    <div class="addProductField">
-        <p>Product Size</p>
-        <InputNumber id="productSize" format="N2" step="0.50" @bind-Value="_newProduct.ProductSize" />
-    </div>
-    <div class="addProductField">
-        <p>Product Measurement Unit</p>
-        <InputSelect id="productUnit" @bind-Value="_measurementUnit">
-            <option value="">Select a meaurement unit</option>
-            @foreach (var unit in Enum.GetValues(typeof(ProductMeasurementUnit)))
-            {
-                <option value="@unit">@unit</option>
-            }
-        </InputSelect>
+    <div class="addProductFieldRow">
+        <div class="addProductFieldSmall">
+            <label for="productSize">Product Size</label>
+            <InputNumber id="productSize" format="N2" step="0.50" @bind-Value="_newProduct.ProductSize" />
+        </div>
+        <div class="addProductFieldSmall">
+            <label for="productUnit">Product Measurement Unit</label>
+            <InputSelect id="productUnit" @bind-Value="_measurementUnit">
+                <option value="">Select a meaurement unit</option>
+                @foreach (var unit in Enum.GetValues(typeof(ProductMeasurementUnit)))
+                {
+                    <option value="@unit">@unit</option>
+                }
+            </InputSelect>
+        </div>
     </div>
     <button type="button" @onclick="() => AddProduct()">Hello there</button>
 </div>

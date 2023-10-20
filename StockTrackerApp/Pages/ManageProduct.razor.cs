@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StockTrackerApp.Pages
 {
-    public partial class AddProduct
+    public partial class ManageProduct
     {
         //Inject Services
         [Inject]
@@ -22,6 +22,9 @@ namespace StockTrackerApp.Pages
 
         [Inject]
         private NavigationManager _navManager { get; set; }
+
+        [Inject]
+        private IUserService _userService { get; set; }
 
         //Define variables
         List<Product> _existingProducts = new List<Product>();
@@ -42,19 +45,16 @@ namespace StockTrackerApp.Pages
             _existingProducts = _supplierService.GetAllProducts();
         }
 
-        private async Task Add()
+        private async Task AddProduct()
         {
-            //Add the product size to the new product object, if string cannot be parsed into a double then value is -1 which will be rejected 
-            if (double.TryParse(_size, out double parsedSize))
-                _newProduct.ProductSize = parsedSize;
-            else
-                _newProduct.ProductSize = -1; // or any other default value
-
-            //Add the product measurement unit to the product objet
+            //Add the product measurement unit to the product object
             if (Enum.TryParse(_measurementUnit, out ProductMeasurementUnit parsedMeasurementUnit))
                 _newProduct.ProductMeasurementUnit = parsedMeasurementUnit;
             else
                 _newProduct.ProductMeasurementUnit = null; // or any other default value
+
+            //set the supplier id to be the id of the current user (who is a suppier in this case)
+            _newProduct.SupplierId = _userService.CurrentUser.UserId;
 
             string prompt = _supplierService.ValidateAndAddProduct(_newProduct, _existingProducts, _productCategories);
 

@@ -83,7 +83,7 @@ namespace StockTrackerApp.Services
             return addConfirmation;
         }
 
-        public string ValidateAndAddProduct(Product newProduct, List<Product> existingProducts, List<ProductCategory> productCategories)
+        public string ValidateAndAddProduct(Product newProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories)
         {
             bool isProductValid = true;
             string prompt = "Product invalid, please enter:\n";
@@ -95,13 +95,13 @@ namespace StockTrackerApp.Services
                 prompt += "A Valid Product Category,\n";
             }
             //check that product name isnt null and that a product doesnt already exist with the same name
-            if (String.IsNullOrEmpty(newProduct.ProductName) || existingProducts.Any(prod => prod.ProductName == newProduct.ProductName))
+            if (String.IsNullOrEmpty(newProduct.ProductName) || suppliersExistingProducts.Any(prod => prod.ProductName == newProduct.ProductName))
             {
                 isProductValid = false;
                 prompt += "A unique product name, \n";
             }
             //check that product name isnt null and that a product doesnt already exist with the same product code
-            if (String.IsNullOrEmpty(newProduct.ProductCode) || existingProducts.Any(prod => prod.ProductCode == newProduct.ProductCode))
+            if (String.IsNullOrEmpty(newProduct.ProductCode) || suppliersExistingProducts.Any(prod => prod.ProductCode == newProduct.ProductCode))
             {
                 isProductValid = false;
                 prompt += "A unique product code \n";
@@ -112,7 +112,7 @@ namespace StockTrackerApp.Services
                 isProductValid = false;
                 prompt += "A product brand name \n";
             }
-            if (newProduct.ProductSize == -1)
+            if (newProduct.ProductSize <= 0)
             {
                 isProductValid = false;
                 prompt += "A product size";
@@ -121,6 +121,11 @@ namespace StockTrackerApp.Services
             {
                 isProductValid = false;
                 prompt += "A valid Product Measurement Unit";
+            }
+            if (newProduct.Price <= 0)
+            {
+                isProductValid = false;
+                prompt += "A Product Price";
             }
 
             if (isProductValid == true)

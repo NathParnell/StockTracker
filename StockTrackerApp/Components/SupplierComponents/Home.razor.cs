@@ -82,7 +82,7 @@ namespace StockTrackerApp.Components.SupplierComponents
 
         private async void AddProductClicked()
         {
-            //_navManager.NavigateTo("ManageStock", true);
+            _navManager.NavigateTo("ManageProduct", true);
         }
 
     }

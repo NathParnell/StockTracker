@@ -1,4 +1,4 @@
-﻿@page "/AddProduct";
+﻿@page "/ManageProduct";
 @using StockTrackerCommon.Models;
 
 <h3>AddProduct</h3>
@@ -27,8 +27,16 @@
         <InputText id="productBrand" @bind-Value="_newProduct.ProductBrand" />
     </div>
     <div class="addProductField">
+        <p>Product Price (£)</p>
+        <InputNumber id="productPrice" format="N2" step="0.01" min="0.01" @bind-Value="_newProduct.Price" />
+    </div>
+    <div class="addProductField">
+        <p>Product Quantity</p>
+        <InputNumber id="productQuantity" min="0" format="D" @bind-Value="_newProduct.ProductQuantity" />
+    </div>
+    <div class="addProductField">
         <p>Product Size</p>
-        <InputText id="productSize" @bind-Value="_size" />
+        <InputNumber id="productSize" format="N2" step="0.50" @bind-Value="_newProduct.ProductSize" />
     </div>
     <div class="addProductField">
         <p>Product Measurement Unit</p>
@@ -40,5 +48,5 @@
             }
         </InputSelect>
     </div>
-    <button type="button" @onclick="() => Add()">Hello there</button>
+    <button type="button" @onclick="() => AddProduct()">Hello there</button>
 </div>

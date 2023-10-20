@@ -45,9 +45,9 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="supplierId"></param>
         /// <returns></returns>
-        public static string CreateGetStockBySupplierRequest(string supplierId)
+        public static string CreateGetProductsBySupplierRequest(string supplierId)
         {
-            string methodName = "RetrieveStockBySupplierId";
+            string methodName = "RetrieveProductsBySupplierId";
             object[] data = new object[] { supplierId };
             return CreateRequest(methodName, data);
         }
@@ -105,10 +105,10 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="stockId"></param>
         /// <returns></returns>
-        public static string CreateDeleteStockByStockIdRequest(string stockId)
+        public static string CreateDeleteProductByProductIdRequest(string productId)
         {
-            string methodName = "DeleteStockItemByStockId";
-            object[] data = new object[] { stockId };
+            string methodName = "DeleteProductByProductId";
+            object[] data = new object[] { productId };
             return CreateRequest(methodName, data);
         }
 

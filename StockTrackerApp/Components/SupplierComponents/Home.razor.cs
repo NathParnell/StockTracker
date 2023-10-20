@@ -29,65 +29,60 @@ namespace StockTrackerApp.Components.SupplierComponents
         private Popup popupRef = new();
 
         //Define Variables
-        private List<Stock> _stock = new List<Stock>();
         private List<Product> _products = new List<Product>();
         private List<ProductCategory> _productCategories = new List<ProductCategory>();
 
-        private Stock _selectedStock = new Stock();
-        private bool _isStockSelected = false;
+        private Product _selectedProduct = new Product();
+        private bool _isProductSelected = false;
 
         //private List<string> _selectedCategories = new List<string>();
 
         protected override async Task OnInitializedAsync()
         {
-            GetStockInformation();
+            GetProductsInformation();
         }
 
-        private async Task GetStockInformation()
+        private async Task GetProductsInformation()
         {
-            //Get all of the stock which belongs to the current user (the supplier)
-            _stock = _supplierService.GetStockBySupplier(_userService.CurrentUser.UserId);
-
-            //Get a list of Product Ids
-            List<string> productIds = _stock.Select(prod => prod.ProductId.ToString()).ToList();
-            _products = _supplierService.GetProductsByProductIds(productIds);
+            //Get all of the products which belong to the current user (the supplier)
+            _products = _supplierService.GetProductBySupplierId(_userService.CurrentUser.UserId);
 
             //Get a list of the product category ids
             List<string> productCategoryIds = _products.Select(cat => cat.ProductCategoryId.ToString()).Distinct().ToList();
             _productCategories = _supplierService.GetProductCategoriesByProductCategoryIds(productCategoryIds);
         }
 
-        private void HandleRowClick(Stock stock)
+        private void HandleRowClick(Product product)
         {
             Console.WriteLine("hello there");
         }
 
-        private void RowSelected(Stock stock)
+        private void RowSelected(Product product)
         {
-            _selectedStock = stock;
-            _isStockSelected = true;
+            _selectedProduct = product;
+            _isProductSelected = true;
         }
 
         /// <summary>
-        /// Creates a popup asking if user would like to delete the selected stock item
-        /// if yes, the stock item is deleted and we rerender the page
+        /// Creates a popup asking if user would like to delete the selected product
+        /// if yes, the product is deleted and we rerender the page
         /// </summary>
-        private async void DeleteStockClicked()
+        private async void DeleteProductClicked()
         {
-            bool confirmed = await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to delete this Stock Item?");
+            bool confirmed = await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to delete this Product?");
             if (confirmed)
             {
-                if (_supplierService.DeleteStockByStockID(_selectedStock.StockId) == true)
+                if (_supplierService.DeleteProductByProductID(_selectedProduct.ProductId) == true)
                 {
-                    await _jSRuntime.InvokeAsync<object>("alert", "Stock item successfully deleted");
+                    await _jSRuntime.InvokeAsync<object>("alert", "Product successfully deleted");
                     _navManager.NavigateTo("Home", true);
                 }
             }
         }
 
-        private async void AddStockClicked()
+        private async void AddProductClicked()
         {
-            _navManager.NavigateTo("ManageStock", true);
+            //_navManager.NavigateTo("ManageStock", true);
         }
 
     }

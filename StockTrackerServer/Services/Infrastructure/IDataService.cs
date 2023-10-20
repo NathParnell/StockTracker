@@ -16,13 +16,13 @@ namespace StockTrackerServer.Services.Infrastructure
         Task<List<Product>> GetAllProducts();
         #endregion
         Task<User> GetUserByUsername(string username);
-        Task<List<Stock>> GetStockBySupplierId(string supplierId);
+        Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);
         Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
         #endregion
 
         #region "Delete Methods"
-        Task<bool> DeleteStockByStockId(string stockId);
+        Task<bool> DeleteProductByProductId(string productId);
         #endregion
 
         #region "Add Methods"

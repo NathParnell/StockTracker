@@ -11,21 +11,19 @@
         <th>Price Per Unit</th>
         <th>Quantity</th>
     </tr>
-    @foreach(StockTrackerCommon.Models.Stock stockItem in _stock)
+    @foreach(StockTrackerCommon.Models.Product product in _products)
     {
-        var product = _products.FirstOrDefault(prod => prod.ProductId == stockItem.ProductId);
-
-        <tr  @onclick="() => RowSelected(stockItem)" @ondblclick="() => HandleRowClick(stockItem)" class="@(_selectedStock == stockItem ? "selectedRow" : "unselectedRow")">
+        <tr  @onclick="() => RowSelected(product)" @ondblclick="() => HandleRowClick(product)" class="@(_selectedProduct == product ? "selectedRow" : "unselectedRow")">
             <td>@_productCategories.FirstOrDefault(cat => cat.ProductCategoryId == product.ProductCategoryId).ProductCategoryName</td>
             <td>@product.ProductCode</td>
             <td>@product.ProductName</td>
             <td>@product.ProductBrand</td>
             <td>@(product.ProductSize.ToString() + product.ProductMeasurementUnit.ToString())</td>
-            <td>@stockItem.StockPrice</td>
-            <td>@stockItem.StockQuantity</td>
+            <td>@product.Price</td>
+            <td>@product.ProductQuantity</td>
         </tr>
     }
 
 </table>
-<button type="button" id="deleteStockButton" hidden="@(!_isStockSelected)" @onclick="() => DeleteStockClicked()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
-<button type="button" id="addStockButton" @onclick="() => AddStockClicked()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>
+<button type="button" id="deleteStockButton" hidden="@(!_isProductSelected)" @onclick="() => DeleteProductClicked()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
+<button type="button" id="addStockButton" @onclick="() => AddProductClicked()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>

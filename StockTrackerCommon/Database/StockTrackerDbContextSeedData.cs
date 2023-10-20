@@ -19,7 +19,7 @@ namespace StockTrackerCommon.Database
         public static void EnsureSeedData(this StockTrackerDbContext context)
         {
             //Ensure that we dont already have a mock db
-            if (!seeded && context.Users.Count() == 0 && context.Products.Count() == 0 && context.ProductCategories.Count() == 0 && context.Stock.Count() == 0)
+            if (!seeded && context.Users.Count() == 0 && context.Products.Count() == 0 && context.ProductCategories.Count() == 0)
             {
                 lock (synchlock)
                 {
@@ -28,12 +28,10 @@ namespace StockTrackerCommon.Database
                         var users = GenerateUsers();
                         var productCategories = GenerateProductCategories();
                         var products = GenerateProducts();
-                        var stock = GenerateStock();
 
                         context.Users.AddRange(users);
                         context.Products.AddRange(products);
                         context.ProductCategories.AddRange(productCategories);
-                        context.Stock.AddRange(stock);
 
                         context.SaveChanges();
                         seeded = true;
@@ -138,7 +136,11 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Warburtons",
                     ProductSize = 2.4,
                     ProductMeasurementUnit = ProductMeasurementUnit.Kg,
-                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200"
+                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200",
+                    ProductQuantity = 200,
+                    Price = 18.50m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
+
                 },
                 new Product
                 {
@@ -148,7 +150,10 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Warburtons",
                     ProductSize = 1.2,
                     ProductMeasurementUnit = ProductMeasurementUnit.Kg,
-                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200"
+                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200",
+                    ProductQuantity = 300,
+                    Price = 10.50m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
                 },
                 new Product
                 {
@@ -158,7 +163,10 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Yorkshire Meat Company",
                     ProductSize = 2,
                     ProductMeasurementUnit = ProductMeasurementUnit.Kg,
-                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
+                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200",
+                    ProductQuantity = 70,
+                    Price = 6.00m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
                 },
                 new Product
                 {
@@ -168,7 +176,10 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Yorkshire Meat Company",
                     ProductSize = 5,
                     ProductMeasurementUnit = ProductMeasurementUnit.Kg,
-                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200"
+                    ProductCategoryId = "9af33c70-f565-4c14-9dad-08dbc77c7200",
+                    ProductQuantity = 150,
+                    Price = 9.00m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
                 },
                 new Product
                 {
@@ -178,7 +189,10 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Flora",
                     ProductSize = 500,
                     ProductMeasurementUnit = ProductMeasurementUnit.ml,
-                    ProductCategoryId = "46689ea1-a123-493d-9db0-08dbc77c7200"
+                    ProductCategoryId = "46689ea1-a123-493d-9db0-08dbc77c7200",
+                    ProductQuantity = 50,
+                    Price = 3.00m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
                 },
                 new Product
                 {
@@ -189,6 +203,9 @@ namespace StockTrackerCommon.Database
                     ProductSize = 2,
                     ProductMeasurementUnit = ProductMeasurementUnit.l,
                     ProductCategoryId = "7f897028-cf37-452f-9da7-08dbc77c7200",
+                    ProductQuantity = 350,
+                    Price = 6.00m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
                 },
                 new Product
                 {
@@ -198,7 +215,10 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Cathedral",
                     ProductSize = 2,
                     ProductMeasurementUnit = ProductMeasurementUnit.Kg,
-                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
+                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200",
+                    ProductQuantity = 250,
+                    Price = 15.50m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
                 },
                 new Product
                 {
@@ -208,58 +228,11 @@ namespace StockTrackerCommon.Database
                     ProductBrand = "Cathedral",
                     ProductSize = 500,
                     ProductMeasurementUnit = ProductMeasurementUnit.g,
-                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200"
-                }
-            };
-        }
+                    ProductCategoryId = "cf261956-8b6d-470e-9daa-08dbc77c7200",
+                    ProductQuantity = 340,
+                    Price = 9.00m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
 
-        /// <summary>
-        /// This method generates Stock for the mock database
-        /// </summary>
-        /// <returns></returns>
-        private static Stock[] GenerateStock()
-        {
-            return new Stock[]
-            {
-                new Stock
-                {
-                    StockId = "23def5d7-9aa6-4820-5439-08dbcc265888",
-                    ProductId = "2fd902fc-90f1-40ef-5435-08dbcc265888",
-                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
-                    StockQuantity = 200,
-                    StockPrice = 7.50m
-                },
-                new Stock
-                {
-                    StockId = "23271213-d265-477c-d148-08dbc80689ae",
-                    ProductId = "a85c0fa1-5a29-4b0e-9db3-08dbc77c7200",
-                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
-                    StockQuantity = 1000,
-                    StockPrice = 12.50m
-                },
-                new Stock
-                {
-                    StockId = "c14d0153-4801-4ab9-d145-08dbc80689ae",
-                    ProductId = "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200",
-                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
-                    StockQuantity = 200,
-                    StockPrice = 15.50m
-                },
-                new Stock
-                {
-                    StockId = "602012e6-a458-4923-d141-08dbc80689ae",
-                    ProductId = "850bc9f5-8138-4f5f-9d9f-08dbc77c7200",
-                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
-                    StockQuantity = 500,
-                    StockPrice = 10.50m
-                },
-                new Stock
-                {
-                    StockId = "fd0ce5b9-8a96-4713-d143-08dbc80689ae",
-                    ProductId = "682ab1ad-0e81-465b-9dbf-08dbc77c7200",
-                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
-                    StockQuantity = 800,
-                    StockPrice = 5.00m
                 }
             };
         }

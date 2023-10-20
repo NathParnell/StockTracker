@@ -23,21 +23,21 @@ namespace StockTrackerApp.Services
             _clientTransportService = clientTransportService;
         }
 
-        #region "Stock Methods"
-        public List<Stock> GetStockBySupplier(string supplierId)
+        #region "Product Methods"
+        public List<Product> GetProductBySupplierId(string supplierId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetStockBySupplierRequest(supplierId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsBySupplierRequest(supplierId));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
                 return null;
 
-            List<Stock> stock = ResponseDeserializingHelper.DeserializeResponse<List<Stock>>(jsonResponse).First().ToList();
-            return stock;
+            List<Product> product = ResponseDeserializingHelper.DeserializeResponse<List<Product>>(jsonResponse).First().ToList();
+            return product;
         }
-        public bool DeleteStockByStockID(string stockId)
+        public bool DeleteProductByProductID(string productId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDeleteStockByStockIdRequest(stockId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDeleteProductByProductIdRequest(productId));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -46,10 +46,7 @@ namespace StockTrackerApp.Services
             bool deleteConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
             return deleteConfirmation;
         }
-
-        #endregion
-
-        #region "Product Methods"
+        
         public List<Product> GetProductsByProductIds(List<string> productIds)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsByProductIdsRequest(productIds));
@@ -73,6 +70,7 @@ namespace StockTrackerApp.Services
             List<Product> products = ResponseDeserializingHelper.DeserializeResponse<List<Product>>(jsonResponse).First().ToList();
             return products;
         }
+
         public bool AddProduct(Product product)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddProduct(product));

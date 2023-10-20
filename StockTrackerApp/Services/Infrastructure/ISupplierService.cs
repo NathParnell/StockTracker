@@ -9,13 +9,9 @@ namespace StockTrackerApp.Services.Infrastructure
 {
     public interface ISupplierService
     {
-        #region "Stock Methods"
-        List<Stock> GetStockBySupplier(string supplierId);
-        bool DeleteStockByStockID(string stockId);
-
-        #endregion
-
         #region "Product Methods"
+        List<Product> GetProductBySupplierId(string supplierId);
+        bool DeleteProductByProductID(string productId);
         List<Product> GetProductsByProductIds(List<string> productIds);
         List<Product> GetAllProducts();
         bool AddProduct(Product product);

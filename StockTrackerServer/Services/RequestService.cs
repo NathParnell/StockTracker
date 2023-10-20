@@ -69,18 +69,18 @@ namespace StockTrackerServer.Services
         #region "Get Methods"
         /// <summary>
         /// Method which takes in an object array and turns it into a supplier id
-        /// With this information we make a call to the data service to retrieve the stock of a supplier with the aforementioned supplier id
+        /// With this information we make a call to the data service to retrieve a suppliers products by the aforementioned supplier id
         /// We then create and return our response
         /// </summary>
         /// <param name="requestObject"></param>
         /// <returns></returns>
-        public string RetrieveStockBySupplierId(object[] requestObject)
+        public string RetrieveProductsBySupplierId(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
             string supplierId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
-            List<Stock> stock = _dataService.GetStockBySupplierId(supplierId).Result;
+            List<Product> products = _dataService.GetProductsBySupplierId(supplierId).Result;
             //make response
-            return ResponseSerializingHelper.CreateResponse(stock);
+            return ResponseSerializingHelper.CreateResponse(products);
         }
 
         /// <summary>
@@ -145,11 +145,11 @@ namespace StockTrackerServer.Services
         #endregion
 
         #region "Delete Methods"
-        public string DeleteStockItemByStockId(object[] requestObject)
+        public string DeleteProductByProductId(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
-            string stockId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
-            bool deleteConfirmation = _dataService.DeleteStockByStockId(stockId).Result;
+            string productId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            bool deleteConfirmation = _dataService.DeleteProductByProductId(productId).Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(deleteConfirmation);
 

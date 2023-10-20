@@ -39,11 +39,11 @@ namespace StockTrackerServer.Services
             }
         }
 
-        public async Task<List<Stock>> GetStockBySupplierId(string supplierId)
+        public async Task<List<Product>> GetProductsBySupplierId(string supplierId)
         {
             try
             {
-                return await _context.Stock.Where(stock => stock.SupplierId == supplierId).ToListAsync();
+                return await _context.Products.Where(prod => prod.SupplierId == supplierId).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -79,14 +79,14 @@ namespace StockTrackerServer.Services
 
         #region "Delete Methods"
         
-        public async Task<bool> DeleteStockByStockId(string stockId)
+        public async Task<bool> DeleteProductByProductId(string productId)
         {
-            var itemToDelete = _context.Stock.Find(stockId); // Replace YourEntities with your actual DbSet name
+            var itemToDelete = _context.Products.Find(productId);
 
             if (itemToDelete != null)
             {
-                _context.Stock.Remove(itemToDelete);
-                _context.SaveChanges(); // Save the changes to delete the entity
+                _context.Products.Remove(itemToDelete);
+                _context.SaveChanges();
                 return true;
             }
             return false;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using StockTrackerApp.Services;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 using System;
@@ -21,7 +22,7 @@ namespace StockTrackerApp.Pages
         private IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
-        private NavigationManager _navManager { get; set; }
+        private NavigationService _navService { get; set; }
 
         [Inject]
         private IUserService _userService { get; set; }
@@ -59,12 +60,12 @@ namespace StockTrackerApp.Pages
             string prompt = _supplierService.ValidateAndAddProduct(_newProduct, _existingProducts, _productCategories);
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
-            _navManager.NavigateTo("ManageProduct", true);
+            _navService.NavigateTo("ManageProduct", true);
         }
 
         private async Task AddProductCategory()
         {
-            _navManager.NavigateTo("AddProductCategory", true);
+            _navService.NavigateTo("AddProductCategory", true);
         }
 
     }

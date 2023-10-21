@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using StockTrackerApp.Services;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 using System;
@@ -16,7 +17,7 @@ namespace StockTrackerApp.Pages
         private IUserService _userService { get; set; }
 
         [Inject]
-        private NavigationManager _navManager { get; set; }
+        private NavigationService _navService { get; set; }
 
         //declare variables
         private string _username;
@@ -47,7 +48,7 @@ namespace StockTrackerApp.Pages
         {
             if (_userService.IsLoggedIn)
             {
-                _navManager.NavigateTo("Home");
+                _navService.NavigateTo("Home");
             }
         }
 

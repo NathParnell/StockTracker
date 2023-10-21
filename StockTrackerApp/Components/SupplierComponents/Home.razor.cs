@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using StockTrackerApp.Services;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 using System;
@@ -23,7 +24,7 @@ namespace StockTrackerApp.Components.SupplierComponents
         private IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
-        private NavigationManager _navManager { get; set; }
+        private NavigationService _navService { get; set; }
 
 
         private Popup popupRef = new();
@@ -75,14 +76,14 @@ namespace StockTrackerApp.Components.SupplierComponents
                 if (_supplierService.DeleteProductByProductID(_selectedProduct.ProductId) == true)
                 {
                     await _jSRuntime.InvokeAsync<object>("alert", "Product successfully deleted");
-                    _navManager.NavigateTo("Home", true);
+                    _navService.NavigateTo("Home", true);
                 }
             }
         }
 
         private async void AddProductClicked()
         {
-            _navManager.NavigateTo("ManageProduct", true);
+            _navService.NavigateTo("ManageProduct", true);
         }
 
     }

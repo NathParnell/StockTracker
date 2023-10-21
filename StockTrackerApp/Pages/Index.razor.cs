@@ -25,6 +25,7 @@ namespace StockTrackerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            NavigateHomeIfLoggedIn();
             Init();
         }
 
@@ -36,6 +37,18 @@ namespace StockTrackerApp.Pages
         {
             _username = String.Empty;
             _password = String.Empty;
+        }
+
+        /// <summary>
+        /// Method checks whether a user is currently logged in and if so, redirects them to the home page
+        /// This is called upon loading the page and after logging in
+        /// </summary>
+        private void NavigateHomeIfLoggedIn()
+        {
+            if (_userService.IsLoggedIn)
+            {
+                _navManager.NavigateTo("Home");
+            }
         }
 
         /// <summary>
@@ -53,7 +66,7 @@ namespace StockTrackerApp.Pages
 
             //attempt login
             User user = _userService.RequestLogin(_username, _password);
-            
+
             //check that the user logged in, if so redirect, if not then prompt the user to retry
             if (user == null)
             {
@@ -61,7 +74,7 @@ namespace StockTrackerApp.Pages
                 Init();
             }
             else
-                _navManager.NavigateTo("Home");
+                NavigateHomeIfLoggedIn();
         }
     }
 }

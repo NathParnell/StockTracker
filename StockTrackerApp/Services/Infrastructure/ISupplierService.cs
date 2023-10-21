@@ -22,6 +22,8 @@ namespace StockTrackerApp.Services.Infrastructure
         #region "Product Category Methods"
         List<ProductCategory> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
         List<ProductCategory> GetAllProductCategories();
+        bool AddProductCategory(ProductCategory productCategory);
+        string ValidateAndAddProductCategory(ProductCategory productCategory, List<ProductCategory> existingProductCategories);
 
         #endregion
 

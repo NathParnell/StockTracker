@@ -1,0 +1,12 @@
+﻿@page "/AddProductCategory"
+
+<div class="addProductCategoryContainer">
+    <h1>Add Product Category</h1>
+    <div class="addProductCategoryFieldRow">
+        <div class="addProductCategoryFieldSmall">
+            <label for="productCategoryName">Product Category Name</label>
+            <InputText id="productCategoryName" @bind-Value="_newProductCategory.ProductCategoryName" />
+        </div>
+    </div>
+    <button type="button" @onclick="() => AddCategory()">Add Product Category</button>
+</div>

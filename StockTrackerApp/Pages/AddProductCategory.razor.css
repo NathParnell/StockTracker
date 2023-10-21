@@ -1,0 +1,26 @@
+.addProductCategoryContainer {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin:auto;
+    align-items:center;
+    border:2px solid #000;
+}
+
+.addProductCategoryFieldRow {
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    width:100%;
+}
+
+.addProductCategoryFieldSmall {
+    display:flex;
+    flex-direction:column;
+    width:50%;
+}
+
+button {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}

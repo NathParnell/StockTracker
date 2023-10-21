@@ -170,6 +170,43 @@ namespace StockTrackerApp.Services
             return productCategories;
         }
 
+        public bool AddProductCategory(ProductCategory productCategory)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddProductCategory(productCategory));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return false;
+
+            bool addConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+            return addConfirmation;
+        }
+
+        public string ValidateAndAddProductCategory(ProductCategory productCategory, List<ProductCategory> existingProductCategories)
+        {
+            bool isProductCategoryValid = true;
+            string prompt = "Product Category invalid, please enter:\n";
+
+            if (String.IsNullOrEmpty(productCategory.ProductCategoryName) || existingProductCategories.Any(cat => cat.ProductCategoryName == productCategory.ProductCategoryName))
+            {
+                prompt += "A Unique Product Category Name";
+                isProductCategoryValid = false;
+            }
+
+            if (isProductCategoryValid == true)
+            {
+                productCategory.ProductCategoryId = Taikandi.SequentialGuid.NewGuid().ToString();
+                if (AddProductCategory(productCategory))
+                    return "Product Category Added Successfully";
+                else
+                    return "Error Adding Product Category";
+            }
+            else
+            {
+                return prompt;
+            }
+        }
+
         #endregion
 
 

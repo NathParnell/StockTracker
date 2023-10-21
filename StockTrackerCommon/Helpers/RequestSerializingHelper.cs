@@ -119,6 +119,13 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data);
         }
 
+        public static string CreateAddProductCategory(ProductCategory productCategory)
+        {
+            string methodName = "AddProductCategory";
+            object[] data = new object[] { productCategory };
+            return CreateRequest(methodName, data);
+        }
+
         #endregion
 
 

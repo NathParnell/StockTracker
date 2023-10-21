@@ -14,7 +14,7 @@
                         <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
                     }
                 </InputSelect>
-                <span type="button" @onclick="() => AddProduct()" class="oi oi-plus" aria-hidden="true"></span>
+                <span type="button" @onclick="() => AddProductCategory()" class="oi oi-plus" aria-hidden="true"></span>
             </div>
         </div>
         <div class="addProductFieldSmall">
@@ -58,5 +58,5 @@
             </InputSelect>
         </div>
     </div>
-    <button type="button" @onclick="() => AddProduct()">Hello there</button>
+    <button type="button" @onclick="() => AddProduct()">Add Product</button>
 </div>

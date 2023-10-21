@@ -167,6 +167,17 @@ namespace StockTrackerServer.Services
             //make response
             return ResponseSerializingHelper.CreateResponse(addConfirmation);
         }
+        
+        public string AddProductCategory(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            ProductCategory productCategory = JsonSerializer.Deserialize<List<ProductCategory>>(request.Data.ToString()).First();
+            bool addConfirmation = _dataService.AddProductCategory(productCategory).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(addConfirmation);
+        }
+
+
 
         #endregion
 

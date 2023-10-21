@@ -108,6 +108,20 @@ namespace StockTrackerServer.Services
                 return false;
             }
         }
+
+        public async Task<bool> AddProductCategory(ProductCategory productCategory)
+        {
+            try
+            {
+                _context.ProductCategories.Add(productCategory);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using StockTrackerApp.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace StockTrackerApp.Shared
     {
         [Inject]
         private NavigationManager _navManager { get; set; }
+        [Inject]
+        private IUserService _userService { get; set; }
 
         private async Task NavigateHome()
         {
@@ -23,6 +26,11 @@ namespace StockTrackerApp.Shared
         private async Task NavigateCounter()
         {
             _navManager.NavigateTo("Counter", true);
+        }
+        private async Task Logout()
+        {
+            _userService.SetCurrentUser();
+            _navManager.NavigateTo("", true);
         }
     }
 }

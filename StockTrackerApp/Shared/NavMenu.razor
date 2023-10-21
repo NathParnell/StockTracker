@@ -2,7 +2,7 @@
 
 
 <nav class="navbar">
-    <div class="link" @onclick="() => NavigateHome()"> 
+    <div class="link" @onclick="() => NavigateHome()" title="Home"> 
         <span class="fa-solid fa-house" style="color: #fdf7f7;" aria-hidden="true"></span>
     </div>
     <div class="link"> 
@@ -10,6 +10,9 @@
     </div>
     <div class="link"> 
         <span class="oi oi-list-rich" aria-hidden="true"></span>
+    </div>
+    <div class="link" @onclick="() => Logout()" title="Logout">
+        <span class="fa-solid fa-right-from-bracket" style="color: #fdf7f7;" aria-hidden="true"></span>
     </div>
 </nav>
 

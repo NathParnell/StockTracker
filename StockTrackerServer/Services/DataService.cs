@@ -39,6 +39,18 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<Product> GetProductByProductId(string productId)
+        {
+            try
+            {
+                return await _context.Products.FirstOrDefaultAsync(prod => prod.ProductId == productId);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<Product>> GetProductsBySupplierId(string supplierId)
         {
             try
@@ -123,5 +135,40 @@ namespace StockTrackerServer.Services
             }
         }
         #endregion
+
+        #region "Update Methods"
+
+        public async Task<bool> UpdateProduct(Product updatedProduct)
+        {
+            try
+            {
+                var product = _context.Products.FirstOrDefault(prod => prod.ProductId == updatedProduct.ProductId);
+                if (product != null)
+                {
+                    //update product values 
+                    product.ProductName = updatedProduct.ProductName;
+                    product.ProductBrand = updatedProduct.ProductBrand;
+                    product.ProductQuantity = updatedProduct.ProductQuantity;
+                    product.ProductMeasurementUnit = updatedProduct.ProductMeasurementUnit;
+                    product.ProductCategoryId = updatedProduct.ProductCategoryId;
+                    product.ProductSize = updatedProduct.ProductSize;
+                    product.Price = updatedProduct.Price;
+                    product.SupplierId = updatedProduct.SupplierId;
+                    product.ProductCode = updatedProduct.ProductCode;
+
+                    _context.Entry(product).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
     }
 }

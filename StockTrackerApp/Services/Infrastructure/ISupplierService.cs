@@ -12,10 +12,13 @@ namespace StockTrackerApp.Services.Infrastructure
         #region "Product Methods"
         List<Product> GetProductBySupplierId(string supplierId);
         bool DeleteProductByProductID(string productId);
+        Product GetProductByProductId(string productId);
         List<Product> GetProductsByProductIds(List<string> productIds);
         List<Product> GetAllProducts();
         bool AddProduct(Product product);
         string ValidateAndAddProduct(Product newProduct, List<Product> existingProducts, List<ProductCategory> productCategories);
+        bool UpdateProduct(Product updatedProduct);
+        string ValidateAndUpdateProduct(Product updatedProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories);
 
         #endregion
 

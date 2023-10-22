@@ -16,6 +16,7 @@ namespace StockTrackerServer.Services.Infrastructure
         Task<List<Product>> GetAllProducts();
         #endregion
         Task<User> GetUserByUsername(string username);
+        Task<Product> GetProductByProductId(string productId);
         Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);
         Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
@@ -28,6 +29,10 @@ namespace StockTrackerServer.Services.Infrastructure
         #region "Add Methods"
         Task<bool> AddProduct(Product product);
         Task<bool> AddProductCategory(ProductCategory productCategory);
+        #endregion
+
+        #region "Update Methods"
+        Task<bool> UpdateProduct(Product updatedProduct);
         #endregion
     }
 }

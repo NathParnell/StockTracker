@@ -24,7 +24,7 @@ namespace StockTrackerApp.Components.SupplierComponents
         private IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
-        private NavigationService _navService { get; set; }
+        private NavigationManager _navManager { get; set; }
 
 
         private Popup popupRef = new();
@@ -53,11 +53,6 @@ namespace StockTrackerApp.Components.SupplierComponents
             _productCategories = _supplierService.GetProductCategoriesByProductCategoryIds(productCategoryIds);
         }
 
-        private void HandleRowClick(Product product)
-        {
-            Console.WriteLine("hello there");
-        }
-
         private void RowSelected(Product product)
         {
             _selectedProduct = product;
@@ -68,7 +63,7 @@ namespace StockTrackerApp.Components.SupplierComponents
         /// Creates a popup asking if user would like to delete the selected product
         /// if yes, the product is deleted and we rerender the page
         /// </summary>
-        private async void DeleteProductClicked()
+        private async void DeleteProduct()
         {
             bool confirmed = await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to delete this Product?");
             if (confirmed)
@@ -76,14 +71,19 @@ namespace StockTrackerApp.Components.SupplierComponents
                 if (_supplierService.DeleteProductByProductID(_selectedProduct.ProductId) == true)
                 {
                     await _jSRuntime.InvokeAsync<object>("alert", "Product successfully deleted");
-                    _navService.NavigateTo("Home", true);
+                    _navManager.NavigateTo("Home", true);
                 }
             }
         }
 
-        private async void AddProductClicked()
+        private async void AddProduct()
         {
-            _navService.NavigateTo("ManageProduct", true);
+            _navManager.NavigateTo("ManageProduct", true);
+        }
+
+        private async void EditProduct(Product product)
+        {
+            _navManager.NavigateTo($"ManageProduct/{product.ProductId}", true);
         }
 
     }

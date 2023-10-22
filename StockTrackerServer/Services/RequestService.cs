@@ -114,6 +114,22 @@ namespace StockTrackerServer.Services
         }
 
         /// <summary>
+        /// Method which takes in an object array and converts it in to a string which the product id of the product we wish to retrieve
+        /// We make a call to the data service to retrieve the product
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveProductByProductId(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string productId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            Product product = _dataService.GetProductByProductId(productId).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(product);
+        }
+
+        /// <summary>
         /// Method which takes in an object array and converts it in to a list of strings which are product category ids.
         /// With this information we make a call to the data service to retrieve the product categories with the product category ids we pass through
         /// We then create and return our response
@@ -177,8 +193,17 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(addConfirmation);
         }
 
+        #endregion
 
-
+        #region "Update Methods"
+        public string UpdateProduct(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            Product product = JsonSerializer.Deserialize<List<Product>>(request.Data.ToString()).First();
+            bool editConfirmation = _dataService.UpdateProduct(product).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(editConfirmation);
+        }
         #endregion
 
     }

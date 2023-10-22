@@ -1,4 +1,4 @@
-﻿@page "/ManageProduct";
+﻿@page "/ManageProduct/{ProductId?}";
 @using StockTrackerCommon.Models;
 
 <div class="addProductContainer">
@@ -7,7 +7,7 @@
         <div class="addProductFieldSmall">
             <label for="productCategory">Category</label>
             <div>
-                <InputSelect id="productCategory" @bind-Value="_newProduct.ProductCategoryId">
+                <InputSelect disabled="@_isStateReadOnly" id="productCategory" @bind-Value="_product.ProductCategoryId">
                     <option value="">Select a category</option>
                     @foreach (var category in _productCategories)
                     {
@@ -19,37 +19,37 @@
         </div>
         <div class="addProductFieldSmall">
             <label for="productName">Product Name</label>
-            <InputText id="productName" @bind-Value="_newProduct.ProductName"/>
+            <InputText readonly="@_isStateReadOnly" id="productName" @bind-Value="_product.ProductName"/>
         </div>
     </div>
     <div class="addProductFieldRow">
         <div class="addProductFieldSmall">
             <label for="productCode">Product Code</label>
-            <InputText id="productCode" @bind-Value="_newProduct.ProductCode" />
+            <InputText readonly="@_isStateReadOnly" id="productCode" @bind-Value="_product.ProductCode" />
         </div>
         <div class="addProductFieldSmall">
             <label for="productBrand">Product Brand</label>
-            <InputText id="productBrand" @bind-Value="_newProduct.ProductBrand" />
+            <InputText readonly="@_isStateReadOnly" id="productBrand" @bind-Value="_product.ProductBrand" />
         </div>
     </div>
     <div class="addProductFieldRow">
         <div class="addProductFieldSmall">
             <label for="productPrice">Product Price (£)</label>
-            <InputNumber id="productPrice" format="N2" step="0.01" min="0.01" @bind-Value="_newProduct.Price" />
+            <InputNumber readonly="@_isStateReadOnly" id="productPrice" format="N2" step="0.01" min="0.01" @bind-Value="_product.Price" />
         </div>
         <div class="addProductFieldSmall">
             <label for="productQuantity">Product Quantity</label>
-            <InputNumber id="productQuantity" min="0" format="D" @bind-Value="_newProduct.ProductQuantity" />
+            <InputNumber readonly="@_isStateReadOnly" id="productQuantity" min="0" format="D" @bind-Value="_product.ProductQuantity" />
         </div>
     </div>
     <div class="addProductFieldRow">
         <div class="addProductFieldSmall">
             <label for="productSize">Product Size</label>
-            <InputNumber id="productSize" format="N2" step="0.50" @bind-Value="_newProduct.ProductSize" />
+            <InputNumber readonly="@_isStateReadOnly" id="productSize" format="N2" step="0.50" @bind-Value="_product.ProductSize" />
         </div>
         <div class="addProductFieldSmall">
             <label for="productUnit">Product Measurement Unit</label>
-            <InputSelect id="productUnit" @bind-Value="_measurementUnit">
+            <InputSelect disabled="@_isStateReadOnly" id="productUnit" @bind-Value="_measurementUnit">
                 <option value="">Select a meaurement unit</option>
                 @foreach (var unit in Enum.GetValues(typeof(ProductMeasurementUnit)))
                 {
@@ -58,5 +58,5 @@
             </InputSelect>
         </div>
     </div>
-    <button type="button" @onclick="() => AddProduct()">Add Product</button>
+    <button type="button" @onclick="() => ProductAction()">Add Product</button>
 </div>

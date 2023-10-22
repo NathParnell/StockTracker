@@ -15,7 +15,7 @@
         </tr>
         @foreach(StockTrackerCommon.Models.Product product in _products)
         {
-            <tr  @onclick="() => RowSelected(product)" @ondblclick="() => HandleRowClick(product)" class="@(_selectedProduct == product ? "selectedRow" : "unselectedRow")">
+            <tr  @onclick="() => RowSelected(product)" @ondblclick="() => EditProduct(product)" class="@(_selectedProduct == product ? "selectedRow" : "unselectedRow")">
                 <td>@_productCategories.FirstOrDefault(cat => cat.ProductCategoryId == product.ProductCategoryId).ProductCategoryName</td>
                 <td>@product.ProductCode</td>
                 <td>@product.ProductName</td>
@@ -28,6 +28,6 @@
 
     </table>
 </div>
-<button type="button" id="deleteStockButton" hidden="@(!_isProductSelected)" @onclick="() => DeleteProductClicked()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
-<button type="button" id="addStockButton" @onclick="() => AddProductClicked()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>
+<button type="button" id="deleteStockButton" hidden="@(!_isProductSelected)" @onclick="() => DeleteProduct()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
+<button type="button" id="addStockButton" @onclick="() => AddProduct()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>
 

@@ -17,7 +17,7 @@ namespace StockTrackerApp.Pages
         private IUserService _userService { get; set; }
 
         [Inject]
-        private NavigationService _navService { get; set; }
+        private NavigationManager _navManager { get; set; }
 
         //declare variables
         private string _username;
@@ -48,7 +48,7 @@ namespace StockTrackerApp.Pages
         {
             if (_userService.IsLoggedIn)
             {
-                _navService.NavigateTo("Home");
+                _navManager.NavigateTo("Home");
             }
         }
 

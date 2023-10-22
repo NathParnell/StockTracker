@@ -21,7 +21,7 @@ namespace StockTrackerApp.Pages
         private IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
-        private NavigationService _navService { get; set; }
+        private NavigationManager _navManager { get; set; }
 
         //define variables
         private List<ProductCategory> _existingProductCategories = new List<ProductCategory>();
@@ -45,7 +45,7 @@ namespace StockTrackerApp.Pages
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
 
-            _navService.NavigateTo("AddProductCategory", true);
+            _navManager.NavigateTo("AddProductCategory", true);
         }
 
     }

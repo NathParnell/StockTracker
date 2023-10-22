@@ -65,6 +65,18 @@ namespace StockTrackerCommon.Helpers
         }
 
         /// <summary>
+        /// Creates a JSON string of a get product by product id request 
+        /// </summary>
+        /// <param name="productIds"></param>
+        /// <returns></returns>
+        public static string CreateGetProductByProductIdRequest(string productId)
+        {
+            string methodName = "RetrieveProductByProductId";
+            object[] data = new object[] { productId };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
         /// Creates a JSON string of a get all products request 
         /// </summary>
         /// <param name="categoryIds"></param>
@@ -112,17 +124,39 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data);
         }
 
-        public static string CreateAddProduct(Product product)
+        /// <summary>
+        /// Creates a JSON string of an Add Product request
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
+        public static string CreateAddProductRequest(Product product)
         {
             string methodName = "AddProduct";
             object[] data = new object[] { product };
             return CreateRequest(methodName, data);
         }
 
-        public static string CreateAddProductCategory(ProductCategory productCategory)
+        /// <summary>
+        /// Creates a JSON string of an Add Product Category request
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
+        public static string CreateAddProductCategoryRequest(ProductCategory productCategory)
         {
             string methodName = "AddProductCategory";
             object[] data = new object[] { productCategory };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of an Update Product request
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
+        public static string CreateUpdateProductRequest(Product product)
+        {
+            string methodName = "UpdateProduct";
+            object[] data = new object[] { product };
             return CreateRequest(methodName, data);
         }
 

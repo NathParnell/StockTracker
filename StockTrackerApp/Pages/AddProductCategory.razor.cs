@@ -26,6 +26,10 @@ namespace StockTrackerApp.Pages
         [Inject]
         private ISessionHistoryService _sessionHistoryService { get; set; }
 
+        //define parameters
+        [Parameter]
+        public string CurrentProductId { get; set; }
+
         //define variables
         private List<ProductCategory> _existingProductCategories = new List<ProductCategory>();
 
@@ -49,7 +53,8 @@ namespace StockTrackerApp.Pages
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
 
-            _navManager.NavigateTo("AddProductCategory", true);
+            string redirectUri = _sessionHistoryService.GetPreviousWebpage();
+            _navManager.NavigateTo(redirectUri + $"/{CurrentProductId}", true);
         }
 
     }

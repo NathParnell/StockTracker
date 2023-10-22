@@ -166,7 +166,12 @@ namespace StockTrackerApp.Pages
 
         private async Task AddProductCategory()
         {
-            _navManager.NavigateTo("AddProductCategory", true);
+            string parameter = "";
+            if (_pageState == ManageProductPageState.EditProductMode)
+                _navManager.NavigateTo($"AddProductCategory/{_product.ProductId}", true);
+            else
+                _navManager.NavigateTo("AddProductCategory", true);
+
         }
 
     }

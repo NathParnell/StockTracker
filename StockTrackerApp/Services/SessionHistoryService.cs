@@ -32,11 +32,19 @@ namespace StockTrackerApp.Services
 
         /// <summary>
         /// Pass through a webpage name and add it to the list of previous webpages
+        /// We only add the webpage to this list if there are no previous webpages or if the previous webpage doesn't equal the current webpage
+        /// This is better for navigation purposes
         /// </summary>
         /// <param name="path"></param>
         public void AddWebpageToHistory(string path)
         {
-            PreviousWebpages.Add(path);
+            if (PreviousWebpages != null && PreviousWebpages.Count > 0)
+            {
+                if (PreviousWebpages[PreviousWebpages.Count - 1] != path)
+                    PreviousWebpages.Add(path);
+            }
+            else
+                PreviousWebpages.Add(path);
         }
 
     }

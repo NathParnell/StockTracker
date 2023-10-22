@@ -19,6 +19,9 @@ namespace StockTrackerApp.Pages
         [Inject]
         private NavigationManager _navManager { get; set; }
 
+        [Inject]
+        private ISessionHistoryService _sessionHistoryService { get; set; }
+
         //declare variables
         private string _username;
         private string _password;
@@ -26,6 +29,7 @@ namespace StockTrackerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            _sessionHistoryService.AddWebpageToHistory("Index");
             NavigateHomeIfLoggedIn();
             Init();
         }

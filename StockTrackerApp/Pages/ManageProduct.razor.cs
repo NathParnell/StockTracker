@@ -27,6 +27,9 @@ namespace StockTrackerApp.Pages
         [Inject]
         private IUserService _userService { get; set; }
 
+        [Inject]
+        private ISessionHistoryService _sessionHistoryService { get; set; }
+
         //Define Parameters
         [Parameter]
         public string ProductId { get; set; }
@@ -47,6 +50,7 @@ namespace StockTrackerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            _sessionHistoryService.AddWebpageToHistory("ManageProduct");
             SetPageState();
             GetExistingProductsInformation();
 

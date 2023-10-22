@@ -23,6 +23,9 @@ namespace StockTrackerApp.Pages
         [Inject]
         private NavigationManager _navManager { get; set; }
 
+        [Inject]
+        private ISessionHistoryService _sessionHistoryService { get; set; }
+
         //define variables
         private List<ProductCategory> _existingProductCategories = new List<ProductCategory>();
 
@@ -31,6 +34,7 @@ namespace StockTrackerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            _sessionHistoryService.AddWebpageToHistory("AddProductCategory");
             GetProductsCategoryInformation();
         }
 

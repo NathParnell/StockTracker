@@ -26,6 +26,9 @@ namespace StockTrackerApp.Components.SupplierComponents
         [Inject]
         private NavigationManager _navManager { get; set; }
 
+        [Inject]
+        private ISessionHistoryService _sessionHistoryService { get; set; }
+
 
         private Popup popupRef = new();
 
@@ -40,6 +43,7 @@ namespace StockTrackerApp.Components.SupplierComponents
 
         protected override async Task OnInitializedAsync()
         {
+            _sessionHistoryService.AddWebpageToHistory("Home");
             GetProductsInformation();
         }
 

@@ -171,9 +171,7 @@ namespace StockTrackerApp.Pages
                 _navManager.NavigateTo($"AddProductCategory/{_product.ProductId}", true);
             else
                 _navManager.NavigateTo("AddProductCategory", true);
-
         }
-
     }
 
 

@@ -1,10 +1,10 @@
 ﻿@page "/ManageProduct/{ProductId?}";
 @using StockTrackerCommon.Models;
 
-<div class="addProductContainer">
-    <h1>Add Product</h1>
-    <div class="addProductFieldRow">
-        <div class="addProductFieldSmall">
+<div class="manageProductContainer">
+    <h1>@_manageProductTitleText</h1>
+    <div class="manageProductFieldRow">
+        <div class="manageProductFieldSmall">
             <label for="productCategory">Category</label>
             <div>
                 <InputSelect disabled="@_isStateReadOnly" id="productCategory" @bind-Value="_product.ProductCategoryId">
@@ -14,40 +14,40 @@
                         <option value="@category.ProductCategoryId">@category.ProductCategoryName</option>
                     }
                 </InputSelect>
-                <span type="button" @onclick="() => AddProductCategory()" class="oi oi-plus" aria-hidden="true"></span>
+                <span type="button" hidden="@_isStateReadOnly" @onclick="() => AddProductCategory()" class="oi oi-plus" aria-hidden="true"></span>
             </div>
         </div>
-        <div class="addProductFieldSmall">
+        <div class="manageProductFieldSmall">
             <label for="productName">Product Name</label>
             <InputText readonly="@_isStateReadOnly" id="productName" @bind-Value="_product.ProductName"/>
         </div>
     </div>
-    <div class="addProductFieldRow">
-        <div class="addProductFieldSmall">
+    <div class="manageProductFieldRow">
+        <div class="manageProductFieldSmall">
             <label for="productCode">Product Code</label>
             <InputText readonly="@_isStateReadOnly" id="productCode" @bind-Value="_product.ProductCode" />
         </div>
-        <div class="addProductFieldSmall">
+        <div class="manageProductFieldSmall">
             <label for="productBrand">Product Brand</label>
             <InputText readonly="@_isStateReadOnly" id="productBrand" @bind-Value="_product.ProductBrand" />
         </div>
     </div>
-    <div class="addProductFieldRow">
-        <div class="addProductFieldSmall">
+    <div class="manageProductFieldRow">
+        <div class="manageProductFieldSmall">
             <label for="productPrice">Product Price (£)</label>
             <InputNumber readonly="@_isStateReadOnly" id="productPrice" format="N2" step="0.01" min="0.01" @bind-Value="_product.Price" />
         </div>
-        <div class="addProductFieldSmall">
+        <div class="manageProductFieldSmall">
             <label for="productQuantity">Product Quantity</label>
             <InputNumber readonly="@_isStateReadOnly" id="productQuantity" min="0" format="D" @bind-Value="_product.ProductQuantity" />
         </div>
     </div>
-    <div class="addProductFieldRow">
-        <div class="addProductFieldSmall">
+    <div class="manageProductFieldRow">
+        <div class="manageProductFieldSmall">
             <label for="productSize">Product Size</label>
             <InputNumber readonly="@_isStateReadOnly" id="productSize" format="N2" step="0.50" @bind-Value="_product.ProductSize" />
         </div>
-        <div class="addProductFieldSmall">
+        <div class="manageProductFieldSmall">
             <label for="productUnit">Product Measurement Unit</label>
             <InputSelect disabled="@_isStateReadOnly" id="productUnit" @bind-Value="_measurementUnit">
                 <option value="">Select a meaurement unit</option>
@@ -58,5 +58,11 @@
             </InputSelect>
         </div>
     </div>
-    <button type="button" @onclick="() => ProductAction()">Add Product</button>
+    <div class="manageProductButtons">
+        @if (_pageState == ManageProductPageState.EditProductMode)
+        {
+            <button type="button" @onclick="() => ViewProduct()">View Product</button>
+        }
+        <button type="button" @onclick="() => ProductAction()">@_productActionButtonText</button>
+    </div>
 </div>

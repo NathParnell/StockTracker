@@ -95,7 +95,7 @@ namespace StockTrackerApp.Services
             return addConfirmation;
         }
 
-        public string ValidateAndAddProduct(Product newProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories)
+        public string ValidateAndAddProduct(Product newProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories, ref bool success)
         {
             bool isProductValid = true;
             string prompt = "Product invalid, please enter:\n";
@@ -144,12 +144,20 @@ namespace StockTrackerApp.Services
             {
                 newProduct.ProductId = Taikandi.SequentialGuid.NewGuid().ToString();
                 if (AddProduct(newProduct))
+                {
+                    success = true;
                     return "Product Added Successfully";
+                }
                 else
+                {
+                    success = false;
                     return "Error Adding Product";
+                }
+
             }
             else
             {
+                success = false;
                 return prompt;
             }
         }
@@ -166,7 +174,7 @@ namespace StockTrackerApp.Services
             return addConfirmation;
         }
 
-        public string ValidateAndUpdateProduct(Product updatedProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories)
+        public string ValidateAndUpdateProduct(Product updatedProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories, ref bool success)
         {
             bool isProductValid = true;
             string prompt = "Updated Product invalid, please enter:\n";
@@ -217,12 +225,19 @@ namespace StockTrackerApp.Services
             if (isProductValid == true)
             {
                 if (UpdateProduct(updatedProduct))
+                {
+                    success = true;
                     return "Product Updated Successfully";
+                }
                 else
+                {
+                    success = false;
                     return "Error Adding Product";
+                }
             }
             else
             {
+                success = false;
                 return prompt;
             }
         }

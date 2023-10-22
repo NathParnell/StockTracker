@@ -28,6 +28,7 @@
 
     </table>
 </div>
-<button type="button" id="deleteStockButton" hidden="@(!_isProductSelected)" @onclick="() => DeleteProduct()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
-<button type="button" id="addStockButton" @onclick="() => AddProduct()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>
+<button type="button" id="deleteProductButton" title="Delete Product" hidden="@(!_isProductSelected)" @onclick="() => DeleteProduct()"><i class="fa-solid fa-minus" style="color: #3e67ac;"></i></button>
+<button type="button" id="editProductButton" title="View/Edit Product" hidden="@(!_isProductSelected)" @onclick="() => EditProduct(_selectedProduct)"><i class="fa-solid fa-pen-to-square" style="color: #3e67ac;"></i></button>
+<button type="button" id="addProductButton" title="Add New Product" @onclick="() => AddProduct()"><i class="fa-solid fa-plus" style="color: #3e67ac;"></i></button>
 

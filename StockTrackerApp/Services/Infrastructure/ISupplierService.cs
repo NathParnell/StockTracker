@@ -16,9 +16,9 @@ namespace StockTrackerApp.Services.Infrastructure
         List<Product> GetProductsByProductIds(List<string> productIds);
         List<Product> GetAllProducts();
         bool AddProduct(Product product);
-        string ValidateAndAddProduct(Product newProduct, List<Product> existingProducts, List<ProductCategory> productCategories);
+        string ValidateAndAddProduct(Product newProduct, List<Product> existingProducts, List<ProductCategory> productCategories, ref bool success);
         bool UpdateProduct(Product updatedProduct);
-        string ValidateAndUpdateProduct(Product updatedProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories);
+        string ValidateAndUpdateProduct(Product updatedProduct, List<Product> suppliersExistingProducts, List<ProductCategory> productCategories, ref bool success);
 
         #endregion
 

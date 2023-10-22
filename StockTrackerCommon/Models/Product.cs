@@ -27,8 +27,8 @@ namespace StockTrackerCommon.Models
     {
         Kg = 0,
         g = 1,
-        l = 2,
+        L = 2,
         ml = 3,
-        units = 4
+        Units = 4
     }
 }

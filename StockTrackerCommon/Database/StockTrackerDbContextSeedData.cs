@@ -201,7 +201,7 @@ namespace StockTrackerCommon.Database
                     ProductName = "Tomato Pizza Sauce",
                     ProductBrand = "Dolmio",
                     ProductSize = 2,
-                    ProductMeasurementUnit = ProductMeasurementUnit.l,
+                    ProductMeasurementUnit = ProductMeasurementUnit.L,
                     ProductCategoryId = "7f897028-cf37-452f-9da7-08dbc77c7200",
                     ProductQuantity = 350,
                     Price = 6.00m,

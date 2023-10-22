@@ -36,8 +36,14 @@ namespace StockTrackerApp.Pages
         private List<ProductCategory> _productCategories = new List<ProductCategory>();
         private Product _product = new Product();
         private string _measurementUnit;
+
+        //define state variables
         private ManageProductPageState _pageState;
         private bool _isStateReadOnly = false;
+
+        //define html string variables
+        private string _productActionButtonText = "";
+        private string _manageProductTitleText = "";
 
         protected override async Task OnInitializedAsync()
         {
@@ -67,6 +73,9 @@ namespace StockTrackerApp.Pages
                 _isStateReadOnly = true;
             else
                 _isStateReadOnly = false;
+
+            SetTitleText();
+            SetProductActionButtonText();
         }
 
         private async Task GetExistingProductsInformation()
@@ -75,11 +84,40 @@ namespace StockTrackerApp.Pages
             _existingProducts = _supplierService.GetAllProducts();
 
             if (_pageState == ManageProductPageState.ViewProductMode)
+            {
                 _product = _supplierService.GetProductByProductId(ProductId);
+                _measurementUnit = _product.ProductMeasurementUnit.ToString();
+            }
+
+        }
+
+        private async Task SetTitleText()
+        {
+            if (_pageState == ManageProductPageState.NewProductMode)
+                _manageProductTitleText = "Add New Product";
+            else if (_pageState == ManageProductPageState.ViewProductMode)
+                _manageProductTitleText = "View Product";
+            else
+                _manageProductTitleText = "Update Product";
+        }
+
+        /// <summary>
+        /// Set the text of the action button to match the page state
+        /// </summary>
+        /// <returns></returns>
+        private async Task SetProductActionButtonText()
+        {
+            if (_pageState == ManageProductPageState.NewProductMode)
+                _productActionButtonText = "Add Product";
+            else if (_pageState == ManageProductPageState.ViewProductMode)
+                _productActionButtonText = "Edit Product";
+            else
+                _productActionButtonText = "Update Product";
         }
 
         private async Task ProductAction()
         {
+            bool actionSuccess = false;
             //if the user wished to enter the edit product mode
             if (_pageState == ManageProductPageState.ViewProductMode)
             {
@@ -101,17 +139,25 @@ namespace StockTrackerApp.Pages
                 //set the supplier id to be the id of the current user (who is a suppier in this case)
                 _product.SupplierId = _userService.CurrentUser.UserId;
 
-                prompt = _supplierService.ValidateAndAddProduct(_product, _existingProducts, _productCategories);
+                prompt = _supplierService.ValidateAndAddProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
             }
             //if the user is updating an existing product, then we attempt to validate and update the product
             else if (_pageState == ManageProductPageState.EditProductMode)
             {
-                prompt = _supplierService.ValidateAndUpdateProduct(_product, _existingProducts, _productCategories);
+                prompt = _supplierService.ValidateAndUpdateProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
             }
 
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
-            _navManager.NavigateTo("ManageProduct", true);
+            if (actionSuccess)
+            {
+                _navManager.NavigateTo($"ManageProduct/{_product.ProductId}", true);
+            }
+        }
+
+        private async Task ViewProduct()
+        {
+            _navManager.NavigateTo($"ManageProduct/{ProductId}", true);
         }
 
         private async Task AddProductCategory()

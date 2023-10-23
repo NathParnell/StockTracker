@@ -27,6 +27,7 @@ namespace StockTrackerCommon.Helpers
 
         #region "Create Requests"
 
+        #region "Authentication Requests"
         /// <summary>
         /// Creates a JSON string of a Validate Login Request
         /// </summary>
@@ -39,7 +40,9 @@ namespace StockTrackerCommon.Helpers
             object[] data = new object[] { username, password };
             return CreateRequest(methodName, data);
         }
+        #endregion
 
+        #region "Product Requests"
         /// <summary>
         /// Creates a JSON string of a get stock by supplier request
         /// </summary>
@@ -89,30 +92,6 @@ namespace StockTrackerCommon.Helpers
         }
 
         /// <summary>
-        /// Creates a JSON string of a get product categories by product category ids request 
-        /// </summary>
-        /// <param name="categoryIds"></param>
-        /// <returns></returns>
-        public static string CreateGetProductCategoriesByProductCategoryIDsRequest(List<string> categoryIds)
-        {
-            string methodName = "RetrieveProductCategoriesByProductCategoryIds";
-            object[] data = new object[] { categoryIds };
-            return CreateRequest(methodName, data);
-        }
-
-        /// <summary>
-        /// Creates a JSON string of a get all product categories request 
-        /// </summary>
-        /// <param name="categoryIds"></param>
-        /// <returns></returns>
-        public static string CreateGetAllProductCategoriesRequest()
-        {
-            string methodName = "RetrieveAllProductCategories";
-            object[] data = new object[] { };
-            return CreateRequest(methodName, data);
-        }
-
-        /// <summary>
         /// Creates a JSON string of a delete stock by stock id request 
         /// </summary>
         /// <param name="stockId"></param>
@@ -137,18 +116,6 @@ namespace StockTrackerCommon.Helpers
         }
 
         /// <summary>
-        /// Creates a JSON string of an Add Product Category request
-        /// </summary>
-        /// <param name="stockId"></param>
-        /// <returns></returns>
-        public static string CreateAddProductCategoryRequest(ProductCategory productCategory)
-        {
-            string methodName = "AddProductCategory";
-            object[] data = new object[] { productCategory };
-            return CreateRequest(methodName, data);
-        }
-
-        /// <summary>
         /// Creates a JSON string of an Update Product request
         /// </summary>
         /// <param name="stockId"></param>
@@ -159,6 +126,46 @@ namespace StockTrackerCommon.Helpers
             object[] data = new object[] { product };
             return CreateRequest(methodName, data);
         }
+        #endregion
+
+
+        #region "Product Category Requests"
+        /// <summary>
+        /// Creates a JSON string of a get product categories by product category ids request 
+        /// </summary>
+        /// <param name="categoryIds"></param>
+        /// <returns></returns>
+        public static string CreateGetProductCategoriesByProductCategoryIDsRequest(List<string> categoryIds)
+        {
+            string methodName = "RetrieveProductCategoriesByProductCategoryIds";
+            object[] data = new object[] { categoryIds };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a get all product categories request 
+        /// </summary>
+        /// <param name="categoryIds"></param>
+        /// <returns></returns>
+        public static string CreateGetAllProductCategoriesRequest()
+        {
+            string methodName = "RetrieveAllProductCategories";
+            object[] data = new object[] { };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of an Add Product Category request
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
+        public static string CreateAddProductCategoryRequest(ProductCategory productCategory)
+        {
+            string methodName = "AddProductCategory";
+            object[] data = new object[] { productCategory };
+            return CreateRequest(methodName, data);
+        }
+        #endregion
 
         #endregion
 

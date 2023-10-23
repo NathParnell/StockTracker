@@ -50,7 +50,7 @@
         <div class="manageProductFieldSmall">
             <label for="productUnit">Product Measurement Unit</label>
             <InputSelect disabled="@_isStateReadOnly" id="productUnit" @bind-Value="_measurementUnit">
-                <option value="">Select a meaurement unit</option>
+                <option value="">Select a measurement unit</option>
                 @foreach (var unit in Enum.GetValues(typeof(ProductMeasurementUnit)))
                 {
                     <option value="@unit">@unit</option>

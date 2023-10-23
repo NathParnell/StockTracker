@@ -151,7 +151,6 @@ namespace StockTrackerApp.Pages
                 prompt = _supplierService.ValidateAndUpdateProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
             }
 
-
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
             if (actionSuccess)
             {
@@ -166,7 +165,6 @@ namespace StockTrackerApp.Pages
 
         private async Task AddProductCategory()
         {
-            string parameter = "";
             if (_pageState == ManageProductPageState.EditProductMode)
                 _navManager.NavigateTo($"AddProductCategory/{_product.ProductId}", true);
             else

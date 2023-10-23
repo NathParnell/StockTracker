@@ -1,4 +1,11 @@
 @page "/Home"
 
+@if (_userService.CurrentUser.UserType == StockTrackerCommon.Models.UserType.Supplier)
+{
+    <StockTrackerApp.Components.SupplierComponents.Home />
+}
+else if (_userService.CurrentUser.UserType == StockTrackerCommon.Models.UserType.Customer)
+{
+    <StockTrackerApp.Components.CustomerComponents.Home />
+}
 
-<StockTrackerApp.Components.SupplierComponents.Home/>

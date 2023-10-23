@@ -16,9 +16,6 @@ namespace StockTrackerApp.Pages
     {
         //Inject Services
         [Inject]
-        private ISupplierService _supplierService { get; set; }
-
-        [Inject]
         private IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
@@ -28,7 +25,14 @@ namespace StockTrackerApp.Pages
         private IUserService _userService { get; set; }
 
         [Inject]
+        private IProductCategoryService _productCategoryService { get; set; }
+
+        [Inject]
+        private IProductService _productService { get; set; }
+
+        [Inject]
         private ISessionHistoryService _sessionHistoryService { get; set; }
+
 
         //Define Parameters
         [Parameter]
@@ -84,12 +88,12 @@ namespace StockTrackerApp.Pages
 
         private async Task GetExistingProductsInformation()
         {
-            _productCategories = _supplierService.GetAllProductCategories();
-            _existingProducts = _supplierService.GetAllProducts();
+            _productCategories = _productCategoryService.GetAllProductCategories();
+            _existingProducts = _productService.GetAllProducts();
 
             if (_pageState == ManageProductPageState.ViewProductMode)
             {
-                _product = _supplierService.GetProductByProductId(ProductId);
+                _product = _productService.GetProductByProductId(ProductId);
                 _measurementUnit = _product.ProductMeasurementUnit.ToString();
             }
 
@@ -143,12 +147,12 @@ namespace StockTrackerApp.Pages
                 //set the supplier id to be the id of the current user (who is a suppier in this case)
                 _product.SupplierId = _userService.CurrentUser.UserId;
 
-                prompt = _supplierService.ValidateAndAddProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
+                prompt = _productService.ValidateAndAddProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
             }
             //if the user is updating an existing product, then we attempt to validate and update the product
             else if (_pageState == ManageProductPageState.EditProductMode)
             {
-                prompt = _supplierService.ValidateAndUpdateProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
+                prompt = _productService.ValidateAndUpdateProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
             }
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);

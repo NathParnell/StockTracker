@@ -15,7 +15,7 @@ namespace StockTrackerApp.Pages
     {
         //Inject Services
         [Inject]
-        private ISupplierService _supplierService { get; set; }
+        private IProductCategoryService _productCategoryService { get; set; }
 
         [Inject]
         private IJSRuntime _jSRuntime { get; set; }
@@ -44,12 +44,12 @@ namespace StockTrackerApp.Pages
 
         private async Task GetProductsCategoryInformation()
         {
-            _existingProductCategories = _supplierService.GetAllProductCategories();
+            _existingProductCategories = _productCategoryService.GetAllProductCategories();
         }
 
         private async Task AddCategory()
         {
-            string prompt = _supplierService.ValidateAndAddProductCategory(_newProductCategory, _existingProductCategories);
+            string prompt = _productCategoryService.ValidateAndAddProductCategory(_newProductCategory, _existingProductCategories);
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);
 

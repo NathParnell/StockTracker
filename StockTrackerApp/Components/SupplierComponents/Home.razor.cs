@@ -15,10 +15,13 @@ namespace StockTrackerApp.Components.SupplierComponents
     {
         //Inject Services
         [Inject]
-        private ISupplierService _supplierService {  get; set; }
+        private IUserService _userService { get; set; }
 
         [Inject]
-        private IUserService _userService { get; set; }
+        private IProductCategoryService _productCategoryService { get; set; }
+
+        [Inject]
+        private IProductService _productService { get; set; }
 
         [Inject]
         private IJSRuntime _jSRuntime { get; set; }
@@ -29,8 +32,6 @@ namespace StockTrackerApp.Components.SupplierComponents
         [Inject]
         private ISessionHistoryService _sessionHistoryService { get; set; }
 
-
-        private Popup popupRef = new();
 
         //Define Variables
         private List<Product> _products = new List<Product>();
@@ -50,11 +51,11 @@ namespace StockTrackerApp.Components.SupplierComponents
         private async Task GetProductsInformation()
         {
             //Get all of the products which belong to the current user (the supplier)
-            _products = _supplierService.GetProductBySupplierId(_userService.CurrentUser.UserId);
+            _products = _productService.GetProductBySupplierId(_userService.CurrentUser.UserId);
 
             //Get a list of the product category ids
             List<string> productCategoryIds = _products.Select(cat => cat.ProductCategoryId.ToString()).Distinct().ToList();
-            _productCategories = _supplierService.GetProductCategoriesByProductCategoryIds(productCategoryIds);
+            _productCategories = _productCategoryService.GetProductCategoriesByProductCategoryIds(productCategoryIds);
         }
 
         private void RowSelected(Product product)
@@ -72,7 +73,7 @@ namespace StockTrackerApp.Components.SupplierComponents
             bool confirmed = await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to delete this Product?");
             if (confirmed)
             {
-                if (_supplierService.DeleteProductByProductID(_selectedProduct.ProductId) == true)
+                if (_productService.DeleteProductByProductID(_selectedProduct.ProductId) == true)
                 {
                     await _jSRuntime.InvokeAsync<object>("alert", "Product successfully deleted");
                     _navManager.NavigateTo("Home", true);

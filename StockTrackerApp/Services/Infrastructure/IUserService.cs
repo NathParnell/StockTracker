@@ -13,6 +13,7 @@ namespace StockTrackerApp.Services.Infrastructure
         bool IsLoggedIn { get; }    
         void SetCurrentUser(User user = null);
         User RequestLogin(string username, string password);
+        List<User> GetUsersByUserType(UserType userType);
 
     }
 }

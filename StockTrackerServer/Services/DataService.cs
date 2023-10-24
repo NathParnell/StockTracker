@@ -39,6 +39,30 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<User> GetUserByUserId(string userId)
+        {
+            try
+            {
+                return await _context.Users.FirstOrDefaultAsync(user => user.UserId == userId);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<User>> GetUsersByUserType(UserType userType)
+        {
+            try
+            {
+                return await _context.Users.Where(user => user.UserType == userType).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<Product> GetProductByProductId(string productId)
         {
             try

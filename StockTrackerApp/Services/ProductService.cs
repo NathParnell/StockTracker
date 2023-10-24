@@ -24,7 +24,7 @@ namespace StockTrackerApp.Services
 
 
         #region "Get Methods"
-        public List<Product> GetProductBySupplierId(string supplierId)
+        public List<Product> GetProductsBySupplierId(string supplierId)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsBySupplierRequest(supplierId));
 

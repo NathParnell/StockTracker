@@ -10,7 +10,7 @@ namespace StockTrackerApp.Services.Infrastructure
     public interface IProductService
     {
         #region "Get Methods"
-        List<Product> GetProductBySupplierId(string supplierId);
+        List<Product> GetProductsBySupplierId(string supplierId);
         Product GetProductByProductId(string productId);
         List<Product> GetProductsByProductIds(List<string> productIds);
         List<Product> GetAllProducts();

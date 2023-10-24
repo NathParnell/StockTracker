@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTrackerApp.Pages
+namespace StockTrackerApp.Pages.SupplierPages
 {
     public partial class AddProductCategory
     {

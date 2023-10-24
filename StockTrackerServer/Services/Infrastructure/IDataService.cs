@@ -16,6 +16,8 @@ namespace StockTrackerServer.Services.Infrastructure
         Task<List<Product>> GetAllProducts();
         #endregion
         Task<User> GetUserByUsername(string username);
+        Task<User> GetUserByUserId(string userId);
+        Task<List<User>> GetUsersByUserType(UserType userType);
         Task<Product> GetProductByProductId(string productId);
         Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);

@@ -25,9 +25,9 @@ namespace StockTrackerCommon.Helpers
             return JsonSerializer.Serialize(request);
         }
 
-        #region "Create Requests"
+        #region "Generate Requests"
 
-        #region "Authentication Requests"
+        #region "User Requests"
         /// <summary>
         /// Creates a JSON string of a Validate Login Request
         /// </summary>
@@ -38,6 +38,30 @@ namespace StockTrackerCommon.Helpers
         {
             string methodName = "ValidateLogin";
             object[] data = new object[] { username, password };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a Get User By User Id Request
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static string CreateGetUserByUserIdRequest(string userId)
+        {
+            string methodName = "RetrieveUserByUserId";
+            object[] data = new object[] { userId };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a Get Users By User Type Request
+        /// </summary>
+        /// <param name="userType"></param>
+        /// <returns></returns>
+        public static string CreateGetUsersByUserTypeRequest(UserType userType)
+        {
+            string methodName = "RetrieveUsersByUserType";
+            object[] data = new object[] { userType };
             return CreateRequest(methodName, data);
         }
         #endregion
@@ -128,7 +152,6 @@ namespace StockTrackerCommon.Helpers
         }
         #endregion
 
-
         #region "Product Category Requests"
         /// <summary>
         /// Creates a JSON string of a get product categories by product category ids request 
@@ -168,7 +191,6 @@ namespace StockTrackerCommon.Helpers
         #endregion
 
         #endregion
-
 
 
         #region "Get IP Address"

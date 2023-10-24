@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace StockTrackerApp.Components.SupplierComponents
 {
+    /// <summary>
+    /// Supplier Homepage Component
+    /// </summary>
     public partial class Home
     {
         //Inject Services
@@ -51,7 +54,7 @@ namespace StockTrackerApp.Components.SupplierComponents
         private async Task GetProductsInformation()
         {
             //Get all of the products which belong to the current user (the supplier)
-            _products = _productService.GetProductBySupplierId(_userService.CurrentUser.UserId);
+            _products = _productService.GetProductsBySupplierId(_userService.CurrentUser.UserId);
 
             //Get a list of the product category ids
             List<string> productCategoryIds = _products.Select(cat => cat.ProductCategoryId.ToString()).Distinct().ToList();

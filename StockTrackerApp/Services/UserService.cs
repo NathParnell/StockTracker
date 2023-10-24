@@ -74,5 +74,29 @@ namespace StockTrackerApp.Services
 
             return user;
         }
+
+        public User GetUserByUserId(string userId)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetUserByUserIdRequest(userId));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrWhiteSpace(jsonResponse))
+                return null;
+
+            User user = ResponseDeserializingHelper.DeserializeResponse<User>(jsonResponse).First();
+            return user;
+        }
+
+        public List<User> GetUsersByUserType(UserType userType)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetUsersByUserTypeRequest(userType));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrWhiteSpace(jsonResponse))
+                return null;
+
+            List<User> users = ResponseDeserializingHelper.DeserializeResponse<List<User>>(jsonResponse).First().ToList();
+            return users;
+        }
     }
 }

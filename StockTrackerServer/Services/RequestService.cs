@@ -67,6 +67,39 @@ namespace StockTrackerServer.Services
         }
 
         #region "Get Methods"
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a user id
+        /// With this information we can make a call to the data service to retrieve a user by the aforementioned user id
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveUserByUserId(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string userId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            User user = _dataService.GetUserByUserId(userId).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(user);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a usertype enum
+        /// With this information we make a call to the data service to retrieve a list of users which have the aforementioned usertype
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveUsersByUserType(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            UserType userType = JsonSerializer.Deserialize<List<UserType>>(request.Data.ToString()).First();
+            List<User> users = _dataService.GetUsersByUserType(userType).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(users);
+        }
+
         /// <summary>
         /// Method which takes in an object array and turns it into a supplier id
         /// With this information we make a call to the data service to retrieve a suppliers products by the aforementioned supplier id

@@ -1,1 +1,15 @@
-<p>Customer</p>
+@using StockTrackerCommon.Models;
+
+<div class="pageContainer">
+    <h1>Available Suppliers</h1>
+    <div class="suppliersContainer">
+        @foreach(User supplier in _suppliers)
+        {
+            <div class="supplier">
+                <span id="SupplierNameLabel" @onclick="() => NavigateToViewSupplierPage(supplier.UserId)">
+                    <p>@supplier.Username</p>
+                </span>
+            </div>
+        }
+    </div>
+</div>

@@ -3,11 +3,11 @@
 <div class="pageContainer">
     <h1>Available Suppliers</h1>
     <div class="suppliersContainer">
-        @foreach(User supplier in _suppliers)
+        @foreach(Supplier supplier in _suppliers)
         {
             <div class="supplier">
-                <span id="SupplierNameLabel" @onclick="() => NavigateToViewSupplierPage(supplier.UserId)">
-                    <p>@supplier.Username</p>
+                <span id="SupplierNameLabel" @onclick="() => NavigateToViewSupplierPage(supplier.SupplierId)">
+                    <p>@supplier.Email</p>
                 </span>
             </div>
         }

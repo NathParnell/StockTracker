@@ -16,32 +16,54 @@ namespace StockTrackerServer.Services
         //define services
         IDataService _dataService;
 
-        public AuthenticationService(IDataService dataService) 
+        public AuthenticationService(IDataService dataService)
         {
             _dataService = dataService;
         }
 
-
-        public User? AuthenticateUser(string username, string password)
+        public Supplier? AuthenticateSupplier(string email, string password)
         {
-            User targetUser = _dataService.GetUserByUsername(username).Result;
-            
-            //if a user with that username does not exist
-            if (targetUser == null)
+            Supplier targetSupplier = _dataService.GetSupplierByEmail(email.ToLower()).Result;
+
+            //if a supplier with that email does not exist
+            if (targetSupplier == null)
             {
-                logger.Info($"AuthenticateUser(), User Authentication failed");
+                logger.Info($"AuthenticateSupplier(), Supplier Authentication failed");
                 return null;
             }
 
-            //if the user is actually authenticated
-            if (targetUser.Username == username && targetUser.Password == password)
+            //if the supplier is actually authenticated
+            if (targetSupplier.Email == email && targetSupplier.Password == password)
             {
-                logger.Info($"AuthenticateUser(), User {targetUser.Username} Authenticated");
-                return targetUser;
+                logger.Info($"AuthenticateSupplier(), Supplier {targetSupplier.Email} Authenticated");
+                return targetSupplier;
             }
 
-            //if the username gets their password wrong
-            logger.Info($"AuthenticateUser(), User Authentication failed");
+            //if the supplier gets their password wrong
+            logger.Info($"AuthenticateSupplier(), Supplier Authentication failed");
+            return null;
+        }
+
+        public Customer? AuthenticateCustomer(string email, string password)
+        {
+            Customer targetCustomer = _dataService.GetCustomerByEmail(email.ToLower()).Result;
+
+            //if a customer with that email does not exist
+            if (targetCustomer == null)
+            {
+                logger.Info($"AuthenticateCustomer(), Customer Authentication failed");
+                return null;
+            }
+
+            //if the customer is actually authenticated
+            if (targetCustomer.Email == email && targetCustomer.Password == password)
+            {
+                logger.Info($"AuthenticateCustomer(), Customer {targetCustomer.Email} Authenticated");
+                return targetCustomer;
+            }
+
+            //if the customer gets their password wrong
+            logger.Info($"AuthenticateCustomer(), Customer Authentication failed");
             return null;
         }
     }

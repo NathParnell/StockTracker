@@ -51,53 +51,97 @@ namespace StockTrackerServer.Services
         }
 
         /// <summary>
-        /// Method which takes an object array and turns it into a username and password
-        /// With this information we call our AuthenticateUser method which returns the user who has just logged in (or null if invalid user creds)
-        /// We then create and return a user authentication response 
+        /// Method which takes an object array and turns it into a email and password
+        /// With this information we call our AuthenticateSupplier method which returns the supplier who has just logged in (or null if invalid user creds)
+        /// We then create and return a supplier authentication response
         /// </summary>
         /// <param name="requestObject"></param>
         /// <returns></returns>
-        public string ValidateLogin(object[] requestObject)
+        public string ValidateSupplierLogin(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
             List<string> parameters = JsonSerializer.Deserialize<List<string>>(request.Data.ToString());
-            User user = _authenticationService.AuthenticateUser(parameters[0], parameters[1]);
-            //need to make a response with this
-            return ResponseSerializingHelper.CreateResponse(user);
+            Supplier supplier = _authenticationService.AuthenticateSupplier(parameters[0], parameters[1]);
+            //make a response with this
+            return ResponseSerializingHelper.CreateResponse(supplier);
+        }
+
+        /// <summary>
+        /// Method which takes an object array and turns it into a email and password
+        /// With this information we call our AuthenticateCustomer method which returns the customer who has just logged in (or null if invalid user creds)
+        /// We then create and return a customer authentication response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string ValidateCustomerLogin(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> parameters = JsonSerializer.Deserialize<List<string>>(request.Data.ToString());
+            Customer customer = _authenticationService.AuthenticateCustomer(parameters[0], parameters[1]);
+            //make a response with this
+            return ResponseSerializingHelper.CreateResponse(customer);
         }
 
         #region "Get Methods"
 
         /// <summary>
-        /// Method which takes in an object array and turns it into a user id
-        /// With this information we can make a call to the data service to retrieve a user by the aforementioned user id
+        /// Method which takes in an object array and turns it into a supplier id
+        /// With this information we can make a call to the data service to retrieve a supplier by the aforementioned supplier id
         /// We then create and return our response
         /// </summary>
         /// <param name="requestObject"></param>
         /// <returns></returns>
-        public string RetrieveUserByUserId(object[] requestObject)
+        public string RetrieveSupplierBySupplierId(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
-            string userId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
-            User user = _dataService.GetUserByUserId(userId).Result;
+            string supplierId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            Supplier supplier = _dataService.GetSupplierBySupplierId(supplierId).Result;
             //make response
-            return ResponseSerializingHelper.CreateResponse(user);
+            return ResponseSerializingHelper.CreateResponse(supplier);
         }
 
         /// <summary>
-        /// Method which takes in an object array and turns it into a usertype enum
-        /// With this information we make a call to the data service to retrieve a list of users which have the aforementioned usertype
+        /// Method which takes in an object array which is empty and not used (Conforms with the other methods)
+        /// We make a call to the data service which retrieves all of the available Suppliers
         /// We then create and return our response
         /// </summary>
         /// <param name="requestObject"></param>
         /// <returns></returns>
-        public string RetrieveUsersByUserType(object[] requestObject)
+        public string RetrieveAllSuppliers(object[] requestObject)
+        {
+            List<Supplier> suppliers = _dataService.GetAllSuppliers().Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(suppliers);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a customer id
+        /// With this information we can make a call to the data service to retrieve a customer by the aforementioned customer id
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveCustomerByCustomerId(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
-            UserType userType = JsonSerializer.Deserialize<List<UserType>>(request.Data.ToString()).First();
-            List<User> users = _dataService.GetUsersByUserType(userType).Result;
+            string customerId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            Customer customer = _dataService.GetCustomerByCustomerId(customerId).Result;
             //make response
-            return ResponseSerializingHelper.CreateResponse(users);
+            return ResponseSerializingHelper.CreateResponse(customer);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array which is empty and not used (Conforms with the other methods)
+        /// We make a call to the data service which retrieves all of the available Customers
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveAllCustomers(object[] requestObject)
+        {
+            List<Customer> customers = _dataService.GetAllCustomers().Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(customers);
         }
 
         /// <summary>

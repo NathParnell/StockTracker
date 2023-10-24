@@ -3,7 +3,7 @@
 
 <script src="https://kit.fontawesome.com/ca28eb9466.js" crossorigin="anonymous"></script>
 <div class="page">
-    <div class="" hidden="@(!_userService.IsLoggedIn)">
+    <div class="" hidden="@(!(_supplierService.IsLoggedIn || _customerService.IsLoggedIn))">
         <NavMenu />
     </div>
     <main>

@@ -17,9 +17,6 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Parameter]
         public string SupplierId { get; set; }
 
-        //define variables
-        private User Supplier = new User();
-
 
     }
 }

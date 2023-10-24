@@ -12,6 +12,9 @@ namespace StockTrackerApp.Pages
     {
         //Inject Services
         [Inject]
-        private IUserService _userService { get; set; }
+        private ISupplierService _supplierService { get; set; }
+
+        [Inject]
+        private ICustomerService _customerService { get; set; }
     }
 }

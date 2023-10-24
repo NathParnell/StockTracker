@@ -9,6 +9,7 @@ namespace StockTrackerServer.Services.Infrastructure
 {
     public interface IAuthenticationService
     {
-        User? AuthenticateUser(string username, string password);
+        Supplier? AuthenticateSupplier(string email, string password);
+        Customer? AuthenticateCustomer(string email, string password);
     }
 }

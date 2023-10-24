@@ -13,8 +13,12 @@ namespace StockTrackerApp.Shared
     {
         [Inject]
         private NavigationManager _navManager { get; set; }
+
         [Inject]
-        private IUserService _userService { get; set; }
+        private ISupplierService _supplierService { get; set; }
+
+        [Inject]
+        private ICustomerService _customerService { get; set; }
 
         private async Task NavigateHome()
         {
@@ -30,7 +34,8 @@ namespace StockTrackerApp.Shared
         }
         private async Task Logout()
         {
-            _userService.SetCurrentUser();
+            _supplierService.SetCurrentUser();
+            _customerService.SetCurrentUser();
             _navManager.NavigateTo("", true);
         }
     }

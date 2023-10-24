@@ -11,13 +11,15 @@ namespace StockTrackerServer.Services.Infrastructure
     {
         #region "Get Methods"
         #region "Get All Methods"
-        Task<List<User>> GetAllUsers();
+        Task<List<Supplier>> GetAllSuppliers();
+        Task<List<Customer>> GetAllCustomers();
         Task<List<ProductCategory>> GetAllProductCategories();
         Task<List<Product>> GetAllProducts();
         #endregion
-        Task<User> GetUserByUsername(string username);
-        Task<User> GetUserByUserId(string userId);
-        Task<List<User>> GetUsersByUserType(UserType userType);
+        Task<Supplier> GetSupplierByEmail(string email);
+        Task<Supplier> GetSupplierBySupplierId(string supplierID);
+        Task<Customer> GetCustomerByEmail(string email);
+        Task<Customer> GetCustomerByCustomerId(string customerId);
         Task<Product> GetProductByProductId(string productId);
         Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);

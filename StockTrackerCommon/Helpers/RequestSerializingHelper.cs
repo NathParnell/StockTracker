@@ -28,42 +28,79 @@ namespace StockTrackerCommon.Helpers
         #region "Generate Requests"
 
         #region "User Requests"
+
         /// <summary>
-        /// Creates a JSON string of a Validate Login Request
+        /// Creates a JSON string of a Validate Supplier Login Request
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static string CreateLoginRequest(string username, string password)
+        public static string CreateSupplierLoginRequest(string email, string password)
         {
-            string methodName = "ValidateLogin";
-            object[] data = new object[] { username, password };
+            string methodName = "ValidateSupplierLogin";
+            object[] data = new object[] { email, password };
             return CreateRequest(methodName, data);
         }
 
         /// <summary>
-        /// Creates a JSON string of a Get User By User Id Request
+        /// Creates a JSON string of a Get Supplier By Supplier Id Request
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static string CreateGetUserByUserIdRequest(string userId)
+        public static string CreateGetSupplierBySupplierIdRequest(string supplierId)
         {
-            string methodName = "RetrieveUserByUserId";
-            object[] data = new object[] { userId };
+            string methodName = "RetrieveSupplierBySupplierId";
+            object[] data = new object[] { supplierId };
             return CreateRequest(methodName, data);
         }
 
         /// <summary>
-        /// Creates a JSON string of a Get Users By User Type Request
+        /// Creates a JSON string of a Get All Suppliers Request
         /// </summary>
-        /// <param name="userType"></param>
         /// <returns></returns>
-        public static string CreateGetUsersByUserTypeRequest(UserType userType)
+        public static string CreateGetAllSuppliersRequest()
         {
-            string methodName = "RetrieveUsersByUserType";
-            object[] data = new object[] { userType };
+            string methodName = "RetrieveAllSuppliers";
+            object[] data = new object[] { };
             return CreateRequest(methodName, data);
         }
+
+        /// <summary>
+        /// Creates a JSON string of a Validate Customer Login Request
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static string CreateCustomerLoginRequest(string email, string password)
+        {
+            string methodName = "ValidateCustomerLogin";
+            object[] data = new object[] { email, password };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a Get Customer By Customer Id Request
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public static string CreateGetCustomerByCustomerIdRequest(string customerId)
+        {
+            string methodName = "RetrieveCustomerByCustomerId";
+            object[] data = new object[] { customerId };
+            return CreateRequest(methodName, data);
+        }
+
+        /// <summary>
+        /// Creates a JSON string of a Get All Customers Request
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateGetAllCustomersRequest()
+        {
+            string methodName = "RetrieveAllCustomers";
+            object[] data = new object[] { };
+            return CreateRequest(methodName, data);
+        }
+
         #endregion
 
         #region "Product Requests"

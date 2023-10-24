@@ -22,7 +22,7 @@ namespace StockTrackerApp.Pages.SupplierPages
         private NavigationManager _navManager { get; set; }
 
         [Inject]
-        private IUserService _userService { get; set; }
+        private ISupplierService _supplierService { get; set; }
 
         [Inject]
         private IProductCategoryService _productCategoryService { get; set; }
@@ -145,7 +145,7 @@ namespace StockTrackerApp.Pages.SupplierPages
             if (_pageState == ManageProductPageState.NewProductMode)
             {
                 //set the supplier id to be the id of the current user (who is a suppier in this case)
-                _product.SupplierId = _userService.CurrentUser.UserId;
+                _product.SupplierId = _supplierService.CurrentUser.SupplierId;
 
                 prompt = _productService.ValidateAndAddProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
             }

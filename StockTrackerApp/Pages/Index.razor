@@ -1,12 +1,22 @@
 ﻿@page "/"
-
+@using StockTrackerCommon.Models;
 
 <div class="loginPage">
     <h1>Login</h1>
     <div class="loginContainer">
         <span class="loginField">
-            <label for="loginUsername">Username:</label>
-            <input type="text" id="loginUsername" required @bind="_username" />
+            <label for="loginUserType">User Type:</label>
+            <select type="text" id="loginUserType" required @bind="_userType">
+                <option value="">Select User Type</option>
+                @foreach (var userType in Enum.GetValues(typeof(UserType)))
+                {
+                    <option value="@userType">@userType</option>
+                }   
+            </select>
+        </span>
+        <span class="loginField">
+            <label for="loginUsername">Email Address:</label>
+            <input type="text" id="loginUsername" required @bind="_email" />
         </span>
         <span class="loginField">
             <label>Password:</label>

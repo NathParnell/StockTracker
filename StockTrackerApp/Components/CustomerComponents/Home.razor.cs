@@ -16,10 +16,10 @@ namespace StockTrackerApp.Components.CustomerComponents
     {
         //Inject Services
         [Inject]
-        private IUserService _userService { get; set; }
+        private ISupplierService _supplierService { get; set; }
 
         [Inject]
-        NavigationManager _navManager { get; set; }
+        private NavigationManager _navManager { get; set; }
 
         [Inject]
         private ISessionHistoryService _sessionHistoryService { get; set; }
@@ -28,7 +28,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         private IProductCategoryService _productCategoryService { get; set; }
 
         //declare variables
-        private List<User> _suppliers = new List<User>();
+        private List<Supplier> _suppliers = new List<Supplier>();
         private List<ProductCategory> _productCategories = new List<ProductCategory>();
 
         protected override async Task OnInitializedAsync()
@@ -40,7 +40,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         private async Task GetSuppliersInformation()
         {
             //Gets all of the suppliers
-            _suppliers = _userService.GetUsersByUserType(UserType.Supplier);
+            _suppliers = _supplierService.GetAllSuppliers();
             _productCategories = _productCategoryService.GetAllProductCategories();
         }
 

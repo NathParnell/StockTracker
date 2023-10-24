@@ -19,17 +19,22 @@ namespace StockTrackerCommon.Database
         public static void EnsureSeedData(this StockTrackerDbContext context)
         {
             //Ensure that we dont already have a mock db
-            if (!seeded && context.Users.Count() == 0 && context.Products.Count() == 0 && context.ProductCategories.Count() == 0)
+            if (!seeded && context.Customers.Count() == 0
+                && context.Suppliers.Count() == 0
+                && context.Products.Count() == 0 
+                && context.ProductCategories.Count() == 0)
             {
                 lock (synchlock)
                 {
                     if (!seeded)
                     {
-                        var users = GenerateUsers();
+                        var customers = GenerateCustomers();
+                        var suppliers = GenerateSuppliers();
                         var productCategories = GenerateProductCategories();
                         var products = GenerateProducts();
 
-                        context.Users.AddRange(users);
+                        context.Customers.AddRange(customers);
+                        context.Suppliers.AddRange(suppliers);
                         context.Products.AddRange(products);
                         context.ProductCategories.AddRange(productCategories);
 
@@ -41,47 +46,90 @@ namespace StockTrackerCommon.Database
         }
 
         #region "Generate Data Methods"
+        
         /// <summary>
-        /// This method generates Users for the mock database
+        /// This Method generates Customers for the mock database
         /// </summary>
         /// <returns></returns>
-        private static User[] GenerateUsers()
+        private static Customer[] GenerateCustomers()
         {
-            return new User[]
+            return new Customer[]
             {
-                new User
+                new Customer
                 {
-                    UserId = "3369956f-abed-42e1-9d99-08dbc77c7200",
-                    Username = "PizzaShop1",
+                    CustomerId = "3369956f-abed-42e1-9d99-08dbc77c7200",
+                    FirstNames = "John",
+                    Surname = "Smith",
+                    Email = "customer1@test.com",
                     Password = "1234",
-                    UserType = UserType.Customer,
-                    CountryCode = "UK"
+                    Address = "345 Fake Street",
+                    City = "Leeds",
+                    Postcode = "LS1 1AA",
+                    CountryCode = "UK",
+                    TelephoneNumber = "0113 123 4564"
                 },
-                new User
+                new Customer
                 {
-                    UserId = "838895f6-76b0-40fb-9d9a-08dbc77c7200",
-                    Username = "PizzaShop2",
+                    CustomerId = "838895f6-76b0-40fb-9d9a-08dbc77c7200",
+                    FirstNames = "Jane",
+                    Surname = "Doe",
+                    Email = "customer2@test.com",
                     Password = "1234",
-                    UserType = UserType.Customer,
-                    CountryCode = "UK"
+                    Address = "456 Fake Street",
+                    City = "Leeds",
+                    Postcode = "LS1 1AA",
+                    CountryCode = "UK",
+                    TelephoneNumber = "0113 123 4565"
                 },
-                new User
+                new Customer
                 {
-                    UserId = "46eb954d-2224-4290-4499-08dbc9a79af4",
-                    Username = "PizzaShop3",
+                    CustomerId = "46eb954d-2224-4290-4499-08dbc9a79af4",
+                    FirstNames = "Nath",
+                    Surname = "Parnell",
+                    Email = "customer3@test.com",
                     Password = "1234",
-                    UserType = UserType.Customer,
-                    CountryCode = "US"
-                },
-                new User
-                {
-                    UserId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
-                    Username = "PizzaShopSupplier",
-                    Password = "1234",
-                    UserType = UserType.Supplier,
-                    CountryCode = "UK"
+                    Address = "567 Fake Street",
+                    City = "Leeds",
+                    Postcode = "LS1 1AA",
+                    CountryCode = "UK",
+                    TelephoneNumber = "0113 123 4566"
                 }
             };
+        }
+
+        /// <summary>
+        /// This method generates Suppliers for the mock database
+        /// </summary>
+        /// <returns></returns>
+        private static Supplier[] GenerateSuppliers()
+        {
+            return new Supplier[]
+            {
+                new Supplier
+                {
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    CompanyName = "Pizza Shop Supplier 1",
+                    Email = "supplier1@test.com",
+                    Password = "1234",
+                    Address = "123 Fake Street",
+                    City = "Leeds",
+                    Postcode = "LS1 1AA",
+                    CountryCode = "UK",
+                    TelephoneNumber = "0113 123 4567"
+                },
+                new Supplier
+                {
+                    SupplierId = "b13e2fe3-59c9-4566-060c-08dbd4c80d02",
+                    CompanyName = "Pizza Shop Supplier 2",
+                    Email = "supplier2@test.com",
+                    Password = "1234",
+                    Address = "234 Fake Street",
+                    City = "Leeds",
+                    Postcode = "LS1 1AA",
+                    CountryCode = "UK",
+                    TelephoneNumber = "0113 123 4568"
+                }
+            };        
         }
 
         /// <summary>

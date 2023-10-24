@@ -14,7 +14,10 @@ namespace StockTrackerApp.Pages
     {
         //Inject Services
         [Inject]
-        private IUserService _userService { get; set; }
+        private ISupplierService _supplierService { get; set; }
+
+        [Inject]
+        private ICustomerService _customerService { get; set; }
 
         [Inject]
         private NavigationManager _navManager { get; set; }
@@ -23,8 +26,9 @@ namespace StockTrackerApp.Pages
         private ISessionHistoryService _sessionHistoryService { get; set; }
 
         //declare variables
-        private string _username;
+        private string _email;
         private string _password;
+        private string _userType;
         private string _loginPrompt = String.Empty;
 
         protected override async Task OnInitializedAsync()
@@ -40,7 +44,8 @@ namespace StockTrackerApp.Pages
         /// <returns></returns>
         private async Task Init()
         {
-            _username = String.Empty;
+            _userType = String.Empty;
+            _email = String.Empty;
             _password = String.Empty;
         }
 
@@ -50,7 +55,7 @@ namespace StockTrackerApp.Pages
         /// </summary>
         private void NavigateHomeIfLoggedIn()
         {
-            if (_userService.IsLoggedIn)
+            if (_supplierService.IsLoggedIn || _customerService.IsLoggedIn)
             {
                 _navManager.NavigateTo("Home");
             }
@@ -62,24 +67,43 @@ namespace StockTrackerApp.Pages
         /// <returns></returns>
         private async Task Login()
         {
-            //ensure that values have been entered ofor both fields
-            if (String.IsNullOrEmpty(_username) || String.IsNullOrEmpty(_password))
+            //ensure that values have been entered of for both fields
+            if (String.IsNullOrWhiteSpace(_userType) || String.IsNullOrWhiteSpace(_email) || String.IsNullOrWhiteSpace(_password))
             {
-                _loginPrompt = "Please enter a username and password!";
+                _loginPrompt = "Please select your user role and enter a email and password!";
                 return;
             }
 
-            //attempt login
-            User user = _userService.RequestLogin(_username, _password);
-
-            //check that the user logged in, if so redirect, if not then prompt the user to retry
-            if (user == null)
+            //check if user is logging as a supplier or a customer
+            Enum.TryParse(_userType, out UserType userType);
+            if (userType == UserType.Supplier)
             {
-                _loginPrompt = "The username or password is incorrect";
-                Init();
+                //attempt login
+                Supplier user = _supplierService.RequestLogin(_email, _password);
+
+                //check that the user logged in, if so redirect, if not then prompt the user to retry
+                if (user == null)
+                {
+                    _loginPrompt = "The email or password is incorrect";
+                    Init();
+                }
+                else
+                    NavigateHomeIfLoggedIn();
             }
-            else
-                NavigateHomeIfLoggedIn();
+            else if (userType == UserType.Customer)
+            {
+                //attempt login
+                Customer user = _customerService.RequestLogin(_email, _password);
+
+                //check that the user logged in, if so redirect, if not then prompt the user to retry
+                if (user == null)
+                {
+                    _loginPrompt = "The email or password is incorrect";
+                    Init();
+                }
+                else
+                    NavigateHomeIfLoggedIn();
+            }
         }
     }
 }

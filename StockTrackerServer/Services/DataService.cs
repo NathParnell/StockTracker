@@ -22,16 +22,17 @@ namespace StockTrackerServer.Services
 
         #region "Get Methods"
         #region "Get All Methods"
-        public async Task<List<User>> GetAllUsers() => await _context.Users.ToListAsync();
+        public async Task<List<Supplier>> GetAllSuppliers() => await _context.Suppliers.ToListAsync();
+        public async Task<List<Customer>> GetAllCustomers() => await _context.Customers.ToListAsync();
         public async Task<List<ProductCategory>> GetAllProductCategories() => await _context.ProductCategories.ToListAsync();
         public async Task<List<Product>> GetAllProducts() => await _context.Products.ToListAsync();
         #endregion
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<Supplier> GetSupplierByEmail(string email)
         {
             try
             {
-                return await _context.Users.FirstOrDefaultAsync(user => user.Username == username);
+                return await _context.Suppliers.FirstOrDefaultAsync(supp => supp.Email == email);
             }
             catch (Exception ex)
             {
@@ -39,11 +40,11 @@ namespace StockTrackerServer.Services
             }
         }
 
-        public async Task<User> GetUserByUserId(string userId)
+        public async Task<Supplier> GetSupplierBySupplierId(string supplierId)
         {
             try
             {
-                return await _context.Users.FirstOrDefaultAsync(user => user.UserId == userId);
+                return await _context.Suppliers.FirstOrDefaultAsync(supp => supp.SupplierId == supplierId);
             }
             catch (Exception ex)
             {
@@ -51,11 +52,23 @@ namespace StockTrackerServer.Services
             }
         }
 
-        public async Task<List<User>> GetUsersByUserType(UserType userType)
+        public async Task<Customer> GetCustomerByEmail(string email)
         {
             try
             {
-                return await _context.Users.Where(user => user.UserType == userType).ToListAsync();
+                return await _context.Customers.FirstOrDefaultAsync(cust => cust.Email == email);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Customer> GetCustomerByCustomerId(string customerId)
+        {
+            try
+            {
+                return await _context.Customers.FirstOrDefaultAsync(cust => cust.CustomerId == customerId);
             }
             catch (Exception ex)
             {

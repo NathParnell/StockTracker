@@ -3,3 +3,30 @@
 @using StockTrackerCommon.Models;
 
 
+<div class="viewSupplierContainer">
+    <div class="supplierContainer">
+        <div class="supplierDetails">
+            <h1>@_supplier.CompanyName</h1>
+            <h3>Based in: @_supplier.City, @_supplier.CountryCode</h3>
+            <h3>Contact Email: @_supplier.Email</h3>
+        </div>  
+    </div>
+    <div class="productCategoriesContainer">
+        @foreach (ProductCategory category in _productCategories)
+        {
+            <h2>@category.ProductCategoryName</h2>
+            <div class="productCategoryContainer">
+                @foreach (Product product in _products.Where(prod => prod.ProductCategoryId == category.ProductCategoryId))
+                {
+                    <div class="productContainer">
+                        <h3>@product.ProductName</h3>
+                        <h4>Brand: @product.ProductBrand</h4>
+                        <h4>Price: £@product.Price</h4>
+                        <h4>Size: @product.ProductSize</h4>
+                        <h4>Measurement Unit: @product.ProductMeasurementUnit</h4>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

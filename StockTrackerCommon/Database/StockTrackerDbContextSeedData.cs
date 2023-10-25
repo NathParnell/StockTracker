@@ -178,6 +178,19 @@ namespace StockTrackerCommon.Database
             {
                 new Product
                 {
+                    ProductId = "56692403-07f3-46a4-c187-08dbd596aa89",
+                    ProductCode = "637489",
+                    ProductName = "36 Stuffed Crust Pizza Bases",
+                    ProductBrand = "Warburtons",
+                    ProductSize = 3.6,
+                    ProductMeasurementUnit = ProductMeasurementUnit.Kg,
+                    ProductCategoryId = "e5704a65-c138-4788-9da4-08dbc77c7200",
+                    ProductQuantity = 100,
+                    Price = 25.50m,
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
+                },
+                new Product
+                {
                     ProductId = "2fd902fc-90f1-40ef-5435-08dbcc265888",
                     ProductCode = "918273",
                     ProductName = "24 Stuffed Crust Pizza Bases",

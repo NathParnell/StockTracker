@@ -14,21 +14,13 @@ namespace StockTrackerApp.Pages.SupplierPages
     public partial class AddProductCategory
     {
         //Inject Services
-        [Inject]
-        private IProductCategoryService _productCategoryService { get; set; }
-
-        [Inject]
-        private IJSRuntime _jSRuntime { get; set; }
-
-        [Inject]
-        private NavigationManager _navManager { get; set; }
-
-        [Inject]
-        private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IProductCategoryService _productCategoryService { get; set; }
+        [Inject] private IJSRuntime _jSRuntime { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
+        [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
 
         //define parameters
-        [Parameter]
-        public string CurrentProductId { get; set; }
+        [Parameter] public string CurrentProductId { get; set; }
 
         //define variables
         private List<ProductCategory> _existingProductCategories = new List<ProductCategory>();

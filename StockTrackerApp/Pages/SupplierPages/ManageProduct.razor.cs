@@ -57,7 +57,6 @@ namespace StockTrackerApp.Pages.SupplierPages
             _sessionHistoryService.AddWebpageToHistory("ManageProduct");
             SetPageState();
             GetExistingProductsInformation();
-
         }
 
         private async Task SetPageState(ManageProductPageState state = ManageProductPageState.Undefined)

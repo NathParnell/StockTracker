@@ -34,16 +34,19 @@ namespace StockTrackerApp.Components.CustomerComponents
         protected override async Task OnInitializedAsync()
         {
             _sessionHistoryService.AddWebpageToHistory("Home");
-            GetSuppliersInformation();
+            Init();
         }
 
-        private async Task GetSuppliersInformation()
+        /// <summary>
+        /// Method called on initialisation which gets all of the suppliers and product categories
+        /// </summary>
+        /// <returns></returns>
+        private async Task Init()
         {
             //Gets all of the suppliers
             _suppliers = _supplierService.GetAllSuppliers();
             _productCategories = _productCategoryService.GetAllProductCategories();
         }
-
 
         private void NavigateToViewSupplierPage(string supplierId)
         {

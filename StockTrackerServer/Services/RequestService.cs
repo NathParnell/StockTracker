@@ -270,6 +270,15 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(addConfirmation);
         }
 
+        public string AddOrder(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            Order order = JsonSerializer.Deserialize<List<Order>>(request.Data.ToString()).First();
+            bool addConfirmation = _dataService.AddOrder(order).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(addConfirmation);
+        }
+
         #endregion
 
         #region "Update Methods"

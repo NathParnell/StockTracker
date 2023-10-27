@@ -171,6 +171,20 @@ namespace StockTrackerServer.Services
                 return false;
             }
         }
+
+        public async Task<bool> AddOrder(Order order)
+        {
+            try
+            {
+                _context.Orders.Add(order);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region "Update Methods"

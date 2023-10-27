@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
+using Microsoft.JSInterop;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 using System;
@@ -13,6 +14,7 @@ namespace StockTrackerApp.Pages.CustomerPages
     public partial class ViewBasket
     {
         //Inject Services
+        [Inject] private IJSRuntime _jSRuntime { get; set; }
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IProductService _productService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
@@ -95,8 +97,31 @@ namespace StockTrackerApp.Pages.CustomerPages
             _navmanager.NavigateTo("ViewBasket", true);
         }
 
-        private void CreateOrderFromSupplier(Supplier supplier)
+        private async Task CreateOrderFromSupplierAsync(Supplier supplier)
         {
+            List<OrderItem> orderItems = new List<OrderItem>();
+            foreach (Product product in _basketProducts.Where(prod => prod.SupplierId == supplier.SupplierId))
+            {
+                if (_orderService.BasketItems.Any(item => item.ProductId == product.ProductId))
+                { 
+                    OrderItem orderItem = _orderService.BasketItems.Where(item => item.ProductId == product.ProductId).FirstOrDefault();
+                    orderItems.Add(orderItem);
+                }
+            }
+
+            if (orderItems != null)
+            {
+                if (_orderService.CreateOrder(orderItems, supplier.SupplierId))
+                {
+                    await _jSRuntime.InvokeAsync<object>("alert", "Order Placed Successfully");
+                    //remove the items just ordered from the basket
+                    foreach (OrderItem orderItem in orderItems)
+                    {
+                        _orderService.BasketItems.RemoveAll(item => item.OrderItemId == orderItem.OrderItemId);
+                    }
+                    _navmanager.NavigateTo("ViewBasket", true);
+                }
+            }
 
         }
     }

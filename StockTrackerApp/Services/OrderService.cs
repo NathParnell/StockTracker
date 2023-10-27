@@ -10,6 +10,7 @@ using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 */
 using StockTrackerApp.Services.Infrastructure;
+using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,12 @@ namespace StockTrackerApp.Services
 
         //define services
         private readonly IClientTransportService _clientTransportService;
+        private readonly ICustomerService _customerService;
 
-        public OrderService(IClientTransportService clientTransportService)
+        public OrderService(IClientTransportService clientTransportService, ICustomerService customerService)
         {
             _clientTransportService = clientTransportService;
+            _customerService = customerService;
         }
 
         //Define public variables
@@ -96,5 +99,41 @@ namespace StockTrackerApp.Services
         {
             BasketItems.Clear();
         }
+
+        #region "Add Methods"
+        public bool CreateOrder(List<OrderItem> itemsToOrder, string supplierId)
+        {
+            string orderId = Taikandi.SequentialGuid.NewGuid().ToString();
+
+            List<string> orderItemIds = new List<string>();
+            
+            //create a list of orderItemIds
+            foreach (OrderItem orderItem in itemsToOrder)
+            {
+                orderItemIds.Add(orderItem.OrderItemId);
+            }
+
+            Order order = new Order()
+            {
+                OrderId = orderId,
+                CustomerId = _customerService.CurrentUser.CustomerId,
+                SupplierId = supplierId,
+                OrderItemIds = orderItemIds,
+                TotalPrice = itemsToOrder.Sum(item => item.OrderPrice),
+                OrderDate = DateTime.Now,
+                OrderStatus = OrderStatus.Pending,
+                OrderNotes = ""
+            };
+
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddOrderRequest(order));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return false;
+
+            bool addConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+            return addConfirmation;
+        }
+        #endregion
     }
 }

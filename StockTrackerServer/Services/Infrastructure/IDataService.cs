@@ -33,6 +33,7 @@ namespace StockTrackerServer.Services.Infrastructure
         #region "Add Methods"
         Task<bool> AddProduct(Product product);
         Task<bool> AddProductCategory(ProductCategory productCategory);
+        Task<bool> AddOrder(Order order);
         #endregion
 
         #region "Update Methods"

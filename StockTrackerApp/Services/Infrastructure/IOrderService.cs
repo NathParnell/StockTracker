@@ -15,5 +15,9 @@ namespace StockTrackerApp.Services.Infrastructure
         void RemoveItemFromBasket(string productId);
         void EditQuantityOfItemInBasket(OrderItem basketItem, int newQuantity, decimal productPrice);
         void ClearBasket();
+
+        #region "Add Methods"
+        bool CreateOrder(List<OrderItem> itemsToOrder, string supplierId);
+        #endregion
     }
 }

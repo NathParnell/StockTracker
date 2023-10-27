@@ -227,6 +227,16 @@ namespace StockTrackerCommon.Helpers
         }
         #endregion
 
+        #region "Order Requests"
+        public static string CreateAddOrderRequest(Order order)
+        {
+            string methodName = "AddOrder";
+            object[] data = new object[] { order };
+            return CreateRequest(methodName, data);
+        }
+
+        #endregion
+
         #endregion
 
 

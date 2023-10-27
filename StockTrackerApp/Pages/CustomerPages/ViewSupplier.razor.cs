@@ -70,7 +70,7 @@ namespace StockTrackerApp.Pages.CustomerPages
             }
         }
 
-        public void UpdateBasket(Product product)
+        private void UpdateBasket(Product product)
         {
             OrderItem basketItem = new OrderItem()
             {

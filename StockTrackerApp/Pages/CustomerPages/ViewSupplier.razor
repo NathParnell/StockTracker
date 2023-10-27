@@ -27,7 +27,7 @@
                             <h4>Measurement Unit: @product.ProductMeasurementUnit</h4>
                         </div>
                         <div class="productBasket">
-                            <input type="number" @bind-value="_productBasketQuantities[product.ProductId]" />
+                            <input type="number" @bind-value="_productBasketQuantities[product.ProductId]" min="0" />
                             <button type="button" @onclick="() => UpdateBasket(product)">
                                 @(_orderService.BasketItems.Any(item => item.ProductId == product.ProductId) ? "Update Basket" : "Add To Basket")
                             </button>

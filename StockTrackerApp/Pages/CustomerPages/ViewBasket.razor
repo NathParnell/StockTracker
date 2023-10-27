@@ -4,4 +4,27 @@
 
 <div class="viewBasketContainer">
     <h1>View Baskets</h1>
+    @foreach (Supplier supplier in _suppliers)
+    {
+        <div class="basketSupplierContainer">
+            <h3>@supplier.CompanyName</h3>
+            @foreach(Product product in _basketProducts.Where(prod => prod.SupplierId == supplier.SupplierId))
+            {
+                <div class="basketProductContainer">
+                    <div class="productDetails">
+                        <h4>@product.ProductName</h4>
+                    </div>
+                    <div class="productBasket">
+                        <input type="number" @bind-value="_productBasketQuantities[product.ProductId]" min="0" />
+                        <button type="button" @onclick="() => UpdateBasket(product)">
+                            @(_orderService.BasketItems.Any(item => item.ProductId == product.ProductId) ? "Update Basket" : "Add To Basket")
+                        </button>
+                    </div>
+                </div>
+            
+            }
+            <button type="button" @onclick="() => CreateOrderFromSupplier(supplier)">Order</button>
+        </div>
+        
+    }
 </div>

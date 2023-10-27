@@ -125,7 +125,7 @@ namespace StockTrackerApp.Services
                 OrderNotes = ""
             };
 
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddOrderRequest(order));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddOrderRequest(order, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))

@@ -16,11 +16,13 @@ namespace StockTrackerServer.Services
         //define services
         private readonly IAuthenticationService _authenticationService;
         private readonly IDataService _dataService;
+        private readonly IPortService _portService;
 
-        public RequestService(IAuthenticationService authenticationService, IDataService dataService)
+        public RequestService(IAuthenticationService authenticationService, IDataService dataService, IPortService portService)
         {
             _authenticationService = authenticationService;
             _dataService = dataService;
+            _portService = portService;
         }
 
         /// <summary>
@@ -31,7 +33,7 @@ namespace StockTrackerServer.Services
         /// </summary>
         /// <param name="jsonRequestString"></param>
         /// <returns></returns>
-        public string ProcessRequest(string jsonRequestString, ref string clientIpAddress)
+        public string ProcessRequest(string jsonRequestString, ref string clientIpAddress, ref string clientPortAddress)
         {
             string response = String.Empty;
 
@@ -40,6 +42,7 @@ namespace StockTrackerServer.Services
             if (request != null)
             {
                 clientIpAddress = request.ClientIp;
+                clientPortAddress = request.ClientPortNumber;
 
                 MethodInfo methodInfo = this.GetType().GetMethod(request.Method);
                 if (methodInfo != null)
@@ -48,6 +51,25 @@ namespace StockTrackerServer.Services
                 }
             }
             return response;
+        }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a clientId
+        /// With this information we call our GenerateClientRequestPort method and our GenerateClientMessagingPort and to generate a list of ports
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveCommunicationPorts(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string clientId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            List<string> ports = new List<string>
+            {
+                _portService.GenerateClientRequestPort(clientId),
+                _portService.GenerateClientMessagingPort(clientId)
+            };
+            return ResponseSerializingHelper.CreateResponse(ports);
         }
 
         /// <summary>

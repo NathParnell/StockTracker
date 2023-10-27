@@ -22,6 +22,9 @@ namespace StockTrackerServer.Services
         //define services
         private readonly IRequestService _requestService;
 
+        //Define variables
+        private string _serverPortNumber = "5556";
+
         public NetmqServerTransportService(IRequestService requestService)
         {
             _requestService = requestService;
@@ -35,7 +38,7 @@ namespace StockTrackerServer.Services
         public void ListenThread()
         {
             var mqServer = new ResponseSocket();
-            mqServer.Bind("tcp://*:5556");
+            mqServer.Bind($"tcp://*:{_serverPortNumber}");
 
             while (true)
             {
@@ -52,7 +55,6 @@ namespace StockTrackerServer.Services
             }
         }
 
-
         /// <summary>
         /// Client Handler thread which handles any requests made by a client
         /// </summary>
@@ -62,6 +64,7 @@ namespace StockTrackerServer.Services
             try
             {
                 string clientIpAddress = String.Empty;
+                string clientPortNumber = String.Empty;
 
                 //decrypt request from client
                 string decryptedRequest = EncryptionHelper.Decrypt(encryptedRequest);
@@ -69,17 +72,17 @@ namespace StockTrackerServer.Services
                     $"{decryptedRequest}");
 
                 //process Message and perform actions and get the prepared response
-                string decryptedResponse = _requestService.ProcessRequest(decryptedRequest, ref clientIpAddress);
+                string decryptedResponse = _requestService.ProcessRequest(decryptedRequest, ref clientIpAddress, ref clientPortNumber);
                 Logger.Info($"TcpClientHandlerThread(), The unencrypted response we will send to the client " +
-                    $"{clientIpAddress}: {decryptedRequest}");
+                    $"{clientIpAddress}: {clientPortNumber}: {decryptedRequest}");
 
                 //Encrypt response for client
                 string encryptedResponse = EncryptionHelper.Encrypt(decryptedResponse);
                 Logger.Info($"TcpClientHandlerThread(), the encrypted response we will send to the client " +
-                    $"{clientIpAddress}: {encryptedResponse}");
+                    $"{clientIpAddress}: {clientPortNumber}: {decryptedRequest}");
 
                 //Send encrypted response to client
-                WriteClientResponse(encryptedResponse, clientIpAddress);
+                WriteClientResponse(encryptedResponse, clientIpAddress, clientPortNumber);
             }
             catch (Exception ex)
             {
@@ -122,16 +125,16 @@ namespace StockTrackerServer.Services
         /// </summary>
         /// <param name="responseMessage"></param>
         /// <param name="clientIp"></param>
-        private void WriteClientResponse(string responseMessage, string clientIp)
+        private void WriteClientResponse(string responseMessage, string clientIp, string clientPort)
         {
             try
             {
                 using (var socket = new RequestSocket())
                 {
-                    socket.Connect($"tcp://{clientIp}:5555");
+                    socket.Connect($"tcp://{clientIp}:{clientPort}");
                     socket.SendFrame(responseMessage);
                     string responseConfirmation = socket.ReceiveFrameString();
-                    Logger.Info($"WriteClientresponse(), {responseConfirmation}");
+                    Logger.Info($"WriteClientResponse(), {responseConfirmation}");
                 }
             }
             catch (Exception ex)

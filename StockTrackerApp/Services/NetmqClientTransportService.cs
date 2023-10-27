@@ -16,6 +16,11 @@ namespace StockTrackerApp.Services
         //Setup logger
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(NetmqClientTransportService));
 
+        //define variables
+        //create a port number variable and default it to 5555 - a new port number will be determined by the server
+        public string ConnectionPortNumber { get; set; } = "5555";
+
+
         /// <summary>
         /// Method which oversees the sending and receiving a message to and from the Server using NetMQ
         /// Returns a Json String of the response
@@ -46,7 +51,7 @@ namespace StockTrackerApp.Services
                     string requestConfirmation = requestSocket.ReceiveFrameString();
                     Logger.Info($"TcpHandler(), {requestConfirmation}");
 
-                    responseSocket.Bind("tcp://*:5555");
+                    responseSocket.Bind($"tcp://*:{ConnectionPortNumber}");
 
                     //Receive response from the server and provide server with confirmation receipt
                     string encryptedResponse = responseSocket.ReceiveFrameString();

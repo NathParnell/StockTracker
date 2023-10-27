@@ -25,7 +25,7 @@ namespace StockTrackerApp.Services
         #region "Get Methods"
         public List<ProductCategory> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductCategoriesByProductCategoryIDsRequest(productCategoryIds));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductCategoriesByProductCategoryIDsRequest(productCategoryIds, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -37,7 +37,7 @@ namespace StockTrackerApp.Services
 
         public List<ProductCategory> GetAllProductCategories()
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductCategoriesRequest());
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductCategoriesRequest(_clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -51,7 +51,7 @@ namespace StockTrackerApp.Services
         #region "Add Methods"
         public bool AddProductCategory(ProductCategory productCategory)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddProductCategoryRequest(productCategory));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddProductCategoryRequest(productCategory, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))

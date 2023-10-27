@@ -26,7 +26,7 @@ namespace StockTrackerApp.Services
         #region "Get Methods"
         public List<Product> GetProductsBySupplierId(string supplierId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsBySupplierRequest(supplierId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsBySupplierRequest(supplierId, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -38,7 +38,7 @@ namespace StockTrackerApp.Services
 
         public Product GetProductByProductId(string productId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductByProductIdRequest(productId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductByProductIdRequest(productId, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -50,7 +50,7 @@ namespace StockTrackerApp.Services
 
         public List<Product> GetProductsByProductIds(List<string> productIds)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsByProductIdsRequest(productIds));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetProductsByProductIdsRequest(productIds, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -62,7 +62,7 @@ namespace StockTrackerApp.Services
 
         public List<Product> GetAllProducts()
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductsRequest());
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductsRequest(_clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -76,7 +76,7 @@ namespace StockTrackerApp.Services
         #region "Add Methods"
         public bool AddProduct(Product product)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddProductRequest(product));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddProductRequest(product, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -90,7 +90,7 @@ namespace StockTrackerApp.Services
         #region "Update Methods"
         public bool UpdateProduct(Product updatedProduct)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateUpdateProductRequest(updatedProduct));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateUpdateProductRequest(updatedProduct, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -104,7 +104,7 @@ namespace StockTrackerApp.Services
         #region "Delete Methods"
         public bool DeleteProductByProductID(string productId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDeleteProductByProductIdRequest(productId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDeleteProductByProductIdRequest(productId, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))

@@ -8,6 +8,7 @@ namespace StockTrackerApp.Services.Infrastructure
 {
     public interface IClientTransportService
     {
-        public string TcpHandler(string jsonRequest);
+        string ConnectionPortNumber { get; set; }
+        string TcpHandler(string jsonRequest);
     }
 }

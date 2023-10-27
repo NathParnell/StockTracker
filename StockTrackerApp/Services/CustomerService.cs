@@ -53,7 +53,7 @@ namespace StockTrackerApp.Services
         {
             //We create a JSON string of our Login Request and pass it to the TCP handler which handles our request
             //We are then returned a JSON string of our response from the server
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateCustomerLoginRequest(email, password));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateCustomerLoginRequest(email, password, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (string.IsNullOrEmpty(jsonResponse))
@@ -66,17 +66,37 @@ namespace StockTrackerApp.Services
             SetCurrentUser(customer);
 
             if (CurrentUser != null)
+            {
                 Logger.Info($"RequestLogin(), Customer: {CurrentUser.Email} has logged into the system");
+                //Now we are logged in we can Request Communication Ports from the server
+                RequestCommunicationPorts(customer.CustomerId);
+            }      
             else
-                Logger.Info($"RequestLogin(), Customer login attempt failed");
+                Logger.Info($"RequestLogin(), Customer login attempt failed");   
 
             return customer;
         }
 
+        private void RequestCommunicationPorts(string customerId)
+        {
+            //We create a JSON string of our Request Communication Ports Request and pass it to the TCP handler which handles our request
+            //We are then returned a JSON string of our response from the server
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateRequestCommunicationPortsRequest(customerId, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (string.IsNullOrEmpty(jsonResponse))
+                return;
+
+            //deserialize the JSON as a list of suppliers and get the first (and only) Supplier
+            List<string> ports = ResponseDeserializingHelper.DeserializeResponse<List<string>>(jsonResponse).First().ToList();
+
+            //set the ports on the client transport service
+            _clientTransportService.ConnectionPortNumber = ports[0];
+        }
 
         public Customer GetCustomerByCustomerId(string customerId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetCustomerByCustomerIdRequest(customerId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetCustomerByCustomerIdRequest(customerId, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (string.IsNullOrWhiteSpace(jsonResponse))
@@ -88,7 +108,7 @@ namespace StockTrackerApp.Services
 
         public List<Customer> GetAllCustomers()
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllCustomersRequest());
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllCustomersRequest(_clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (string.IsNullOrWhiteSpace(jsonResponse))

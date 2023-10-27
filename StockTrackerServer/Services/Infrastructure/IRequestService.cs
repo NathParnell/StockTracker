@@ -8,6 +8,6 @@ namespace StockTrackerServer.Services.Infrastructure
 {
     public interface IRequestService
     {
-        string ProcessRequest(string jsonRequestString, ref string clientIpAddress);
+        string ProcessRequest(string jsonRequestString, ref string clientIpAddress, ref string clientPortNumber);
     }
 }

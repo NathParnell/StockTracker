@@ -33,6 +33,7 @@ IHostBuilder CreateHostBuilder(string[] strings)
             //services.AddSingleton<IServerTransportService, ServerTransportService>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IRequestService, RequestService>();
+            services.AddSingleton<IPortService, PortService>();
             services.AddSingleton<ServerApp>();
         });
 }

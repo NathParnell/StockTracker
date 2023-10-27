@@ -13,12 +13,13 @@ namespace StockTrackerCommon.Helpers
         /// <param name="methodName"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string CreateRequest(string methodName, object[] data)
+        public static string CreateRequest(string methodName, object[] data, string portNumber)
         {
             var request = new Request
             {
                 RequestId = Taikandi.SequentialGuid.NewGuid().ToString(),
                 ClientIp = GetPrivateIpAddress(),
+                ClientPortNumber = portNumber,
                 Method = methodName,
                 Data = data
             };
@@ -26,6 +27,22 @@ namespace StockTrackerCommon.Helpers
         }
 
         #region "Generate Requests"
+
+        #region "Port Requests"
+
+        /// <summary>
+        /// Creates a JSON string of a Get Communication Ports Request
+        /// </summary>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateRequestCommunicationPortsRequest(string clientId, string portNumber)
+        {
+            string methodName = "RetrieveCommunicationPorts";
+            object[] data = new object[] { clientId };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
+        #endregion
 
         #region "User Requests"
 
@@ -35,11 +52,11 @@ namespace StockTrackerCommon.Helpers
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static string CreateSupplierLoginRequest(string email, string password)
+        public static string CreateSupplierLoginRequest(string email, string password, string portNumber)
         {
             string methodName = "ValidateSupplierLogin";
             object[] data = new object[] { email, password };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -47,22 +64,22 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static string CreateGetSupplierBySupplierIdRequest(string supplierId)
+        public static string CreateGetSupplierBySupplierIdRequest(string supplierId, string portNumber)
         {
             string methodName = "RetrieveSupplierBySupplierId";
             object[] data = new object[] { supplierId };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
         /// Creates a JSON string of a Get All Suppliers Request
         /// </summary>
         /// <returns></returns>
-        public static string CreateGetAllSuppliersRequest()
+        public static string CreateGetAllSuppliersRequest(string portNumber)
         {
             string methodName = "RetrieveAllSuppliers";
             object[] data = new object[] { };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -71,11 +88,11 @@ namespace StockTrackerCommon.Helpers
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static string CreateCustomerLoginRequest(string email, string password)
+        public static string CreateCustomerLoginRequest(string email, string password, string portNumber)
         {
             string methodName = "ValidateCustomerLogin";
             object[] data = new object[] { email, password };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -83,22 +100,22 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public static string CreateGetCustomerByCustomerIdRequest(string customerId)
+        public static string CreateGetCustomerByCustomerIdRequest(string customerId, string portNumber)
         {
             string methodName = "RetrieveCustomerByCustomerId";
             object[] data = new object[] { customerId };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
         /// Creates a JSON string of a Get All Customers Request
         /// </summary>
         /// <returns></returns>
-        public static string CreateGetAllCustomersRequest()
+        public static string CreateGetAllCustomersRequest(string portNumber)
         {
             string methodName = "RetrieveAllCustomers";
             object[] data = new object[] { };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         #endregion
@@ -109,11 +126,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="supplierId"></param>
         /// <returns></returns>
-        public static string CreateGetProductsBySupplierRequest(string supplierId)
+        public static string CreateGetProductsBySupplierRequest(string supplierId, string portNumber)
         {
             string methodName = "RetrieveProductsBySupplierId";
             object[] data = new object[] { supplierId };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -121,11 +138,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="productIds"></param>
         /// <returns></returns>
-        public static string CreateGetProductsByProductIdsRequest(List<string> productIds)
+        public static string CreateGetProductsByProductIdsRequest(List<string> productIds, string portNumber)
         {
             string methodName = "RetrieveProductsByProductIds";
             object[] data = new object[] { productIds };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -133,11 +150,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="productIds"></param>
         /// <returns></returns>
-        public static string CreateGetProductByProductIdRequest(string productId)
+        public static string CreateGetProductByProductIdRequest(string productId, string portNumber)
         {
             string methodName = "RetrieveProductByProductId";
             object[] data = new object[] { productId };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -145,11 +162,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="categoryIds"></param>
         /// <returns></returns>
-        public static string CreateGetAllProductsRequest()
+        public static string CreateGetAllProductsRequest(string portNumber)
         {
             string methodName = "RetrieveAllProducts";
             object[] data = new object[] { };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -157,11 +174,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="stockId"></param>
         /// <returns></returns>
-        public static string CreateDeleteProductByProductIdRequest(string productId)
+        public static string CreateDeleteProductByProductIdRequest(string productId, string portNumber)
         {
             string methodName = "DeleteProductByProductId";
             object[] data = new object[] { productId };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -169,11 +186,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="stockId"></param>
         /// <returns></returns>
-        public static string CreateAddProductRequest(Product product)
+        public static string CreateAddProductRequest(Product product, string portNumber)
         {
             string methodName = "AddProduct";
             object[] data = new object[] { product };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -181,11 +198,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="stockId"></param>
         /// <returns></returns>
-        public static string CreateUpdateProductRequest(Product product)
+        public static string CreateUpdateProductRequest(Product product, string portNumber)
         {
             string methodName = "UpdateProduct";
             object[] data = new object[] { product };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
         #endregion
 
@@ -195,11 +212,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="categoryIds"></param>
         /// <returns></returns>
-        public static string CreateGetProductCategoriesByProductCategoryIDsRequest(List<string> categoryIds)
+        public static string CreateGetProductCategoriesByProductCategoryIDsRequest(List<string> categoryIds, string portNumber)
         {
             string methodName = "RetrieveProductCategoriesByProductCategoryIds";
             object[] data = new object[] { categoryIds };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -207,11 +224,11 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="categoryIds"></param>
         /// <returns></returns>
-        public static string CreateGetAllProductCategoriesRequest()
+        public static string CreateGetAllProductCategoriesRequest(string portNumber)
         {
             string methodName = "RetrieveAllProductCategories";
             object[] data = new object[] { };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         /// <summary>
@@ -219,20 +236,20 @@ namespace StockTrackerCommon.Helpers
         /// </summary>
         /// <param name="stockId"></param>
         /// <returns></returns>
-        public static string CreateAddProductCategoryRequest(ProductCategory productCategory)
+        public static string CreateAddProductCategoryRequest(ProductCategory productCategory, string portNumber)
         {
             string methodName = "AddProductCategory";
             object[] data = new object[] { productCategory };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
         #endregion
 
         #region "Order Requests"
-        public static string CreateAddOrderRequest(Order order)
+        public static string CreateAddOrderRequest(Order order, string portNumber)
         {
             string methodName = "AddOrder";
             object[] data = new object[] { order };
-            return CreateRequest(methodName, data);
+            return CreateRequest(methodName, data, portNumber);
         }
 
         #endregion

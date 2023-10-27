@@ -54,7 +54,7 @@ namespace StockTrackerApp.Services
         {
             //We create a JSON string of our Login Request and pass it to the TCP handler which handles our request
             //We are then returned a JSON string of our response from the server
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateSupplierLoginRequest(email, password));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateSupplierLoginRequest(email, password, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrEmpty(jsonResponse))
@@ -76,7 +76,7 @@ namespace StockTrackerApp.Services
 
         public Supplier GetSupplierBySupplierId(string supplierId)
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetSupplierBySupplierIdRequest(supplierId));
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetSupplierBySupplierIdRequest(supplierId, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrWhiteSpace(jsonResponse))
@@ -88,7 +88,7 @@ namespace StockTrackerApp.Services
 
         public List<Supplier> GetAllSuppliers()
         {
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllSuppliersRequest());
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllSuppliersRequest(_clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrWhiteSpace(jsonResponse))

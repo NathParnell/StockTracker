@@ -33,6 +33,7 @@ namespace StockTrackerApp
             builder.Services.AddSingleton<IProductService, ProductService>();
             builder.Services.AddSingleton<IClientTransportService, NetmqClientTransportService>();
             builder.Services.AddSingleton<ISessionHistoryService, SessionHistoryService>();
+            builder.Services.AddSingleton<IOrderService, OrderService>();
 
             return builder.Build();
         }

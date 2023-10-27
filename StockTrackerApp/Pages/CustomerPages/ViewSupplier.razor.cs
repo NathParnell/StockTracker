@@ -16,6 +16,8 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private IProductService _productService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IOrderService _orderService { get; set; }
+        [Inject] private NavigationManager _navmanager { get; set; }
 
         //Define Parameters
         [Parameter] public string SupplierId { get; set; }
@@ -24,6 +26,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         private Supplier _supplier = new Supplier();
         private List<Product> _products = new List<Product>();
         private List<ProductCategory> _productCategories = new List<ProductCategory>();
+        private Dictionary<string, int>? _productBasketQuantities = new Dictionary<string, int>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,10 +37,56 @@ namespace StockTrackerApp.Pages.CustomerPages
         private async Task Init()
         {
             _supplier = _supplierService.GetSupplierBySupplierId(SupplierId);
-            _products = _productService.GetProductsBySupplierId(SupplierId);
             _productCategories = _productCategoryService.GetAllProductCategories();
+            _products = _productService.GetProductsBySupplierId(SupplierId);
+            GetBasketItems();
         }
 
+        private void GetBasketItems()
+        {
+            foreach (OrderItem basketItem in _orderService.BasketItems)
+            {
+                UpdateProductQuantity(basketItem.ProductId, basketItem.Quantity);
+            }
+
+            foreach (Product product in _products)
+            {
+                if (_productBasketQuantities.ContainsKey(product.ProductId) == false)
+                {
+                    _productBasketQuantities.Add(product.ProductId, 0);
+                }
+            }
+        }
+
+        private void UpdateProductQuantity(string productId, int quantity)
+        {
+            if (_productBasketQuantities.ContainsKey(productId))
+            {
+                _productBasketQuantities[productId] = quantity;
+            }
+            else
+            {
+                _productBasketQuantities.Add(productId, quantity);
+            }
+        }
+
+        public void UpdateBasket(Product product)
+        {
+            OrderItem basketItem = new OrderItem()
+            {
+                OrderItemId = Taikandi.SequentialGuid.NewGuid().ToString(),
+                ProductId = product.ProductId,
+                Quantity = _productBasketQuantities[product.ProductId],
+                OrderPrice = _productBasketQuantities[product.ProductId] * product.Price
+            };
+
+            _orderService.AddItemToBasket(basketItem, product.Price);
+        }
+
+        public void ViewBasket()
+        {
+            _navmanager.NavigateTo("ViewBasket");
+        }
 
     }
 }

@@ -1,8 +1,8 @@
-.viewSupplierContariner{
-    display:flex;
-    flex-direction:column;
-    width:80%;
-    margin:auto;
+.viewSupplierContariner {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
 }
 
 .supplierContainer {
@@ -53,12 +53,29 @@
 
 .productContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 47%;
-    justify-content: left;
+    justify-content: space-between;
     border: 2px solid #ccc;
     margin-top: 1rem;
     margin-bottom: 1rem;
     margin-left, margin-right: auto;
     border-radius: 5px;
+}
+
+.productDetails{
+    display:flex;
+    flex-direction:column;
+}
+
+.productBasket{
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+}
+
+#viewBasketButton{
+    margin: 1rem auto;
+    display: block;
+    width:40%;
 }

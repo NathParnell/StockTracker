@@ -12,7 +12,7 @@ namespace StockTrackerCommon.Models
 
         public string OrderItemId { get; set; }
         public string ProductId { get; set; }
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
         public decimal OrderPrice { get; set; }
     }
 }

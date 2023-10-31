@@ -89,14 +89,13 @@ namespace StockTrackerApp.Services
             if (string.IsNullOrEmpty(jsonResponse))
                 return;
 
-            //deserialize the JSON as a list of suppliers and get the first (and only) Supplier
+            //deserialize the JSON as a list of ports
             List<string> ports = ResponseDeserializingHelper.DeserializeResponse<List<string>>(jsonResponse).First().ToList();
 
             //set the ports on the client transport service and start listening for private messages
             _clientTransportService.ConnectionPortNumber = ports[0];
             _messageListenerService.MessagePortNumber = ports[1];
             _messageListenerService.StartListener();
-
         }
 
         public Customer GetCustomerByCustomerId(string customerId)

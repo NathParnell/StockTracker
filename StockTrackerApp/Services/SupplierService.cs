@@ -16,10 +16,12 @@ namespace StockTrackerApp.Services
 
         //define services
         private readonly IClientTransportService _clientTransportService;
+        private readonly IMessageListenerService _messageListenerService;
 
-        public SupplierService(IClientTransportService clientTransportService)
+        public SupplierService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService)
         {
             _clientTransportService = clientTransportService;
+            _messageListenerService = messageListenerService;
         }
 
         //Define public variables 
@@ -67,11 +69,34 @@ namespace StockTrackerApp.Services
             SetCurrentUser(supplier);
 
             if (this.CurrentUser != null)
+            {
                 Logger.Info($"RequestLogin(), Supplier: {this.CurrentUser.Email} has logged into the system");
+                //Now we are logged in we can Request Communication Ports from the server
+                RequestCommunicationPorts(supplier.SupplierId);
+            }
             else
                 Logger.Info($"RequestLogin(), Supplier login attempt failed");
 
             return supplier;
+        }
+
+        private void RequestCommunicationPorts(string supplierId)
+        {
+            //We create a JSON string of our Request Communication Ports Request and pass it to the TCP handler which handles our request
+            //We are then returned a JSON string of our response from the server
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateRequestCommunicationPortsRequest(supplierId, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (string.IsNullOrEmpty(jsonResponse))
+                return;
+
+            //deserialize the JSON as a list of ports
+            List<string> ports = ResponseDeserializingHelper.DeserializeResponse<List<string>>(jsonResponse).First().ToList();
+
+            //set the ports on the client transport service and start listening for private messages
+            _clientTransportService.ConnectionPortNumber = ports[0];
+            _messageListenerService.MessagePortNumber = ports[1];
+            _messageListenerService.StartListener();
         }
 
         public Supplier GetSupplierBySupplierId(string supplierId)

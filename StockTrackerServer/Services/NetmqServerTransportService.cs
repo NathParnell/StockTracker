@@ -46,7 +46,7 @@ namespace StockTrackerServer.Services
                 string requestMessage = ReadClientRequest(ref mqServer);
 
                 //Ensure that a request was received
-                if (String.IsNullOrEmpty(requestMessage) == false)
+                if (String.IsNullOrWhiteSpace(requestMessage) == false)
                 {
                     // Handle the request in a new thread
                     Thread tcpClientHandlerThread = new Thread(() => TcpClientHandlerThread(requestMessage));

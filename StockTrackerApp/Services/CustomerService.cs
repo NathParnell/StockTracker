@@ -16,10 +16,12 @@ namespace StockTrackerApp.Services
 
         //define services
         private readonly IClientTransportService _clientTransportService;
+        private readonly IMessageListenerService _messageListenerService;
 
-        public CustomerService(IClientTransportService clientTransportService)
+        public CustomerService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService)
         {
             _clientTransportService = clientTransportService;
+            _messageListenerService = messageListenerService;
         }
 
         //Define public variables 
@@ -90,8 +92,11 @@ namespace StockTrackerApp.Services
             //deserialize the JSON as a list of suppliers and get the first (and only) Supplier
             List<string> ports = ResponseDeserializingHelper.DeserializeResponse<List<string>>(jsonResponse).First().ToList();
 
-            //set the ports on the client transport service
+            //set the ports on the client transport service and start listening for private messages
             _clientTransportService.ConnectionPortNumber = ports[0];
+            _messageListenerService.MessagePortNumber = ports[1];
+            _messageListenerService.StartListener();
+
         }
 
         public Customer GetCustomerByCustomerId(string customerId)

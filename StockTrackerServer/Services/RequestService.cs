@@ -17,12 +17,14 @@ namespace StockTrackerServer.Services
         private readonly IAuthenticationService _authenticationService;
         private readonly IDataService _dataService;
         private readonly IPortService _portService;
+        private readonly IMessagingService _messagingService;
 
-        public RequestService(IAuthenticationService authenticationService, IDataService dataService, IPortService portService)
+        public RequestService(IAuthenticationService authenticationService, IDataService dataService, IPortService portService, IMessagingService messagingService)
         {
             _authenticationService = authenticationService;
             _dataService = dataService;
             _portService = portService;
+            _messagingService = messagingService;
         }
 
         /// <summary>
@@ -54,6 +56,29 @@ namespace StockTrackerServer.Services
         }
 
         /// <summary>
+        /// Method which takes in an object array and turns it into a list of messages
+        /// We go through each of the messages and send the messages to the dedicated receivers
+        /// We return a success boolean which notifies whether or not the messages were sent/saved successfully
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string SendPrivateMessages(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<Message> messages = JsonSerializer.Deserialize<List<List<Message>>>(request.Data.ToString()).First();
+            bool success = true;
+            foreach (Message message in messages)
+            {
+                //send the message for the message and if we are returned false, then we change the value of the success variable to false
+                if (_messagingService.SendMessage(message) == false)
+                    success = false;
+            }
+            //make response
+            return ResponseSerializingHelper.CreateResponse(success);
+
+        }
+
+        /// <summary>
         /// Method which takes in an object array and turns it into a clientId
         /// With this information we call our GenerateClientRequestPort method and our GenerateClientMessagingPort and to generate a list of ports
         /// We then create and return our response
@@ -66,8 +91,8 @@ namespace StockTrackerServer.Services
             string clientId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
             List<string> ports = new List<string>
             {
-                _portService.GenerateClientRequestPort(clientId),
-                _portService.GenerateClientMessagingPort(clientId)
+                _portService.GenerateClientRequestPort(clientId, request.ClientIp),
+                _portService.GenerateClientMessagingPort(clientId, request.ClientIp)
             };
             return ResponseSerializingHelper.CreateResponse(ports);
         }

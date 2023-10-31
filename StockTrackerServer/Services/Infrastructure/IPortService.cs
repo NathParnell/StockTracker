@@ -8,8 +8,8 @@ namespace StockTrackerServer.Services.Infrastructure
 {
     public interface IPortService
     {
-        string GenerateClientRequestPort(string clientId);
-        string GenerateClientMessagingPort(string clientId);
+        string GenerateClientRequestPort(string clientId, string ipAddress);
+        string GenerateClientMessagingPort(string clientId, string ipAddress);
         string GetClientMessagingPort(string clientId);
         bool UnassignClientsRequestPort(string clientId);
         bool UnassignClientsMessagingPort(string clientId);

@@ -41,6 +41,19 @@ namespace StockTrackerCommon.Helpers
             object[] data = new object[] { clientId };
             return CreateRequest(methodName, data, portNumber);
         }
+        
+        /// <summary>
+        /// Creates a JSON string of a drop Communication Ports Request
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateDropCommunicationPortsRequest(string clientId, string portNumber)
+        {
+            string methodName = "DropCommunicationPorts";
+            object[] data = new object[] { clientId };
+            return CreateRequest(methodName, data, portNumber);
+        }
 
         #endregion
 

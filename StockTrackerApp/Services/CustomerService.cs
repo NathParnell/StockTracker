@@ -35,7 +35,7 @@ namespace StockTrackerApp.Services
         /// Method also sets the IsLoggedIn variable, which assists in managing the state of the app
         /// </summary>
         /// <param name="user"></param>
-        public void SetCurrentUser(Customer user = null)
+        private void SetCurrentUser(Customer user = null)
         {
             CurrentUser = user;
             if (CurrentUser == null)
@@ -87,6 +87,16 @@ namespace StockTrackerApp.Services
             return customer;
         }
 
+        public bool Logout()
+        {
+            //Need to drop the communication ports
+            DropCommunicationPorts(CurrentUser.CustomerId);            
+
+            //need to set the current user to null and remove authorization information
+            SetCurrentUser();
+            return true;
+        }
+
         private void RequestCommunicationPorts(string customerId)
         {
             //We create a JSON string of our Request Communication Ports Request and pass it to the TCP handler which handles our request
@@ -104,6 +114,25 @@ namespace StockTrackerApp.Services
             _clientTransportService.ConnectionPortNumber = ports[0];
             _messageListenerService.MessagePortNumber = ports[1];
             _messageListenerService.StartListener();
+        }
+
+        private void DropCommunicationPorts(string customerId)
+        {
+            //We create a JSON string of our Drop Communication Ports Request and pass it to the TCP handler which handles our request
+            //We are then returned a JSON string of our response from the server
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDropCommunicationPortsRequest(customerId, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (string.IsNullOrEmpty(jsonResponse))
+                return;
+
+            bool success = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+
+            if (success)
+            {
+                _clientTransportService.ConnectionPortNumber = "5555";
+                _messageListenerService.StopListener();
+            }        
         }
 
         public Customer GetCustomerByCustomerId(string customerId)

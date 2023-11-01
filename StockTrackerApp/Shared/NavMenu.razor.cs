@@ -35,8 +35,8 @@ namespace StockTrackerApp.Shared
         }
         private async Task Logout()
         {
-            _supplierService.SetCurrentUser();
-            _customerService.SetCurrentUser();
+            _supplierService.Logout();
+            _customerService.Logout();
             _navManager.NavigateTo("", true);
         }
     }

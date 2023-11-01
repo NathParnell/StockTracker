@@ -98,6 +98,21 @@ namespace StockTrackerServer.Services
         }
 
         /// <summary>
+        /// Method which takes in an object array and turns it into a clientId
+        /// with this information we call our UnassignClientsRequestPort and UnassignClientsMessagingPort methods to unassign the ports, if this succeeded we return true
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string DropCommunicationPorts(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string clientId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            bool success = _portService.UnassignClientsRequestPort(clientId) && _portService.UnassignClientsMessagingPort(clientId);
+            return ResponseSerializingHelper.CreateResponse(success);
+        }
+
+        /// <summary>
         /// Method which takes an object array and turns it into a email and password
         /// With this information we call our AuthenticateSupplier method which returns the supplier who has just logged in (or null if invalid user creds)
         /// We then create and return a supplier authentication response

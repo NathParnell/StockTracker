@@ -86,6 +86,16 @@ namespace StockTrackerApp.Services
             return supplier;
         }
 
+        public bool Logout()
+        {
+            //Need to drop the communcation ports
+            DropCommunicationPorts(CurrentUser.SupplierId);
+
+            //need to set the current user to null and remove authorization information
+            SetCurrentUser();
+            return true;
+        }
+
         private void RequestCommunicationPorts(string supplierId)
         {
             //We create a JSON string of our Request Communication Ports Request and pass it to the TCP handler which handles our request
@@ -103,6 +113,25 @@ namespace StockTrackerApp.Services
             _clientTransportService.ConnectionPortNumber = ports[0];
             _messageListenerService.MessagePortNumber = ports[1];
             _messageListenerService.StartListener();
+        }
+
+        private void DropCommunicationPorts(string supplierId)
+        {
+            //We create a JSON string of our Drop Communication Ports Request and pass it to the TCP handler which handles our request
+            //We are then returned a JSON string of our response from the server
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateDropCommunicationPortsRequest(supplierId, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (string.IsNullOrEmpty(jsonResponse))
+                return;
+
+            bool success = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+
+            if (success)
+            {
+                _clientTransportService.ConnectionPortNumber = "5555";
+                _messageListenerService.StopListener();
+            }
         }
 
         public Supplier GetSupplierBySupplierId(string supplierId)

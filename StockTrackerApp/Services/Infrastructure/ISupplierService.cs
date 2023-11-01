@@ -10,7 +10,6 @@ namespace StockTrackerApp.Services.Infrastructure
     public interface ISupplierService
     {
         Supplier CurrentUser { get; }
-        bool IsLoggedIn { get; }
         void SetCurrentUser(Supplier user = null);
         Supplier RequestLogin(string email, string password);
         Supplier GetSupplierBySupplierId(string supplierId);

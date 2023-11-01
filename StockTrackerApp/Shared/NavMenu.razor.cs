@@ -11,22 +11,23 @@ namespace StockTrackerApp.Shared
 {
     public partial class NavMenu
     {
-        [Inject]
-        private NavigationManager _navManager { get; set; }
+        //Inject Services
+        [Inject] private NavigationManager _navManager { get; set; }
 
-        [Inject]
-        private ISupplierService _supplierService { get; set; }
+        [Inject] private ISupplierService _supplierService { get; set; }
 
-        [Inject]
-        private ICustomerService _customerService { get; set; }
+        [Inject] private ICustomerService _customerService { get; set; }
+
+        [Inject] private IAuthorizationService _authorizationService { get; set; }
+
 
         private async Task NavigateHome()
         {
             _navManager.NavigateTo("Home", true);
         }
-        private async Task NavigateFetchData()
+        private async Task NavigateBasket()
         {
-            _navManager.NavigateTo("FetchData", true);
+            _navManager.NavigateTo("ViewBasket", true);
         }
         private async Task NavigateCounter()
         {

@@ -1,10 +1,12 @@
 @page "/Home"
+@using StockTrackerCommon.Models;
 
-@if (_supplierService.IsLoggedIn == true)
+
+@if (_authorizationService.UserType == UserType.Supplier)
 {
     <StockTrackerApp.Components.SupplierComponents.Home />
 }
-else if (_customerService.IsLoggedIn == true)
+else if (_authorizationService.UserType == UserType.Customer)
 {
     <StockTrackerApp.Components.CustomerComponents.Home />
 }

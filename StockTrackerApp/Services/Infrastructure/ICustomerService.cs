@@ -10,7 +10,6 @@ namespace StockTrackerApp.Services.Infrastructure
     public interface ICustomerService
     {
         Customer CurrentUser { get; }
-        bool IsLoggedIn { get; }
         void SetCurrentUser(Customer user = null);
         Customer RequestLogin(string email, string password);
         Customer GetCustomerByCustomerId(string customerId);

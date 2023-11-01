@@ -13,17 +13,16 @@ namespace StockTrackerApp.Pages
     public partial class Index
     {
         //Inject Services
-        [Inject]
-        private ISupplierService _supplierService { get; set; }
+        [Inject] private ISupplierService _supplierService { get; set; }
 
-        [Inject]
-        private ICustomerService _customerService { get; set; }
+        [Inject] private ICustomerService _customerService { get; set; }
 
-        [Inject]
-        private NavigationManager _navManager { get; set; }
+        [Inject] private IAuthorizationService _authorizationService { get; set; }
 
-        [Inject]
-        private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
+
+        [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+
 
         //declare variables
         private string _email;
@@ -55,7 +54,7 @@ namespace StockTrackerApp.Pages
         /// </summary>
         private void NavigateHomeIfLoggedIn()
         {
-            if (_supplierService.IsLoggedIn || _customerService.IsLoggedIn)
+            if (_authorizationService.IsLoggedIn)
             {
                 _navManager.NavigateTo("Home");
             }

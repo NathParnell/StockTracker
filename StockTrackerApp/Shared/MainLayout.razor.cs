@@ -10,11 +10,7 @@ namespace StockTrackerApp.Shared
 {
     public partial class MainLayout
     {
-        [Inject]
-        private ISupplierService _supplierService { get; set; }
-
-        [Inject]
-        private ICustomerService _customerService { get; set; }
+        [Inject] private IAuthorizationService _authorizationService { get; set; }
 
     }
 }

@@ -1,17 +1,18 @@
-﻿
+﻿@using StockTrackerCommon.Models;
+
 
 
 <nav class="navbar">
-    <div class="link" @onclick="() => NavigateHome()" title="Home"> 
+    <div id="navHome" class="link" @onclick="() => NavigateHome()" title="Home" hidden="@(!_authorizationService.IsLoggedIn)">
         <span class="fa-solid fa-house" style="color: #fdf7f7;" aria-hidden="true"></span>
     </div>
-    <div class="link"> 
-        <span class="oi oi-plus" aria-hidden="true"></span>
+    <div id="navBasket" class="link" @onclick="() => NavigateBasket()" title="View Basket" hidden="@(_authorizationService.UserType != UserType.Customer)">
+        <span class="fa-solid fa-cart-shopping" style="color: #fdf7f7;" aria-hidden="true"></span>
     </div>
-    <div class="link"> 
+    <div class="link">
         <span class="oi oi-list-rich" aria-hidden="true"></span>
     </div>
-    <div class="link" @onclick="() => Logout()" title="Logout">
+    <div class="link" @onclick="() => Logout()" title="Logout" hidden="@(!_authorizationService.IsLoggedIn)">
         <span class="fa-solid fa-right-from-bracket" style="color: #fdf7f7;" aria-hidden="true"></span>
     </div>
 </nav>

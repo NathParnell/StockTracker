@@ -17,17 +17,17 @@ namespace StockTrackerApp.Services
         //define services
         private readonly IClientTransportService _clientTransportService;
         private readonly IMessageListenerService _messageListenerService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public SupplierService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService)
+        public SupplierService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService, Infrastructure.IAuthorizationService authorizationService)
         {
             _clientTransportService = clientTransportService;
             _messageListenerService = messageListenerService;
+            _authorizationService = authorizationService;
         }
 
         //Define public variables 
         public Supplier CurrentUser { get; private set; }
-        public bool IsLoggedIn { get; private set; } = false;
-
 
 
         /// <summary>
@@ -39,9 +39,15 @@ namespace StockTrackerApp.Services
         {
             CurrentUser = user;
             if (CurrentUser == null)
-                IsLoggedIn = false;
+            {
+                _authorizationService.IsLoggedIn = false;
+                _authorizationService.UserType = null;
+            }
             else
-                IsLoggedIn = true;
+            {
+                _authorizationService.IsLoggedIn = true;
+                _authorizationService.UserType = UserType.Supplier;
+            }
         }
 
 

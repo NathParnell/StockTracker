@@ -11,10 +11,6 @@ namespace StockTrackerApp.Pages
     public partial class Home
     {
         //Inject Services
-        [Inject]
-        private ISupplierService _supplierService { get; set; }
-
-        [Inject]
-        private ICustomerService _customerService { get; set; }
+        [Inject] private IAuthorizationService _authorizationService { get; set; }
     }
 }

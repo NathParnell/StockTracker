@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using NetMQ;
 using NetMQ.Sockets;
 using StockTrackerApp.Services.Infrastructure;
+using StockTrackerCommon.Helpers;
+using StockTrackerCommon.Models;
 
 namespace StockTrackerApp.Services
 {
@@ -69,11 +72,16 @@ namespace StockTrackerApp.Services
             }
         }
 
-        private void MessageHandlerThread(string message)
+        private void MessageHandlerThread(string encryptedMessage)
         {
             try
             {
                 // Process the message
+                //decrypt message
+                string decryptedMessage = EncryptionHelper.Decrypt(encryptedMessage);
+
+                Message message = JsonSerializer.Deserialize<Message>(decryptedMessage);
+
             }
             catch (Exception ex)
             {

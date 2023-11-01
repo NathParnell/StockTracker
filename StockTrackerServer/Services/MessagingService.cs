@@ -16,10 +16,12 @@ namespace StockTrackerServer.Services
     {
         //Define Services
         private IPortService _portService { get; set; }
+        private IDataService _dataService { get; set; }
 
-        public MessagingService(IPortService portService) 
+        public MessagingService(IPortService portService, IDataService dataService) 
         {
             _portService = portService;
+            _dataService = dataService;
         }
 
         public bool SendMessage(Message message)
@@ -27,10 +29,10 @@ namespace StockTrackerServer.Services
             try
             {
                 //save the message to the database
-                //TODO: save the message to the database
+                bool messagedSaved = _dataService.AddMessage(message).Result;
 
                 //check to make sure we can send this to our receiver as they may not even be able to receive it
-                string targetEndpoint = _portService.GetClientMessagingPort(message.ReceiverId);
+                string targetEndpoint = _portService.GetClientMessagingEndpoint(message.ReceiverId);
                 if (String.IsNullOrWhiteSpace(targetEndpoint) == false)
                 {
                     using (var messageSocket = new RequestSocket())

@@ -25,12 +25,13 @@ namespace StockTrackerCommon.Database
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
-        //these commands are need to run
-        //Add-Migration InitialCreate
-        //Update-Database
-
+        /// <summary>
+        /// This code is what allows us to store a list of strings in the Order table
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()

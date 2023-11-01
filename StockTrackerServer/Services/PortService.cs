@@ -72,7 +72,7 @@ namespace StockTrackerServer.Services
             }
         }
 
-        public string GetClientMessagingPort(string clientId)
+        public string GetClientMessagingEndpoint(string clientId)
         {
             //if the user doesnt already have a port assigned, return null
             if (_assignedMessagingClientEndpoints.ContainsKey(clientId) == false)

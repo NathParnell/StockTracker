@@ -132,6 +132,24 @@ namespace StockTrackerApp.Services
                 return false;
 
             bool addConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+
+            //if the order request has been created successfully, then we notify the user
+            if (addConfirmation)
+            {
+                Message message = new Message()
+                {
+                    MessageId = Taikandi.SequentialGuid.NewGuid().ToString(),
+                    SentTime = DateTime.Now,
+                    SenderId = _customerService.CurrentUser.CustomerId,
+                    ReceiverId = _customerService.CurrentUser.CustomerId,
+                    Subject = "New Order Request",
+                    MessageBody = $"A new order request has been created by {_customerService.CurrentUser.FirstNames}{_customerService.CurrentUser.Surname}"
+                };
+
+                string messageJsonResponse = _clientTransportService.TcpHandler(
+                    RequestSerializingHelper.CreateSendPrivateMessagesRequest(new List<Message>() {message}, _clientTransportService.ConnectionPortNumber));
+            }
+
             return addConfirmation;
         }
         #endregion

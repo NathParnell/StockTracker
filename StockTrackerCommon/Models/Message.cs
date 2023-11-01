@@ -13,6 +13,9 @@ namespace StockTrackerCommon.Models
         [JsonPropertyName("messageId")]
         public string MessageId { get; set; }
 
+        [JsonPropertyName("sentTime")]
+        public DateTime SentTime { get; set; }
+
         [JsonPropertyName("receiverId")]
         public string ReceiverId { get; set; }
 

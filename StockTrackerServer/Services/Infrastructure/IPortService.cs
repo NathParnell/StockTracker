@@ -10,7 +10,7 @@ namespace StockTrackerServer.Services.Infrastructure
     {
         string GenerateClientRequestPort(string clientId, string ipAddress);
         string GenerateClientMessagingPort(string clientId, string ipAddress);
-        string GetClientMessagingPort(string clientId);
+        string GetClientMessagingEndpoint(string clientId);
         bool UnassignClientsRequestPort(string clientId);
         bool UnassignClientsMessagingPort(string clientId);
     }

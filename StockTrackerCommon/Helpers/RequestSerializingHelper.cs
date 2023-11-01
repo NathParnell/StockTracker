@@ -44,6 +44,23 @@ namespace StockTrackerCommon.Helpers
 
         #endregion
 
+        #region "Message Requests"
+        
+        /// <summary>
+        /// Creates a JSON string of a Send Message Request
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateSendPrivateMessagesRequest(List<Message> messages, string portNumber)
+        {
+            string methodName = "SendPrivateMessages";
+            object[] data = new object[] { messages };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
+        #endregion
+
         #region "User Requests"
 
         /// <summary>

@@ -185,6 +185,21 @@ namespace StockTrackerServer.Services
                 return false;
             }
         }
+
+        public async Task<bool> AddMessage(Message message)
+        {
+            try
+            {
+                _context.Messages.Add(message);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region "Update Methods"

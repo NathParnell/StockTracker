@@ -70,6 +70,7 @@ namespace StockTrackerApp.Services
             if (CurrentUser != null)
             {
                 Logger.Info($"RequestLogin(), Customer: {CurrentUser.Email} has logged into the system");
+
                 //Now we are logged in we can Request Communication Ports from the server
                 RequestCommunicationPorts(customer.CustomerId);
             }      

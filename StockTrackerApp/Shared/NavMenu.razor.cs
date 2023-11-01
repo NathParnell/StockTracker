@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using StockTrackerApp.Services;
 using StockTrackerApp.Services.Infrastructure;
+using StockTrackerCommon.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,11 @@ namespace StockTrackerApp.Shared
         }
         private async Task Logout()
         {
-            _supplierService.Logout();
-            _customerService.Logout();
+            if (_authorizationService.UserType == UserType.Supplier)
+                _supplierService.Logout();
+            else if (_authorizationService.UserType == UserType.Customer)
+                _customerService.Logout();
+
             _navManager.NavigateTo("", true);
         }
     }

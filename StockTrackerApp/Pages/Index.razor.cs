@@ -87,7 +87,9 @@ namespace StockTrackerApp.Pages
                     Init();
                 }
                 else
+                {
                     NavigateHomeIfLoggedIn();
+                }
             }
             else if (userType == UserType.Customer)
             {
@@ -101,7 +103,9 @@ namespace StockTrackerApp.Pages
                     Init();
                 }
                 else
+                {
                     NavigateHomeIfLoggedIn();
+                }
             }
         }
     }

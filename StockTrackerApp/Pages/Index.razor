@@ -22,7 +22,7 @@
             <label>Password:</label>
             <input type="password" id="loginPassword" required @bind="_password" />
         </span>
-        <button type="button" @onclick="Login">Login</button>
+        <button type="button" @onclick="() => Login()">Login</button>
         <p>@_loginPrompt</p>
     </div>
 </div>

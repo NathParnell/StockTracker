@@ -3,7 +3,18 @@
 
 <script src="https://kit.fontawesome.com/ca28eb9466.js" crossorigin="anonymous"></script>
 <div class="page">
-    <NavMenu />
+    @if (_authorizationService.IsLoggedIn)
+    {
+        @if (_authorizationService.UserType == StockTrackerCommon.Models.UserType.Supplier)
+        {
+            <StockTrackerApp.Components.SupplierComponents.NavMenu/>
+        }
+        else if (_authorizationService.UserType == StockTrackerCommon.Models.UserType.Customer)
+        {
+            <StockTrackerApp.Components.CustomerComponents.NavMenu/>
+        }
+    }
+@*     <NavMenu /> *@
     <main>
         <article class="content px-4">
             @Body

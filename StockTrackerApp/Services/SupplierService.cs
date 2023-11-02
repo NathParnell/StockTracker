@@ -19,7 +19,7 @@ namespace StockTrackerApp.Services
         private readonly IMessageListenerService _messageListenerService;
         private readonly IAuthorizationService _authorizationService;
 
-        public SupplierService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService, Infrastructure.IAuthorizationService authorizationService)
+        public SupplierService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService, IAuthorizationService authorizationService)
         {
             _clientTransportService = clientTransportService;
             _messageListenerService = messageListenerService;

@@ -1,8 +1,6 @@
 ﻿@using StockTrackerCommon.Models;
 
 
-
-
 <nav class="navbar">
     @if (_authorizationService.IsLoggedIn == true)
     {
@@ -18,7 +16,5 @@
         <div class="link" @onclick="() => Logout()" title="Logout">
             <span class="fa-solid fa-right-from-bracket" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
-    } 
+    }
 </nav>
-
-

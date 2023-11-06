@@ -354,7 +354,6 @@ namespace StockTrackerCommon.Helpers
                     {
                         if (ipInfo.Address.AddressFamily == AddressFamily.InterNetwork)
                         {
-                            Console.WriteLine(ipInfo.Address.ToString());
                             return ipInfo.Address.ToString();
                         }
                     }

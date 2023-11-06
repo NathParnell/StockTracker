@@ -141,7 +141,7 @@ namespace StockTrackerApp.Services
                     MessageId = Taikandi.SequentialGuid.NewGuid().ToString(),
                     SentTime = DateTime.Now,
                     SenderId = _customerService.CurrentUser.CustomerId,
-                    ReceiverId = _customerService.CurrentUser.CustomerId,
+                    ReceiverId = supplierId,
                     Subject = "New Order Request",
                     MessageBody = $"A new order request has been created by {_customerService.CurrentUser.FirstNames}{_customerService.CurrentUser.Surname}"
                 };

@@ -1,5 +1,6 @@
 ﻿using StockTrackerCommon.Models;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.Json;
 
@@ -328,16 +329,41 @@ namespace StockTrackerCommon.Helpers
 
         private static string GetPrivateIpAddress()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+            // var host = Dns.GetHostEntry(Dns.GetHostName());
+            // foreach (var ip in host.AddressList)
+            // {
+            //     if (ip.AddressFamily == AddressFamily.InterNetwork)
+            //     {
+            //         return ip.ToString();
+            //     }
+            // }
+            // throw new Exception("No network adapters with an IPv4 address in the system!");
+            
+            // Get all network interfaces
+            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface networkInterface in networkInterfaces)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                // Check if the network interface is up and it's not a loopback or virtual interface
+                if (networkInterface.OperationalStatus == OperationalStatus.Up &&
+                    networkInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                    networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ppp)
                 {
-                    return ip.ToString();
+                    // Get the IPv4 addresses associated with this interface
+                    foreach (UnicastIPAddressInformation ipInfo in networkInterface.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ipInfo.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            Console.WriteLine(ipInfo.Address.ToString());
+                            return ipInfo.Address.ToString();
+                        }
+                    }
                 }
             }
+
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
+        
         #endregion
     }
 }

@@ -16,6 +16,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
+        [Inject] private NavigationManager _navmanager { get; set; }
 
         //declare variables
         private List<string> _contactIds { get; set; }
@@ -36,6 +37,11 @@ namespace StockTrackerApp.Components.CustomerComponents
                 _suppliers = _supplierService.GetSuppliersBySupplierIDs(_contactIds);
             }
 
+        }
+
+        private void NavigateToMessageThread(string contactId)
+        {
+            _navmanager.NavigateTo($"/MessageThread/{contactId}");
         }
     }
 }

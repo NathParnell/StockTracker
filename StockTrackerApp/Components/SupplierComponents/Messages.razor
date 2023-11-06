@@ -2,7 +2,7 @@
     <h1>Messages</h1>
     @foreach (var customer in _customers)
     {
-        <div class="messageContact">
+        <div class="messageContact" @onclick="() => NavigateToMessageThread(customer.CustomerId)">
             <h4>@customer.FirstNames @customer.Surname</h4>
         </div>
     }

@@ -108,6 +108,11 @@ namespace StockTrackerServer.Services
                 string dataReceived = socket.ReceiveFrameString();
                 socket.SendFrame("Message received by server");
 
+                if (String.IsNullOrWhiteSpace(dataReceived))
+                {
+                    Logger.Info("ReadClientRequest(), No data received from client");
+                }
+
                 return dataReceived;
             }
             catch (Exception ex)

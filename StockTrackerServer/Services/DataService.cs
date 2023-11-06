@@ -123,11 +123,15 @@ namespace StockTrackerServer.Services
                 return null;
             }
         }
+        public async Task<List<string>> GetContactIds(string userId)
+        {
+            return null;
+        }
 
         #endregion
 
         #region "Delete Methods"
-        
+
         public async Task<bool> DeleteProductByProductId(string productId)
         {
             var itemToDelete = _context.Products.Find(productId);

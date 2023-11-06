@@ -72,6 +72,19 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data, portNumber);
         }
 
+        /// <summary>
+        /// Creates a JSON string of a Get Contact ids Request
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateGetContactIdsRequest(string userId, string portNumber)
+        {
+            string methodName = "RetrieveContactIds";
+            object[] data = new object[] { userId };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
         #endregion
 
         #region "User Requests"

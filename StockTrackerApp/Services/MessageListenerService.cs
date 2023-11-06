@@ -14,15 +14,12 @@ namespace StockTrackerApp.Services
 {
     public class MessageListenerService : IMessageListenerService
     {
-        private CancellationTokenSource _cancellationTokenSource;
-
+        //Define port number for listening for messages
         public string MessagePortNumber { get; set; } = String.Empty;
 
 
         public void StartListener()
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-
             // Start a thread which will run in the background to listen for messages
             Thread messageListenerThread = new Thread(() => MessageListenerThread());
             messageListenerThread.Start();

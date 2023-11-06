@@ -1,0 +1,12 @@
+@page "/Messages"
+@using StockTrackerCommon.Models;
+
+
+@if (_authorizationService.UserType == UserType.Supplier)
+{
+    <StockTrackerApp.Components.SupplierComponents.Messages/>
+}
+else if (_authorizationService.UserType == UserType.Customer)
+{
+    <StockTrackerApp.Components.CustomerComponents.Messages/>
+}

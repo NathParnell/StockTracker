@@ -78,6 +78,8 @@ namespace StockTrackerServer.Services
 
         }
 
+        #region "Ports Methods"
+
         /// <summary>
         /// Method which takes in an object array and turns it into a clientId
         /// With this information we call our GenerateClientRequestPort method and our GenerateClientMessagingPort and to generate a list of ports
@@ -112,6 +114,9 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(success);
         }
 
+        #endregion
+
+        #region "Validate Login Methods"
         /// <summary>
         /// Method which takes an object array and turns it into a email and password
         /// With this information we call our AuthenticateSupplier method which returns the supplier who has just logged in (or null if invalid user creds)
@@ -143,6 +148,8 @@ namespace StockTrackerServer.Services
             //make a response with this
             return ResponseSerializingHelper.CreateResponse(customer);
         }
+
+        #endregion
 
         #region "Get Methods"
 
@@ -296,6 +303,16 @@ namespace StockTrackerServer.Services
             List<ProductCategory> productCategories = _dataService.GetAllProductCategories().Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(productCategories);
+        }
+
+        public string RetrieveContactIds(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string userId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            //List<string> contactIds = _dataService.GetContactIds(userId).Result;
+            //make response
+            //return ResponseSerializingHelper.CreateResponse(contactIds);
+            return null;
         }
         #endregion
 

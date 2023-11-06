@@ -30,7 +30,10 @@ namespace StockTrackerApp.Components.CustomerComponents
         {
             _navManager.NavigateTo("ViewBasket", true);
         }
-        //messaging navigate
+        private async Task NavigateMessages()
+        {
+            _navManager.NavigateTo("Messages", true);
+        }
         private async Task Logout()
         {
             if (_customerService.Logout())

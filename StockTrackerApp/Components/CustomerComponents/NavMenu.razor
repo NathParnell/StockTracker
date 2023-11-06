@@ -10,10 +10,10 @@
         <div id="navBasket" class="link" @onclick="() => NavigateBasket()" title="View Basket">
             <span class="fa-solid fa-cart-shopping" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
-        <div class="link" title="Private Messaging">
+        <div id="navMessages" class="link" @onclick="() => NavigateMessages()" title="Private Messaging">
             <span class="fa-solid fa-message" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
-        <div class="link" @onclick="() => Logout()" title="Logout">
+        <div id="navLogout" class="link" @onclick="() => Logout()" title="Logout">
             <span class="fa-solid fa-right-from-bracket" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
     }

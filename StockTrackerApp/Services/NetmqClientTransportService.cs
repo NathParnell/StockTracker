@@ -36,7 +36,7 @@ namespace StockTrackerApp.Services
                 using (var requestSocket = new RequestSocket())
                 using (var responseSocket = new ResponseSocket())
                 {
-                    requestSocket.Connect("tcp://127.0.0.1:5556");
+                    requestSocket.Connect("tcp://192.168.0.86:5556");
 
                     Logger.Info($"TcpHandler(), The unencrypted request we will send to the client: " +
                         $"{decryptedRequest}");
@@ -50,12 +50,12 @@ namespace StockTrackerApp.Services
                     requestSocket.SendFrame(encryptedRequest);
                     string requestConfirmation = requestSocket.ReceiveFrameString();
                     Logger.Info($"TcpHandler(), {requestConfirmation}");
-
                     responseSocket.Bind($"tcp://*:{ConnectionPortNumber}");
 
                     //Receive response from the server and provide server with confirmation receipt
                     string encryptedResponse = responseSocket.ReceiveFrameString();
                     responseSocket.SendFrame("Message received by client");
+                    responseSocket.Unbind($"tcp://*:{ConnectionPortNumber}");
                     Logger.Info($"TcpHandler(), Client has received encrypted response from server: " +
                         $"{encryptedResponse}");
 

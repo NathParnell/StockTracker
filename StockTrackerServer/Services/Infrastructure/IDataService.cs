@@ -18,12 +18,15 @@ namespace StockTrackerServer.Services.Infrastructure
         #endregion
         Task<Supplier> GetSupplierByEmail(string email);
         Task<Supplier> GetSupplierBySupplierId(string supplierID);
+        Task<List<Supplier>> GetSuppliersBySupplierIds(List<string> supplierIds);
         Task<Customer> GetCustomerByEmail(string email);
         Task<Customer> GetCustomerByCustomerId(string customerId);
+        Task<List<Customer>> GetCustomersByCustomerIds(List<string> customerIds);
         Task<Product> GetProductByProductId(string productId);
         Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);
         Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
+        Task<List<string>> GetContactIds(string userId);
         #endregion
 
         #region "Delete Methods"

@@ -32,11 +32,13 @@ namespace StockTrackerCommon.Database
                         var suppliers = GenerateSuppliers();
                         var productCategories = GenerateProductCategories();
                         var products = GenerateProducts();
+                        var messages = GenerateMessages();
 
                         context.Customers.AddRange(customers);
                         context.Suppliers.AddRange(suppliers);
                         context.Products.AddRange(products);
                         context.ProductCategories.AddRange(productCategories);
+                        context.Messages.AddRange(messages);
 
                         context.SaveChanges();
                         seeded = true;
@@ -294,6 +296,30 @@ namespace StockTrackerCommon.Database
                     Price = 9.00m,
                     SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200"
 
+                }
+            };
+        }
+        private static Message[] GenerateMessages()
+        {
+            return new Message[]
+            {
+                new Message
+                {
+                    MessageId = "36c559dd-df8c-45b5-73e0-08dbdf012f23",
+                    SentTime = DateTime.Now,
+                    SenderId = "3369956f-abed-42e1-9d99-08dbc77c7200",
+                    ReceiverId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    Subject = "Message",
+                    MessageBody = "Message from Customer 1 to Supplier 1"
+                },
+                new Message
+                {
+                    MessageId = "fc0cfc4b-9fc6-406e-73e2-08dbdf012f23",
+                    SentTime = DateTime.Now,
+                    SenderId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    ReceiverId = "3369956f-abed-42e1-9d99-08dbc77c7200",
+                    Subject = "Message",
+                    MessageBody = "Message from Supplier 1 to Customer 1"
                 }
             };
         }

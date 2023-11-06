@@ -36,6 +36,7 @@ namespace StockTrackerApp
             builder.Services.AddSingleton<IOrderService, OrderService>();
             builder.Services.AddSingleton<IMessageListenerService, MessageListenerService>();
             builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
+            builder.Services.AddScoped<IMessageService, MessageService>();
 
 
             return builder.Build();

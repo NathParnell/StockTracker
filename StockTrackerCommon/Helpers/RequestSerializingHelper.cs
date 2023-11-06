@@ -126,6 +126,13 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data, portNumber);
         }
 
+        public static string CreateGetSuppliersBySupplierIdsRequest(List<string> supplierIds, string portNumber)
+        {
+            string methodName = "RetrieveSuppliersBySupplierIds";
+            object[] data = new object[] { supplierIds };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
         /// <summary>
         /// Creates a JSON string of a Validate Customer Login Request
         /// </summary>
@@ -159,6 +166,13 @@ namespace StockTrackerCommon.Helpers
         {
             string methodName = "RetrieveAllCustomers";
             object[] data = new object[] { };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
+        public static string CreateGetCustomersByCustomerIdsRequest(List<string> customerIds, string portNumber)
+        {
+            string methodName = "RetrieveCustomersByCustomerIds";
+            object[] data = new object[] { customerIds };
             return CreateRequest(methodName, data, portNumber);
         }
 

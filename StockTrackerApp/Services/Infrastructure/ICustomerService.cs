@@ -14,5 +14,6 @@ namespace StockTrackerApp.Services.Infrastructure
         bool Logout();
         Customer GetCustomerByCustomerId(string customerId);
         List<Customer> GetAllCustomers();
+        List<Customer> GetCustomersByCustomerIds(List<string> customerIds);
     }
 }

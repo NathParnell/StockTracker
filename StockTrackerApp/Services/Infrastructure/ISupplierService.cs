@@ -14,5 +14,6 @@ namespace StockTrackerApp.Services.Infrastructure
         bool Logout();
         Supplier GetSupplierBySupplierId(string supplierId);
         List<Supplier> GetAllSuppliers();
+        List<Supplier> GetSuppliersBySupplierIDs(List<string> supplierIds);
     }
 }

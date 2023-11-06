@@ -30,9 +30,9 @@ namespace StockTrackerApp.Components.SupplierComponents
         {
             _navManager.NavigateTo("ViewBasket", true);
         }
-        private async Task NavigateCounter()
+        private async Task NavigateMessages()
         {
-            _navManager.NavigateTo("Counter", true);
+            _navManager.NavigateTo("Messages", true);
         }
         private async Task Logout()
         {

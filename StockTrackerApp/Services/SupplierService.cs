@@ -96,6 +96,7 @@ namespace StockTrackerApp.Services
             return true;
         }
 
+        #region "Ports Methods"
         private void RequestCommunicationPorts(string supplierId)
         {
             //We create a JSON string of our Request Communication Ports Request and pass it to the TCP handler which handles our request
@@ -134,6 +135,8 @@ namespace StockTrackerApp.Services
             }
         }
 
+        #endregion
+
         public Supplier GetSupplierBySupplierId(string supplierId)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetSupplierBySupplierIdRequest(supplierId, _clientTransportService.ConnectionPortNumber));
@@ -149,6 +152,18 @@ namespace StockTrackerApp.Services
         public List<Supplier> GetAllSuppliers()
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllSuppliersRequest(_clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrWhiteSpace(jsonResponse))
+                return null;
+
+            List<Supplier> suppliers = ResponseDeserializingHelper.DeserializeResponse<List<Supplier>>(jsonResponse).First().ToList();
+            return suppliers;
+        }
+
+        public List<Supplier> GetSuppliersBySupplierIDs(List<string> supplierIds)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetSuppliersBySupplierIdsRequest(supplierIds, _clientTransportService.ConnectionPortNumber));
 
             //if the method we tried to call did not exist
             if (String.IsNullOrWhiteSpace(jsonResponse))

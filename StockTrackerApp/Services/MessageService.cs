@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StockTrackerApp.Services
 {
-    public class MessageService
+    public class MessageService : IMessageService
     {
         //Define Services
         private readonly IClientTransportService _clientTransportService;

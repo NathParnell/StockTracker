@@ -1,0 +1,9 @@
+<div class="messageContactsConatiner">
+    <h1>Messages</h1>
+    @foreach (var customer in _customers)
+    {
+        <div class="messageContact">
+            <h4>@customer.FirstNames @customer.Surname</h4>
+        </div>
+    }
+</div>

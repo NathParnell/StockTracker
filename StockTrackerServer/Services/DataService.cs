@@ -52,6 +52,18 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<List<Supplier>> GetSuppliersBySupplierIds(List<string> supplierIds)
+        {
+            try
+            {
+                return await _context.Suppliers.Where(supp => supplierIds.Contains(supp.SupplierId.ToString())).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<Customer> GetCustomerByEmail(string email)
         {
             try
@@ -69,6 +81,18 @@ namespace StockTrackerServer.Services
             try
             {
                 return await _context.Customers.FirstOrDefaultAsync(cust => cust.CustomerId == customerId);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Customer>> GetCustomersByCustomerIds(List<string> customerIds)
+        {
+            try
+            {
+                return await _context.Customers.Where(cust => customerIds.Contains(cust.CustomerId.ToString())).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -125,7 +149,20 @@ namespace StockTrackerServer.Services
         }
         public async Task<List<string>> GetContactIds(string userId)
         {
-            return null;
+            try
+            {
+                var userIDs = _context.Messages
+                    .Where(message => message.ReceiverId == userId || message.SenderId == userId)
+                    .Select(message => message.ReceiverId == userId ? message.SenderId : message.ReceiverId)
+                    .Distinct()
+                    .ToList();
+
+                return userIDs;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         #endregion

@@ -183,6 +183,16 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(suppliers);
         }
 
+        public string RetrieveSuppliersBySupplierIds(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> supplierIds = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<Supplier> suppliers = _dataService.GetSuppliersBySupplierIds(supplierIds).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(suppliers);
+
+        }
+
         /// <summary>
         /// Method which takes in an object array and turns it into a customer id
         /// With this information we can make a call to the data service to retrieve a customer by the aforementioned customer id
@@ -211,6 +221,15 @@ namespace StockTrackerServer.Services
             List<Customer> customers = _dataService.GetAllCustomers().Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(customers);
+        }
+
+        public string RetrieveCustomersByCustomerIds(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> customerIds = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<Customer> suppliers = _dataService.GetCustomersByCustomerIds(customerIds).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(suppliers);
         }
 
         /// <summary>
@@ -305,15 +324,22 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(productCategories);
         }
 
+        /// <summary>
+        /// Method which takes in an object array and converts it in to a string which is the user id of the user whos contacts we wish to retrieve
+        /// We make a call to the data service to retrieve the contacts of the user with the user id we pass through
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
         public string RetrieveContactIds(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
             string userId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
-            //List<string> contactIds = _dataService.GetContactIds(userId).Result;
+            List<string> contactIds = _dataService.GetContactIds(userId).Result;
             //make response
-            //return ResponseSerializingHelper.CreateResponse(contactIds);
-            return null;
+            return ResponseSerializingHelper.CreateResponse(contactIds);
         }
+
         #endregion
 
         #region "Delete Methods"

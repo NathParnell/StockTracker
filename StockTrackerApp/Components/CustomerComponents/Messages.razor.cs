@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using StockTrackerApp.Services.Infrastructure;
+using StockTrackerCommon.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace StockTrackerApp.Components.CustomerComponents
     {
         //Inject Services
         [Inject] private ICustomerService _customerService { get; set; }
+        [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IMessageService _messageService { get; set; }
 
         //declare variables
-        private List<string> ContactIds { get; set; }
+        private List<string> _contactIds { get; set; }
+        private List<Supplier> _suppliers { get; set; }
 
 
         protected override async Task OnInitializedAsync()
@@ -26,7 +30,12 @@ namespace StockTrackerApp.Components.CustomerComponents
 
         private async Task Init()
         {
-            
+            _contactIds = _messageService.GetContactIds(_customerService.CurrentUser.CustomerId);
+            if (_contactIds != null)
+            {
+                _suppliers = _supplierService.GetSuppliersBySupplierIDs(_contactIds);
+            }
+
         }
     }
 }

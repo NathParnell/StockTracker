@@ -1,1 +1,9 @@
-﻿<h3>Messages</h3>
+﻿<div class="messageContactsConatiner">
+    <h1>Messages</h1>
+    @foreach (var supplier in _suppliers)
+    {
+        <div class="messageContact">
+            <h4>@supplier.CompanyName</h4>
+        </div>
+    }
+</div>

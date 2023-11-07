@@ -340,6 +340,15 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(orders);
         }
 
+        public string RetrieveOrderItemsByOrderItemIds(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> orderItemIds = JsonSerializer.Deserialize<List<List<string>>>(request.Data.ToString()).First();
+            List<OrderItem> orderItems = _dataService.GetOrderItemsByOrderItemIds(orderItemIds).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(orderItems);
+        }
+
         /// <summary>
         /// Method which takes in an object array and converts it in to a string which is the user id of the user whos contacts we wish to retrieve
         /// We make a call to the data service to retrieve the contacts of the user with the user id we pass through

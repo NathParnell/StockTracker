@@ -95,7 +95,7 @@ namespace StockTrackerApp.Services
         #endregion
 
         #region "Get Methods"
-        public List<Order> GetSuppliersOrderRequests(string supplierId)
+        public List<Order> GetOrderRequestsBySupplierId(string supplierId)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetOrderRequestsBySupplierIdRequest(supplierId, _clientTransportService.ConnectionPortNumber));
 
@@ -105,6 +105,21 @@ namespace StockTrackerApp.Services
 
             List<Order> orderRequests = ResponseDeserializingHelper.DeserializeResponse<List<Order>>(jsonResponse).First().ToList();
             return orderRequests;
+        }
+
+        public List<OrderItem> GetOrderItemsByOrderItemIds(List<string> orderItemIds)
+        {
+            if (orderItemIds == null)
+                return null;
+
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetOrderItemsByOrderItemIdsRequest(orderItemIds, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return null;
+
+            List<OrderItem> orderItems = ResponseDeserializingHelper.DeserializeResponse<List<OrderItem>>(jsonResponse).First().ToList();
+            return orderItems;
         }
 
         #endregion

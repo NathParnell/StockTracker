@@ -19,6 +19,7 @@ namespace StockTrackerApp.Pages.SupplierPages
 
         //Define Variables
         private List<Order> _orderRequests = new List<Order>();
+        private List<OrderItem> _orderItems = new List<OrderItem>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -28,7 +29,9 @@ namespace StockTrackerApp.Pages.SupplierPages
 
         private void Init()
         {
-            _orderRequests = _orderService.GetSuppliersOrderRequests(_supplierService.CurrentUser.SupplierId);
+            _orderRequests = _orderService.GetOrderRequestsBySupplierId(_supplierService.CurrentUser.SupplierId);
+            List<string> orderItemIds  = _orderRequests.SelectMany(order => order.OrderItemIds).ToList();
+            _orderItems = _orderService.GetOrderItemsByOrderItemIds(orderItemIds);
         }
 
     }

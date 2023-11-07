@@ -340,6 +340,17 @@ namespace StockTrackerCommon.Helpers
 
         #endregion
 
+        #region "Order Item Requests"
+
+        public static string CreateGetOrderItemsByOrderItemIdsRequest(List<string> orderItemIds, string portNumber)
+        {
+            string methodName = "RetrieveOrderItemsByOrderItemIds";
+            object[] data = new object[] { orderItemIds };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
+        #endregion
+
         #endregion
 
 

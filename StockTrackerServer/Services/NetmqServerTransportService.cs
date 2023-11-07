@@ -134,6 +134,11 @@ namespace StockTrackerServer.Services
         {
             try
             {
+                if (clientPort.Contains(":"))
+                {
+                    clientPort = clientPort.Split(':')[1];
+                }
+
                 using (var socket = new RequestSocket())
                 {
                     socket.Connect($"tcp://{clientIp}:{clientPort}");

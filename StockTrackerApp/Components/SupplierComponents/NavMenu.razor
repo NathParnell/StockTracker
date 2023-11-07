@@ -4,13 +4,13 @@
     @if (_authorizationService.IsLoggedIn == true)
     {
         <div id="navHome" class="link" @onclick="() => NavigateHome()" title="Home">
-            <span class="fa-solid fa-house" style="color: #fdf7f7;" aria-hidden="true"></span>
+            <span class="oi oi-home" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
         <div id="navMessages "class="link" @onclick="() => NavigateMessages()" title="Private Messaging">
-            <span class="fa-solid fa-message" style="color: #fdf7f7;" aria-hidden="true"></span>
+            <span class="oi oi-chat" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
         <div class="link" @onclick="() => Logout()" title="Logout">
-            <span class="fa-solid fa-right-from-bracket" style="color: #fdf7f7;" aria-hidden="true"></span>
+            <span class="oi oi-account-logout" style="color: #fdf7f7;" aria-hidden="true"></span>
         </div>
     }
 </nav>

@@ -27,6 +27,7 @@ namespace StockTrackerServer.Services.Infrastructure
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);
         Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
         Task<List<string>> GetContactIds(string userId);
+        Task<List<Message>> GetMessageThreads(string userId, string contactId);
         #endregion
 
         #region "Delete Methods"

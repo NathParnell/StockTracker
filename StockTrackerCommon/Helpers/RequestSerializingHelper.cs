@@ -86,6 +86,20 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data, portNumber);
         }
 
+        /// <summary>
+        /// Creates a JSON string of a Get Message Threads Request
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="contactId"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateGetMessageThreadsRequest(string userId, string contactId, string portNumber)
+        {
+            string methodName = "RetrieveMessageThreads";
+            object[] data = new object[] { userId, contactId };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
         #endregion
 
         #region "User Requests"

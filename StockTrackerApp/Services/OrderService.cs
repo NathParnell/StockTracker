@@ -28,11 +28,13 @@ namespace StockTrackerApp.Services
         //define services
         private readonly IClientTransportService _clientTransportService;
         private readonly ICustomerService _customerService;
+        private readonly IMessageService _messageService;
 
-        public OrderService(IClientTransportService clientTransportService, ICustomerService customerService)
+        public OrderService(IClientTransportService clientTransportService, ICustomerService customerService, IMessageService messageService)
         {
             _clientTransportService = clientTransportService;
             _customerService = customerService;
+            _messageService = messageService;
         }
 
         //Define public variables
@@ -143,11 +145,10 @@ namespace StockTrackerApp.Services
                     SenderId = _customerService.CurrentUser.CustomerId,
                     ReceiverId = supplierId,
                     Subject = "New Order Request",
-                    MessageBody = $"A new order request has been created by {_customerService.CurrentUser.FirstNames}{_customerService.CurrentUser.Surname}"
+                    MessageBody = $"A new order request has been created by {_customerService.CurrentUser.FirstNames} {_customerService.CurrentUser.Surname}"
                 };
 
-                string messageJsonResponse = _clientTransportService.TcpHandler(
-                    RequestSerializingHelper.CreateSendPrivateMessagesRequest(new List<Message>() {message}, _clientTransportService.ConnectionPortNumber));
+                bool messageSent = _messageService.SendMessage(message);
             }
 
             return addConfirmation;

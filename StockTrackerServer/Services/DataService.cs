@@ -147,6 +147,7 @@ namespace StockTrackerServer.Services
                 return null;
             }
         }
+
         public async Task<List<string>> GetContactIds(string userId)
         {
             try
@@ -160,6 +161,23 @@ namespace StockTrackerServer.Services
                 return userIDs;
             }
             catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Message>> GetMessageThreads(string userId, string contactId)
+        {
+            try
+            {
+                var messages = await _context.Messages
+                    .Where(mess => (mess.SenderId == userId && mess.ReceiverId == contactId) || (mess.SenderId == contactId && mess.ReceiverId == userId))
+                    .OrderBy(mess => mess.SentTime)
+                    .ToListAsync();
+
+                return messages;
+            }
+            catch (Exception ex)
             {
                 return null;
             }

@@ -340,6 +340,22 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(contactIds);
         }
 
+        /// <summary>
+        /// Method which takes in an object array and converts it in to a list of strings which are the user ids of the users whose message threads we wish to retrieve
+        /// We make a call to the data service to retrieve the message threads of the users with the user ids we pass through
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveMessageThreads(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            List<string> parameters = JsonSerializer.Deserialize<List<string>>(request.Data.ToString());
+            List<Message> messages = _dataService.GetMessageThreads(parameters[0], parameters[1]).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(messages);
+        }
+
         #endregion
 
         #region "Delete Methods"

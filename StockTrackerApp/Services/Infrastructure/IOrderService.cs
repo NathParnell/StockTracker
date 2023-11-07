@@ -9,12 +9,18 @@ namespace StockTrackerApp.Services.Infrastructure
 {
     public interface IOrderService
     {
-        List<OrderItem> BasketItems { get; } 
+        List<OrderItem> BasketItems { get; }
 
+        #region "Basket Methods"
         void AddItemToBasket(OrderItem basketItem, decimal productPrice);
         void RemoveItemFromBasket(string productId);
         void EditQuantityOfItemInBasket(OrderItem basketItem, int newQuantity, decimal productPrice);
         void ClearBasket();
+        #endregion
+
+        #region "Get Methods"
+        List<Order> GetSuppliersOrderRequests(string supplierId);
+        #endregion
 
         #region "Add Methods"
         bool CreateOrder(List<OrderItem> itemsToOrder, string supplierId);

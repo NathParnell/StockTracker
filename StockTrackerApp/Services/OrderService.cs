@@ -1,15 +1,4 @@
-﻿
-/* Unmerged change from project 'StockTrackerApp (net7.0-maccatalyst)'
-Before:
-using StockTrackerCommon.Models;
-After:
-using StockTrackerApp;
-using StockTrackerApp.Services;
-using StockTrackerApp.Services;
-using StockTrackerApp.Services.Infrastructure;
-using StockTrackerCommon.Models;
-*/
-using StockTrackerApp.Services.Infrastructure;
+﻿using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
 using System;
@@ -40,6 +29,7 @@ namespace StockTrackerApp.Services
         //Define public variables
         public List<OrderItem> BasketItems { get; private set; } = new List<OrderItem>();
 
+        #region "Basket Methods"
         /// <summary>
         /// Method which adds an item to the basket
         /// </summary>
@@ -101,6 +91,23 @@ namespace StockTrackerApp.Services
         {
             BasketItems.Clear();
         }
+
+        #endregion
+
+        #region "Get Methods"
+        public List<Order> GetSuppliersOrderRequests(string supplierId)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetOrderRequestsBySupplierIdRequest(supplierId, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return null;
+
+            List<Order> orderRequests = ResponseDeserializingHelper.DeserializeResponse<List<Order>>(jsonResponse).First().ToList();
+            return orderRequests;
+        }
+
+        #endregion
 
         #region "Add Methods"
         public bool CreateOrder(List<OrderItem> itemsToOrder, string supplierId)

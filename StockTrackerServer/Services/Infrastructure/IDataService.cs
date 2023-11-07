@@ -26,6 +26,7 @@ namespace StockTrackerServer.Services.Infrastructure
         Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);
         Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
+        Task<List<Order>> GetOrderRequestsBySupplierId(string supplierId);
         Task<List<string>> GetContactIds(string userId);
         Task<List<Message>> GetMessageThreads(string userId, string contactId);
         #endregion

@@ -148,6 +148,18 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<List<Order>> GetOrderRequestsBySupplierId(string supplierId)
+        {
+            try
+            {
+                return await _context.Orders.Where(order => order.SupplierId == supplierId && order.OrderStatus == OrderStatus.Pending).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<string>> GetContactIds(string userId)
         {
             try

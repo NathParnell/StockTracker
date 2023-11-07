@@ -325,6 +325,22 @@ namespace StockTrackerServer.Services
         }
 
         /// <summary>
+        /// Method which takes in an object array and converts it in to a string which is the supplier id of the supplier whos order requests we wish to retrieve
+        /// We make a call to the data service to retrieve the order requests of the supplier with the supplier id we pass through
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveOrderRequestsBySupplierId(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            string supplierId = JsonSerializer.Deserialize<List<string>>(request.Data.ToString()).First();
+            List<Order> orders = _dataService.GetOrderRequestsBySupplierId(supplierId).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(orders);
+        }
+
+        /// <summary>
         /// Method which takes in an object array and converts it in to a string which is the user id of the user whos contacts we wish to retrieve
         /// We make a call to the data service to retrieve the contacts of the user with the user id we pass through
         /// We then create and return our response

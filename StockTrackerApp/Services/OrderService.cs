@@ -134,16 +134,21 @@ namespace StockTrackerApp.Services
                 OrderNotes = ""
             };
 
-            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddOrderRequest(order, _clientTransportService.ConnectionPortNumber));
+            //add the order to order table
+            string jsonResponseForAddingOrder = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddOrderRequest(order, _clientTransportService.ConnectionPortNumber));
 
-            //if the method we tried to call did not exist
-            if (String.IsNullOrEmpty(jsonResponse))
+            //add the order items to order items table
+            string jsonResponseForAddingOrderItems = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateAddOrderItemsRequest(itemsToOrder, _clientTransportService.ConnectionPortNumber));
+
+            //if the methods we tried to call did not exist
+            if (String.IsNullOrWhiteSpace(jsonResponseForAddingOrder) || String.IsNullOrWhiteSpace(jsonResponseForAddingOrderItems))
                 return false;
 
-            bool addConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+            bool addConfirmationForOrder = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponseForAddingOrder).First();
+            bool addConfirmationForOrderItems = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponseForAddingOrderItems).First();
 
             //if the order request has been created successfully, then we notify the user
-            if (addConfirmation)
+            if (addConfirmationForOrder && addConfirmationForOrderItems)
             {
                 Message message = new Message()
                 {
@@ -158,7 +163,7 @@ namespace StockTrackerApp.Services
                 bool messageSent = _messageService.SendMessage(message);
             }
 
-            return addConfirmation;
+            return addConfirmationForOrder && addConfirmationForOrderItems;
         }
         #endregion
     }

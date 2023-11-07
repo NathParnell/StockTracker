@@ -257,6 +257,20 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<bool> AddOrderItems(List<OrderItem> orderItems)
+        {
+            try
+            {
+                _context.OrderItems.AddRange(orderItems);
+                _context.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> AddMessage(Message message)
         {
             try

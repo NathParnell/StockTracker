@@ -55,6 +55,8 @@ namespace StockTrackerApp.Services
 
                         // Send a response back to the server
                         socket.SendFrame("Message received by client");
+                        
+                        socket.Unbind($"tcp://*:{MessagePortNumber}");
 
                         //Ensure that a request was received
                         if (String.IsNullOrWhiteSpace(message) == false)

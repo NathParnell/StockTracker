@@ -32,7 +32,7 @@
             }
         }
     </div>
-    <div class="sendMessageContainer">
+    <div class="sendMessageContainer" style="position:fixed; width:60%; bottom:0px;">
         <input type="text" class="sendMessageInput" @bind="_newMessage" placeholder="Type new message here"/>
         <button type="button" class="sendMessageButton" @onclick="() => SendMessage()">Send</button> 
     </div>

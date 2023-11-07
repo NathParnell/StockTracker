@@ -17,6 +17,7 @@ namespace StockTrackerApp.Pages
         [Inject] private IAuthorizationService _authorizationService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
+        [Inject] private IMessageListenerService _messageListenerService { get; set; }
         [Inject] private NavigationManager _navManager { get; set; }
 
         //declare variables
@@ -32,6 +33,7 @@ namespace StockTrackerApp.Pages
         protected override async Task OnInitializedAsync()
         {
             _sessionHistoryService.AddWebpageToHistory("MessageThread");
+            _messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
             Init();
         }
 
@@ -79,6 +81,14 @@ namespace StockTrackerApp.Pages
             if (messageSent)
             {
                _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
+            }
+        }
+
+        private void NewMessageReceived(object sender, Message newMessage)
+        {
+            if (newMessage.SenderId == ContactId)
+            {
+                _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
             }
         }
     }

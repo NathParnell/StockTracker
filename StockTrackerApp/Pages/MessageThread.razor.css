@@ -7,16 +7,21 @@
 
 .messageThreadsContactContainer{
     height:50px;
+    width:60%;
     background-color:#322521;
     color:white;
     text-align:center;
-
+    position:fixed;
 }
 
 .messageContainer{
     display:flex;
     flex-direction:row;
     margin-top: 10px;
+}
+
+.messageThreads{
+    margin-top:50px;
 }
 
 .userMessage{

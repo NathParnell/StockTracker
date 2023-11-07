@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockTrackerCommon.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace StockTrackerApp.Services.Infrastructure
     public interface IMessageListenerService
     {
         string MessagePortNumber { get; set; }
+        event EventHandler<Message> MessageReceived;
 
         void StartListener();
         void StopListener();

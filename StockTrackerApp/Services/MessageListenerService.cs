@@ -17,6 +17,9 @@ namespace StockTrackerApp.Services
         //Define port number for listening for messages
         public string MessagePortNumber { get; set; } = String.Empty;
 
+        //define events
+        public event EventHandler<Message> MessageReceived;
+
 
         public void StartListener()
         {
@@ -78,6 +81,8 @@ namespace StockTrackerApp.Services
                 string decryptedMessage = EncryptionHelper.Decrypt(encryptedMessage);
 
                 Message message = JsonSerializer.Deserialize<Message>(decryptedMessage);
+
+                MessageReceived?.Invoke(this, message);
 
             }
             catch (Exception ex)

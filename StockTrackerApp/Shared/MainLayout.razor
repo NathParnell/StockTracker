@@ -3,20 +3,23 @@
 
 <script src="https://kit.fontawesome.com/ca28eb9466.js" crossorigin="anonymous"></script>
 <div class="page">
-    @if (_authorizationService.IsLoggedIn)
-    {
-        @if (_authorizationService.UserType == StockTrackerCommon.Models.UserType.Supplier)
+        @if (_authorizationService.IsLoggedIn)
         {
-            <StockTrackerApp.Components.SupplierComponents.NavMenu/>
+            <div style="position:fixed; top:0px; width:100%">
+                @if (_authorizationService.UserType == StockTrackerCommon.Models.UserType.Supplier)
+                {
+                    <StockTrackerApp.Components.SupplierComponents.NavMenu />
+                }
+                else if (_authorizationService.UserType == StockTrackerCommon.Models.UserType.Customer)
+                {
+                    <StockTrackerApp.Components.CustomerComponents.NavMenu />
+                }
+            </div>
         }
-        else if (_authorizationService.UserType == StockTrackerCommon.Models.UserType.Customer)
-        {
-            <StockTrackerApp.Components.CustomerComponents.NavMenu/>
-        }
-    }
+    
 @*     <NavMenu /> *@
     <main>
-        <article class="content px-4">
+        <article class="content px-4" style="margin-top:25px">
             @Body
         </article>
     </main>

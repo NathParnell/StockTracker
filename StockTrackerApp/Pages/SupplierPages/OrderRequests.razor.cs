@@ -15,6 +15,7 @@ namespace StockTrackerApp.Pages.SupplierPages
         [Inject] private IOrderService _orderService { get; set; }
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private ICustomerService _customerService { get; set; }
+        [Inject] private IMessageService _messageService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IProductService _productService { get; set; }
 
@@ -56,7 +57,11 @@ namespace StockTrackerApp.Pages.SupplierPages
         {
             //update the order request have a status of accepted
             order.OrderStatus = OrderStatus.Accepted;
-            _orderService.UpdateOrder(order);
+            if (_orderService.UpdateOrder(order))
+            {
+                string messageBody = $"Your order request has been Accepted";
+                bool messageSent = _messageService.SendMessage(order.CustomerId, messageBody, "OrderRequest");
+            }
 
             //get the product ids of the order items which are in the order request
             List<string> productIds = _orderItemsInRequests.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId))
@@ -79,7 +84,11 @@ namespace StockTrackerApp.Pages.SupplierPages
         {
             //update the order request have a status of accepted
             order.OrderStatus = OrderStatus.Rejected;
-            _orderService.UpdateOrder(order);
+            if (_orderService.UpdateOrder(order))
+            {
+                string messageBody = $"Your order request has been rejected";
+                bool messageSent = _messageService.SendMessage(order.CustomerId, messageBody, "OrderRequest");
+            }
 
             //Refresh the page
             Refresh();

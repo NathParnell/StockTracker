@@ -64,19 +64,8 @@ namespace StockTrackerApp.Pages
             {
                 return;
             }
-
-            //create new message
-            Message newMessage = new Message()
-            {
-                MessageId = Guid.NewGuid().ToString(),
-                SentTime = DateTime.Now,
-                SenderId = _currentUserId,
-                ReceiverId = ContactId,
-                Subject = "Message",
-                MessageBody = _newMessage  
-            };
             
-            bool messageSent = _messageService.SendMessage(newMessage);
+            bool messageSent = _messageService.SendMessage(ContactId, _newMessage);
 
             if (messageSent)
             {

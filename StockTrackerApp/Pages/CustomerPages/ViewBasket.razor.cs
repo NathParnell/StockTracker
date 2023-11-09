@@ -19,6 +19,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private IProductService _productService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IMessageService _messageService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
         [Inject] private NavigationManager _navmanager { get; set; }
 
@@ -113,6 +114,8 @@ namespace StockTrackerApp.Pages.CustomerPages
             {
                 if (_orderService.CreateOrder(orderItems, supplier.SupplierId))
                 {
+                    string messageBody = $"Hi, please review my Order request";
+                    bool messageSent = _messageService.SendMessage(supplier.SupplierId, messageBody, "OrderRequest");
                     await _jSRuntime.InvokeAsync<object>("alert", "Order Placed Successfully");
                     //remove the items just ordered from the basket
                     foreach (OrderItem orderItem in orderItems)

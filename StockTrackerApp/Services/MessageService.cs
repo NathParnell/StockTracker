@@ -14,10 +14,17 @@ namespace StockTrackerApp.Services
     {
         //Define Services
         private readonly IClientTransportService _clientTransportService;
+        private readonly ICustomerService _customerService;
+        private readonly ISupplierService _supplierService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public MessageService(IClientTransportService clientTransportService)
+        public MessageService(IClientTransportService clientTransportService, ICustomerService customerService, ISupplierService supplierService,
+            IAuthorizationService authorizationService)
         {
             _clientTransportService = clientTransportService;
+            _customerService = customerService;
+            _supplierService = supplierService;
+            _authorizationService = authorizationService;
         }
 
         public List<string> GetContactIds(string userId)
@@ -49,8 +56,32 @@ namespace StockTrackerApp.Services
             return messages;
         }
 
-        public bool SendMessage(Message message)
+        public bool SendMessage(string receiverId, string messageBody)
         {
+            string messageSubject = "Message";
+            return SendMessage(receiverId, messageBody, messageSubject);
+        }
+
+        public bool SendMessage(string receiverId, string messageBody, string messageSubject)
+        {
+            //set the sender id based on the current user
+            string senderId = String.Empty;
+            if (_authorizationService.UserType == UserType.Supplier)
+                senderId = _supplierService.CurrentUser.SupplierId;
+            else if (_authorizationService.UserType == UserType.Customer)
+                senderId = _customerService.CurrentUser.CustomerId;
+
+            // Generate a new message
+            Message message = new Message()
+            {
+                MessageId = Taikandi.SequentialGuid.NewGuid().ToString(),
+                SentTime = DateTime.Now,
+                ReceiverId = receiverId,
+                SenderId = senderId,
+                Subject = messageSubject,
+                MessageBody = messageBody
+            };
+
             string jsonResponse = _clientTransportService.TcpHandler(
                 RequestSerializingHelper.CreateSendPrivateMessagesRequest(new List<Message>() { message }, _clientTransportService.ConnectionPortNumber));
 

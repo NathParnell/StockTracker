@@ -1,0 +1,22 @@
+.orderRequestsPageContainer {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.orderRequestsContainer{
+    width:100%;
+}
+
+.orderRequestContainer {
+    width: 100%;
+    padiding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border: 1px solid black;
+}

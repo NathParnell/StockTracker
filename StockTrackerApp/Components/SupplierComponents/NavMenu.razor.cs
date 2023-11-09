@@ -26,10 +26,6 @@ namespace StockTrackerApp.Components.SupplierComponents
         {
             _navManager.NavigateTo("Home", true);
         }
-        private async Task NavigateBasket()
-        {
-            _navManager.NavigateTo("ViewBasket", true);
-        }
         private async Task NavigateMessages()
         {
             _navManager.NavigateTo("Messages", true);

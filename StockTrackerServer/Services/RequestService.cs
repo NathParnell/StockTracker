@@ -437,11 +437,35 @@ namespace StockTrackerServer.Services
         #endregion
 
         #region "Update Methods"
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a list of products
+        /// With this information we can make a call to the data service to update the products
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
         public string UpdateProduct(object[] requestObject)
         {
             Request request = (Request)requestObject[0];
             Product product = JsonSerializer.Deserialize<List<Product>>(request.Data.ToString()).First();
             bool editConfirmation = _dataService.UpdateProduct(product).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(editConfirmation);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into an order object
+        /// With this information we can make a call to the data service to update the order
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string UpdateOrder(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            Order order = JsonSerializer.Deserialize<List<Order>>(request.Data.ToString()).First();
+            bool editConfirmation = _dataService.UpdateOrder(order).Result;
             //make response
             return ResponseSerializingHelper.CreateResponse(editConfirmation);
         }

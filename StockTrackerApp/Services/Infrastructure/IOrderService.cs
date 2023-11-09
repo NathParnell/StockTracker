@@ -26,5 +26,11 @@ namespace StockTrackerApp.Services.Infrastructure
         #region "Add Methods"
         bool CreateOrder(List<OrderItem> itemsToOrder, string supplierId);
         #endregion
+
+        #region "Update Methods"
+
+        bool UpdateOrder(Order order);
+
+        #endregion
     }
 }

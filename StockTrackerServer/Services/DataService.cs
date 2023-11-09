@@ -331,6 +331,30 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<bool> UpdateOrder(Order updatedOrder)
+        {
+            try
+            {
+                var order = _context.Orders.FirstOrDefault(ord => ord.OrderId == updatedOrder.OrderId);
+                if (order != null)
+                {
+                    //update order values - the only vakues that would reallu change are the order items, the notes and most importantly the status
+                    order.OrderItemIds = updatedOrder.OrderItemIds;
+                    order.OrderNotes = updatedOrder.OrderNotes;
+                    order.OrderStatus = updatedOrder.OrderStatus;
+
+                    _context.Entry(order).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         #endregion
 
     }

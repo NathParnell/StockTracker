@@ -181,5 +181,24 @@ namespace StockTrackerApp.Services
             return addConfirmationForOrder && addConfirmationForOrderItems;
         }
         #endregion
+
+        #region "Update Methods"
+
+        public bool UpdateOrder(Order order)
+        {
+            if (order == null)
+                return false;
+
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateUpdateOrderRequest(order, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrWhiteSpace(jsonResponse))
+                return false;
+
+            bool updateConfirmation = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+            return updateConfirmation;
+        }
+
+        #endregion
     }
 }

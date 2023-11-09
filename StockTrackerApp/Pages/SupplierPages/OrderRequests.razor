@@ -1,3 +1,35 @@
-﻿@page "/OrderRequests"
+﻿@page "/OrderRequests";
+@using StockTrackerCommon.Models;
 
-<h1>Order requests</h1>
+<div class="orderRequestsPageContainer">
+    <h1>Order Requests</h1>
+    <div class="orderRequestsContainer">
+        @foreach (Order order in _orderRequests)
+        {
+            var customer = _customers.FirstOrDefault(cust => cust.CustomerId == order.CustomerId);
+            <div class="orderRequestContainer">
+                <h3>Customer: @customer.FirstNames @customer.Surname</h3>
+                <div class="orderItems">
+                    @foreach (var orderItem in _orderItemsInRequests.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
+                    {
+                        var product = _productsRequested.FirstOrDefault(prod => prod.ProductId == orderItem.ProductId);
+                            <div class="orderItem">
+                                <h4>Product: @product.ProductName</h4>
+                                <p>Quantity: @orderItem.Quantity</p>
+                                <p>Price: @orderItem.OrderPrice</p>
+                            </div>
+                    }
+                </div>
+                <div class="orderRequestInfo">
+                    <h4>Date Placed: @order.OrderDate.ToShortDateString()</h4>
+                    <h4>Total Price: £@order.TotalPrice</h4>
+                </div>
+                <div class="orderRequestActionButtons">
+                    <button type="button" id="rejectOrderButton" @onclick="() => RejectOrderRequest(order)">Reject Order</button>
+                    <button type="button" id="acceptOrderButton" @onclick="() => AcceptOrderRequest(order)">Accept Order</button>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

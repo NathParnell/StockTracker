@@ -46,6 +46,7 @@ namespace StockTrackerServer.Services.Infrastructure
 
         #region "Update Methods"
         Task<bool> UpdateProduct(Product updatedProduct);
+        Task<bool> UpdateOrder(Order updatedOrder);
         #endregion
     }
 }

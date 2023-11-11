@@ -22,7 +22,10 @@ namespace StockTrackerCommon.Database
             if (!seeded && context.Customers.Count() == 0
                 && context.Suppliers.Count() == 0
                 && context.Products.Count() == 0 
-                && context.ProductCategories.Count() == 0)
+                && context.ProductCategories.Count() == 0
+                && context.Orders.Count() == 0
+                && context.OrderItems.Count() == 0
+                && context.Messages.Count() == 0)
             {
                 lock (synchlock)
                 {
@@ -32,12 +35,16 @@ namespace StockTrackerCommon.Database
                         var suppliers = GenerateSuppliers();
                         var productCategories = GenerateProductCategories();
                         var products = GenerateProducts();
+                        var orders = GenerateOrders();
+                        var orderItems = GenerateOrderItems();
                         var messages = GenerateMessages();
 
                         context.Customers.AddRange(customers);
                         context.Suppliers.AddRange(suppliers);
                         context.Products.AddRange(products);
                         context.ProductCategories.AddRange(productCategories);
+                        context.Orders.AddRange(orders);
+                        context.OrderItems.AddRange(orderItems);
                         context.Messages.AddRange(messages);
 
                         context.SaveChanges();
@@ -299,6 +306,88 @@ namespace StockTrackerCommon.Database
                 }
             };
         }
+        private static Order[] GenerateOrders()
+        {
+            return new Order[]
+            {
+                new Order
+                {
+                    OrderId = "92428116-ce24-48de-15c9-08dbe2d3e428",
+                    CustomerId = "3369956f-abed-42e1-9d99-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    OrderDate = DateTime.Now,
+                    OrderStatus = OrderStatus.Pending,
+                    OrderItemIds = new List<string>(){ "50ab31d9-355d-472a-15ca-08dbe2d3e428" },
+                    TotalPrice = 12.00m,
+                    OrderNotes = ""
+                },
+                new Order
+                {
+                    OrderId = "6ac9f6ae-549c-48f8-15d3-08dbe2d3e428",
+                    CustomerId = "3369956f-abed-42e1-9d99-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    OrderDate = DateTime.Now,
+                    OrderStatus = OrderStatus.Accepted,
+                    OrderItemIds = new List<string>(){ "520d8145-d50f-4840-15d6-08dbe2d3e428", "dc3f3126-210a-440c-15d9-08dbe2d3e428" },
+                    TotalPrice = 42.00m,
+                    OrderNotes = ""
+                },
+                new Order
+                {
+                    OrderId = "06cebbb8-ab36-48a9-15dc-08dbe2d3e428",
+                    CustomerId = "838895f6-76b0-40fb-9d9a-08dbc77c7200",
+                    SupplierId = "15c30fdd-e762-4e22-9d9c-08dbc77c7200",
+                    OrderDate = DateTime.Now,
+                    OrderStatus = OrderStatus.Pending,
+                    OrderItemIds = new List<string>(){ "4622954b-d54a-4657-15e2-08dbe2d3e428", "d374f8ef-1430-4cb3-15e6-08dbe2d3e428" },
+                    TotalPrice = 57.00m,
+                    OrderNotes = ""
+                }
+            };
+        }
+
+        private static OrderItem[] GenerateOrderItems()
+        {
+            return new OrderItem[]
+            {
+                new OrderItem
+                {
+                    OrderItemId = "50ab31d9-355d-472a-15ca-08dbe2d3e428",
+                    ProductId = "850bc9f5-8138-4f5f-9d9f-08dbc77c7200",
+                    Quantity = 2,
+                    OrderPrice = 12.00m
+                },
+                new OrderItem
+                {
+                    OrderItemId = "520d8145-d50f-4840-15d6-08dbe2d3e428",
+                    ProductId = "82ba46be-2ddd-443c-9db8-08dbc77c7200",
+                    Quantity = 5,
+                    OrderPrice = 15.00m
+                },
+                new OrderItem
+                {
+                    OrderItemId = "dc3f3126-210a-440c-15d9-08dbe2d3e428",
+                    ProductId = "c4f8a7eb-fe76-41d5-9db5-08dbc77c7200",
+                    Quantity = 3,
+                    OrderPrice = 27.00m
+                },
+                new OrderItem
+                {
+                    OrderItemId = "4622954b-d54a-4657-15e2-08dbe2d3e428",
+                    ProductId = "ca0eb2ef-2d0c-4ec3-9dba-08dbc77c7200",
+                    Quantity = 4,
+                    OrderPrice = 36.00m
+                },
+                new OrderItem
+                {
+                    OrderItemId = "d374f8ef-1430-4cb3-15e6-08dbe2d3e428",
+                    ProductId = "682ab1ad-0e81-465b-9dbf-08dbc77c7200",
+                    Quantity = 2,
+                    OrderPrice = 21.00m
+                }
+            };
+        }
+
         private static Message[] GenerateMessages()
         {
             return new Message[]

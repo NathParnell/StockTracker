@@ -14,11 +14,8 @@ namespace StockTrackerApp.Components.CustomerComponents
     {
         //Inject Services
         [Inject] private NavigationManager _navManager { get; set; }
-
         [Inject] private ISupplierService _supplierService { get; set; }
-
         [Inject] private ICustomerService _customerService { get; set; }
-
         [Inject] private IAuthorizationService _authorizationService { get; set; }
 
 
@@ -29,6 +26,10 @@ namespace StockTrackerApp.Components.CustomerComponents
         private async Task NavigateBasket()
         {
             _navManager.NavigateTo("ViewBasket", true);
+        }
+        private async Task NavigateOrderHistory()
+        {
+            _navManager.NavigateTo("OrderHistory", true);
         }
         private async Task NavigateMessages()
         {

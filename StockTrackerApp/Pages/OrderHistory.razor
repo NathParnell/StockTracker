@@ -1,0 +1,12 @@
+﻿@page "/OrderHistory";
+@using StockTrackerCommon.Models;
+
+@if (_authorizationService.UserType == UserType.Supplier)
+{
+    <StockTrackerApp.Components.SupplierComponents.OrderHistory/>
+}
+else if (_authorizationService.UserType == UserType.Customer)
+{
+    <StockTrackerApp.Components.CustomerComponents.OrderHistory />
+}
+

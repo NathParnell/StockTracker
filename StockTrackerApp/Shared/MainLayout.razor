@@ -16,11 +16,15 @@
                 }
             </div>
         }
-    
-@*     <NavMenu /> *@
     <main>
         <article class="content px-4" style="margin-top:25px">
             @Body
         </article>
     </main>
+    @if (_message != null)
+    {
+        <div style="position:absolute; top:5px; left:5px; z-index:1000; width:350px; height:125px;">
+            <StockTrackerApp.Components.MessagePopup Message="_message"/>
+        </div>
+    }
 </div>

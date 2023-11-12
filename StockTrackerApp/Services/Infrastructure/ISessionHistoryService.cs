@@ -9,6 +9,7 @@ namespace StockTrackerApp.Services.Infrastructure
     public interface ISessionHistoryService
     {
         string GetPreviousWebpage();
+        string GetCurrentWebpage();
         void AddWebpageToHistory(string path);
     }
 }

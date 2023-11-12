@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 using System;
@@ -34,8 +35,18 @@ namespace StockTrackerApp.Pages
         {
             _sessionHistoryService.AddWebpageToHistory("MessageThread");
             _messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
+            //NavigationManager.LocationChanged += OnLeave;
             Init();
         }
+
+        //protected override void OnAfterRender(bool firstRender)
+        //{
+        //    base.OnAfterRender(firstRender);
+        //    if (firstRender)
+        //    {
+        //        _navManager.RegisterLocationChangingHandler(async (location) => await OnLocationChanging(location));
+        //    }
+        //}
 
         private void Init()
         {
@@ -75,10 +86,24 @@ namespace StockTrackerApp.Pages
 
         private void NewMessageReceived(object sender, Message newMessage)
         {
-            if (newMessage.SenderId == ContactId)
+            if (_sessionHistoryService.GetCurrentWebpage() == "MessageThread")
             {
-                _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
-            }
+                if (newMessage.SenderId == ContactId)
+                {
+                    _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
+                }
+            }      
         }
+
+        private void OnLeave(object sender, LocationChangedEventArgs args)
+        {
+            _messageListenerService.MessageReceived -= (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
+        }
+
+        //private async ValueTask OnLocationChanging(object args)
+        //{
+        //    _messageListenerService.MessageReceived -= (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
+        //    await Task.CompletedTask;
+        //}
     }
 }

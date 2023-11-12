@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Main.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Main.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.11" />
     <PackageReference Include="NetMQ" Version="4.0.1.13" />
     <PackageReference Include="SequentialGuidGenerator" Version="1.1.0" />

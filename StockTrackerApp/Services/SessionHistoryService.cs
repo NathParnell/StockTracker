@@ -10,7 +10,7 @@ namespace StockTrackerApp.Services
 {
     public class SessionHistoryService : ISessionHistoryService
     {
-        private List<string> PreviousWebpages = new List<string>();
+        private List<string> VisitedWebpages = new List<string>();
 
 
         /// <summary>
@@ -20,13 +20,22 @@ namespace StockTrackerApp.Services
         /// </summary>
         public string GetPreviousWebpage()
         {
-            if (PreviousWebpages != null && PreviousWebpages.Count > 0)
+            if (VisitedWebpages != null && VisitedWebpages.Count > 0)
             {
-                string redirectPath = PreviousWebpages[PreviousWebpages.Count - 2];
-                PreviousWebpages.RemoveAt(PreviousWebpages.Count - 1);
+                string redirectPath = VisitedWebpages[VisitedWebpages.Count - 2];
+                VisitedWebpages.RemoveAt(VisitedWebpages.Count - 1);
                 return redirectPath;
             }
 
+            return null;
+        }
+
+        public string GetCurrentWebpage()
+        {
+            if (VisitedWebpages != null && VisitedWebpages.Count > 0)
+            {
+                return VisitedWebpages[VisitedWebpages.Count - 1];
+            }
             return null;
         }
 
@@ -38,13 +47,13 @@ namespace StockTrackerApp.Services
         /// <param name="path"></param>
         public void AddWebpageToHistory(string path)
         {
-            if (PreviousWebpages != null && PreviousWebpages.Count > 0)
+            if (VisitedWebpages != null && VisitedWebpages.Count > 0)
             {
-                if (PreviousWebpages[PreviousWebpages.Count - 1] != path)
-                    PreviousWebpages.Add(path);
+                if (VisitedWebpages[VisitedWebpages.Count - 1] != path)
+                    VisitedWebpages.Add(path);
             }
             else
-                PreviousWebpages.Add(path);
+                VisitedWebpages.Add(path);
         }
 
     }

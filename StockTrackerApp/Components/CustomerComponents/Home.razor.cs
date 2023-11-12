@@ -15,17 +15,10 @@ namespace StockTrackerApp.Components.CustomerComponents
     public partial class Home
     {
         //Inject Services
-        [Inject]
-        private ISupplierService _supplierService { get; set; }
-
-        [Inject]
-        private NavigationManager _navManager { get; set; }
-
-        [Inject]
-        private ISessionHistoryService _sessionHistoryService { get; set; }
-
-        [Inject]
-        private IProductCategoryService _productCategoryService { get; set; }
+        [Inject] private ISupplierService _supplierService { get; set; }
+        [Inject]private NavigationManager _navManager { get; set; }
+        [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IProductCategoryService _productCategoryService { get; set; }
 
         //declare variables
         private List<Supplier> _suppliers = new List<Supplier>();

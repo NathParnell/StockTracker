@@ -13,7 +13,7 @@
 
 .orderRequestContainer {
     width: 100%;
-    padiding: 20px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

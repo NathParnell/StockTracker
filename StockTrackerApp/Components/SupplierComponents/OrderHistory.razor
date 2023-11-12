@@ -1,5 +1,51 @@
-﻿<h3>OrderHistory</h3>
+﻿@using StockTrackerCommon.Models;
 
-@code {
-
-}
+<div class="orderHistoryContainer">
+    <h1>Order History</h1>
+    @if (_orders.Any(order => order.OrderStatus == OrderStatus.Accepted))
+    {
+        <div class="acceptedOrdersContainer">
+            <h2>Accepted Orders</h2>
+            @foreach (Order order in _orders.Where(order => order.OrderStatus == OrderStatus.Accepted))
+            {
+                Customer customer = _customers.FirstOrDefault(supp => supp.CustomerId == order.CustomerId);
+                <h3>Customer: @customer.FirstNames @customer.Surname </h3>
+                @foreach (OrderItem orderItem in _orderItems.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
+                {
+                    <div class="orderItem">
+                        <h4>Product: @_orderedProducts.FirstOrDefault(prod => prod.ProductId == orderItem.ProductId).ProductName</h4>
+                        <p>Quantity: @orderItem.Quantity</p>
+                        <p>Price: £@orderItem.OrderPrice</p>
+                    </div>
+                }
+                <div class="orderInfo">
+                    <h4>Date Placed: @order.OrderDate.ToShortDateString()</h4>
+                    <h4>Total Price: £@order.TotalPrice</h4>
+                </div>
+            }
+        </div>
+    }
+    @if (_orders.Any(order => order.OrderStatus == OrderStatus.Rejected))
+    {
+        <div class="rejectedOrdersContainer">
+            <h2>Rejected Orders</h2>
+            @foreach (Order order in _orders.Where(order => order.OrderStatus == OrderStatus.Rejected))
+            {
+                Customer customer = _customers.FirstOrDefault(supp => supp.CustomerId == order.CustomerId);
+                <h3>Customer: @customer.FirstNames @customer.Surname </h3>
+                @foreach (OrderItem orderItem in _orderItems.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
+                {
+                    <div class="orderItem">
+                        <h4>Product: @_orderedProducts.FirstOrDefault(prod => prod.ProductId == orderItem.ProductId).ProductName</h4>
+                        <p>Quantity: @orderItem.Quantity</p>
+                        <p>Price: £@orderItem.OrderPrice</p>
+                    </div>
+                }
+                <div class="orderInfo">
+                    <h4>Date Placed: @order.OrderDate.ToShortDateString()</h4>
+                    <h4>Total Price: £@order.TotalPrice</h4>
+                </div>
+            }
+        </div>
+    }
+</div>

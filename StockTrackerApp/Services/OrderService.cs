@@ -107,6 +107,18 @@ namespace StockTrackerApp.Services
             return orderRequests;
         }
 
+        public List<Order> GetOrdersByUserId(string userId)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetOrdersByUserIdRequest(userId, _clientTransportService.ConnectionPortNumber));
+            
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return null;
+
+            List<Order> orders = ResponseDeserializingHelper.DeserializeResponse<List<Order>>(jsonResponse).First().ToList();
+            return orders;
+        }
+
         public List<OrderItem> GetOrderItemsByOrderItemIds(List<string> orderItemIds)
         {
             if (orderItemIds == null)

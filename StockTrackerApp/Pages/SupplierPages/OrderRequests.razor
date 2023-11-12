@@ -10,14 +10,14 @@
             <div class="orderRequestContainer">
                 <h3>Customer: @customer.FirstNames @customer.Surname</h3>
                 <div class="orderItems">
-                    @foreach (var orderItem in _orderItemsInRequests.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
+                    @foreach (OrderItem orderItem in _orderItemsInRequests.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
                     {
-                        var product = _productsRequested.FirstOrDefault(prod => prod.ProductId == orderItem.ProductId);
-                            <div class="orderItem">
-                                <h4>Product: @product.ProductName</h4>
-                                <p>Quantity: @orderItem.Quantity</p>
-                                <p>Price: £@orderItem.OrderPrice</p>
-                            </div>
+                        Product product = _productsRequested.FirstOrDefault(prod => prod.ProductId == orderItem.ProductId);
+                        <div class="orderItem">
+                            <h4>Product: @product.ProductName</h4>
+                            <p>Quantity: @orderItem.Quantity</p>
+                            <p>Price: £@orderItem.OrderPrice</p>
+                        </div>
                     }
                 </div>
                 <div class="orderRequestInfo">

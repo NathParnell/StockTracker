@@ -20,6 +20,7 @@ namespace StockTrackerApp.Services.Infrastructure
 
         #region "Get Methods"
         List<Order> GetOrderRequestsBySupplierId(string supplierId);
+        List<Order> GetOrdersByUserId(string userId);
         List<OrderItem> GetOrderItemsByOrderItemIds(List<string> orderItemIds);
         #endregion
 

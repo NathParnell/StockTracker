@@ -160,6 +160,18 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<List<Order>> GetOrdersByUserId(string userId)
+        {
+            try
+            {
+                return await _context.Orders.Where(order => order.SupplierId == userId || order.CustomerId == userId).ToListAsync(); 
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<OrderItem>> GetOrderItemsByOrderItemIds(List<string> orderItemIds)
         {
             try

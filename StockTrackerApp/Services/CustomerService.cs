@@ -17,12 +17,15 @@ namespace StockTrackerApp.Services
         //define services
         private readonly IClientTransportService _clientTransportService;
         private readonly IMessageListenerService _messageListenerService;
+        private readonly IBroadcastListenerService _broadcastListenerService;
         private readonly IAuthorizationService _authorizationService;
 
-        public CustomerService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService, IAuthorizationService authorizationService)
+        public CustomerService(IClientTransportService clientTransportService, IMessageListenerService messageListenerService,
+            IBroadcastListenerService broadcastListenerService, IAuthorizationService authorizationService)
         {
             _clientTransportService = clientTransportService;
             _messageListenerService = messageListenerService;
+            _broadcastListenerService = broadcastListenerService;
             _authorizationService = authorizationService;
         }
 
@@ -115,6 +118,9 @@ namespace StockTrackerApp.Services
             _clientTransportService.ConnectionPortNumber = ports[0];
             _messageListenerService.MessagePortNumber = ports[1];
             _messageListenerService.StartListener();
+
+            // Start listening for Broadcasts
+            _broadcastListenerService.StartListener();
         }
 
         private void DropCommunicationPorts(string customerId)
@@ -131,8 +137,12 @@ namespace StockTrackerApp.Services
 
             if (success)
             {
+                //reset the port on the client transport service and stop listening for private messages
                 _clientTransportService.ConnectionPortNumber = "5555";
                 _messageListenerService.StopListener();
+
+                //stop listening for broadcasts
+                _broadcastListenerService.StopListener();
             }        
         }
 

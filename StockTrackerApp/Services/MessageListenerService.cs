@@ -58,10 +58,10 @@ namespace StockTrackerApp.Services
                         
                         socket.Unbind($"tcp://*:{MessagePortNumber}");
 
-                        //Ensure that a request was received
+                        //Ensure that a message was received
                         if (String.IsNullOrWhiteSpace(message) == false)
                         {
-                            // Handle the request in a new thread
+                            // Handle the message in a new thread
                             Thread messageHandlerThread = new Thread(() => MessageHandlerThread(message));
                             messageHandlerThread.Start();
                         }
@@ -78,12 +78,13 @@ namespace StockTrackerApp.Services
         {
             try
             {
-                // Process the message
                 //decrypt message
                 string decryptedMessage = EncryptionHelper.Decrypt(encryptedMessage);
 
+                //deserialize message
                 Message message = JsonSerializer.Deserialize<Message>(decryptedMessage);
 
+                //raise the message received event
                 MessageReceived?.Invoke(this, message);
 
             }

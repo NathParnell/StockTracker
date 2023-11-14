@@ -130,6 +130,7 @@ namespace StockTrackerApp.Services
 
             if (success)
             {
+                //reset the port on the client transport service and stop listening for private messages
                 _clientTransportService.ConnectionPortNumber = "5555";
                 _messageListenerService.StopListener();
             }

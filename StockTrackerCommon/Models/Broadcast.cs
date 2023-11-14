@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -8,18 +7,9 @@ using System.Threading.Tasks;
 
 namespace StockTrackerCommon.Models
 {
-    public class Message
+    public class Broadcast
     {
-        public Message() { }
-
-        [JsonPropertyName("messageId")] 
-        public string MessageId { get; set; }
-
-        [JsonPropertyName("sentTime")]
-        public DateTime SentTime { get; set; }
-
-        [JsonPropertyName("receiverId")]
-        public string ReceiverId { get; set; }
+        public Broadcast() { }
 
         [JsonPropertyName("senderId")]
         public string SenderId { get; set; }

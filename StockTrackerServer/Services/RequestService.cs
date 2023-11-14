@@ -18,13 +18,16 @@ namespace StockTrackerServer.Services
         private readonly IDataService _dataService;
         private readonly IPortService _portService;
         private readonly IMessagingService _messagingService;
+        private readonly IBroadcastingService _broadcastingService;
 
-        public RequestService(IAuthenticationService authenticationService, IDataService dataService, IPortService portService, IMessagingService messagingService)
+        public RequestService(IAuthenticationService authenticationService, IDataService dataService, IPortService portService,
+            IMessagingService messagingService, IBroadcastingService broadcastingService)
         {
             _authenticationService = authenticationService;
             _dataService = dataService;
             _portService = portService;
             _messagingService = messagingService;
+            _broadcastingService = broadcastingService;
         }
 
         /// <summary>
@@ -77,6 +80,23 @@ namespace StockTrackerServer.Services
             return ResponseSerializingHelper.CreateResponse(success);
 
         }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a broadcast object
+        /// We pass this broadcast object to our broadcasting service which broadcasts the message to all of the customers
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string SendBroadcast(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            Broadcast broadcast = JsonSerializer.Deserialize<List<Broadcast>>(request.Data.ToString()).First();
+            bool success = _broadcastingService.BroadcastMessage(broadcast);
+            //make response
+            return ResponseSerializingHelper.CreateResponse(success);
+        }
+
 
         #region "Ports Methods"
 

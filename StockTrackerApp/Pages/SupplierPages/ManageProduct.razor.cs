@@ -21,6 +21,7 @@ namespace StockTrackerApp.Pages.SupplierPages
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private IProductService _productService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IBroadcastService _broadcastService { get; set; }
 
 
         //Define Parameters
@@ -136,6 +137,12 @@ namespace StockTrackerApp.Pages.SupplierPages
                 _product.SupplierId = _supplierService.CurrentUser.SupplierId;
 
                 prompt = _productService.ValidateAndAddProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
+                
+                //if the product has been added, send broadcast to all customers informing them of new product
+                if (actionSuccess)
+                {
+                    bool x = _broadcastService.BroadcastMessage($"A new item has product has landed in our shop: {_product.ProductName}", "New Product Added");
+                }
             }
             //if the user is updating an existing product, then we attempt to validate and update the product
             else if (_pageState == ManageProductPageState.EditProductMode)

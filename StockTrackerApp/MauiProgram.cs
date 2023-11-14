@@ -38,6 +38,7 @@ namespace StockTrackerApp
             builder.Services.AddSingleton<IBroadcastListenerService, BroadcastListenerService>();
             builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
             builder.Services.AddScoped<IMessageService, MessageService>();
+            builder.Services.AddScoped<IBroadcastService, BroadcastService>();
 
 
             return builder.Build();

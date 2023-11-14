@@ -35,6 +35,7 @@ IHostBuilder CreateHostBuilder(string[] strings)
             services.AddSingleton<IRequestService, RequestService>();
             services.AddSingleton<IPortService, PortService>();
             services.AddSingleton<IMessagingService, MessagingService>();
+            services.AddSingleton<IBroadcastingService, BroadcastingService>();
             services.AddSingleton<ServerApp>();
         });
 }

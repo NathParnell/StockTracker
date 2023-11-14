@@ -102,6 +102,23 @@ namespace StockTrackerCommon.Helpers
 
         #endregion
 
+        #region "Broadcast Requests"
+
+        /// <summary>
+        /// Creates a JSON string of a Broadcast Message Request
+        /// </summary>
+        /// <param name="broadcast"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateBroadcastMessageRequest(Broadcast broadcast, string portNumber)
+        {
+            string methodName = "SendBroadcast";
+            object[] data = new object[] { broadcast };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
+        #endregion
+
         #region "User Requests"
 
         /// <summary>

@@ -8,24 +8,13 @@ using NetMQ;
 using NetMQ.Sockets;
 using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
+using StockTrackerServer.Services.Infrastructure;
 
 namespace StockTrackerServer.Services
 {
-    public class BroadcastingService
+    public class BroadcastingService : IBroadcastingService
     {
-        //private PublisherSocket _publisherSocket;
-        //public void SetUpBroadcaster()
-        //{
-        //    if (_publisherSocket != null)
-        //    {
-        //        return;
-        //    }
-
-        //    _publisherSocket = new PublisherSocket();
-        //    _publisherSocket.Bind("tcp://*:5557");
-        //}
-
-        public void BroadcastMessage(Broadcast broadcastMessage)
+        public bool BroadcastMessage(Broadcast broadcastMessage)
         {
             using (var publisherSocket = new PublisherSocket())
             {
@@ -43,6 +32,8 @@ namespace StockTrackerServer.Services
 
                 //unbind from our publishing socket
                 publisherSocket.Unbind("tcp://*:5557");
+
+                return true;
             }
         }
     }

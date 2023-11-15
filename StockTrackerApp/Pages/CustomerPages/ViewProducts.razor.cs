@@ -1,49 +1,49 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace StockTrackerApp.Components.SupplierComponents
+namespace StockTrackerApp.Pages.CustomerPages
 {
-    /// <summary>
-    /// Supplier Homepage Component
-    /// </summary>
-    public partial class Home
+    public partial class ViewProducts
     {
         //Inject Services
-        [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private IProductService _productService { get; set; }
-        [Inject] private IJSRuntime _jSRuntime { get; set; }
-        [Inject] private NavigationManager _navManager { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private ISupplierService _supplierService { get; set; }
+        [Inject] private IOrderService _orderService { get; set; }
+        [Inject] private NavigationManager _navmanager { get; set; }
 
-        //Define Variables
+        // Define Variables
         private List<Product> _products = new List<Product>();
+        private List<Supplier> _suppliers = new List<Supplier>();
         private List<ProductCategory> _productCategories = new List<ProductCategory>();
 
-        private Product _selectedProduct = new Product();
-        private bool _isProductSelected = false;
-
-        private readonly List<String> _sortByOptions = new List<String>() { "Product Name (A-Z)", "Product Name (Z-A)", "Product Brand (A-Z)", "Product Brand (Z-A)", "Price (Low to High)", "Price (High to Low)",
-            "Quantity (Low to High)", "Quantity (High to Low)"};
-
-        //private List<string> _selectedCategories = new List<string>();
+        private Dictionary<string, int>? _productBasketQuantities = new Dictionary<string, int>();
+        private readonly List<String> _sortByOptions = new List<String>() { "Product Name (A-Z)", "Product Name (Z-A)", "Product Brand (A-Z)", "Product Brand (Z-A)", "Price (Low to High)", "Price (High to Low)" };
 
         protected override async Task OnInitializedAsync()
         {
-            _sessionHistoryService.AddWebpageToHistory("Home");
+            _sessionHistoryService.AddWebpageToHistory("ViewProducts");
             Init();
         }
 
         private void Init()
         {
-            //Get all of the products which belong to the current user (the supplier)
-            _products = _productService.GetProductsBySupplierId(_supplierService.CurrentUser.SupplierId);
+            //get all of the products with stock that can be sold on stock tracker
+            _products = _productService.GetAllProductsWithStock();
+            _suppliers = _supplierService.GetAllSuppliers();
 
-            //Get a list of the product category ids
             List<string> productCategoryIds = _products.Select(cat => cat.ProductCategoryId.ToString()).Distinct().ToList();
             _productCategories = _productCategoryService.GetProductCategoriesByProductCategoryIds(productCategoryIds);
+
+            //we need to set the basket quantities for each product
+            GetBasketItems();
 
             //we need to sort the products by name
             SortProducts(_sortByOptions[0]);
@@ -65,7 +65,7 @@ namespace StockTrackerApp.Components.SupplierComponents
         /// </summary>
         /// <param name="sortByOption"></param>
         /// <returns></returns>
-        private void SortProducts (string sortByOption)
+        private void SortProducts(string sortByOption)
         {
             //Sort the products based on the selected option
             switch (sortByOption)
@@ -88,49 +88,55 @@ namespace StockTrackerApp.Components.SupplierComponents
                 case "Price (High to Low)":
                     _products = _products.OrderByDescending(prod => prod.Price).ToList();
                     break;
-                case "Quantity (Low to High)":
-                    _products = _products.OrderBy(prod => prod.ProductQuantity).ToList();
-                    break;
-                case "Quantity (High to Low)":
-                    _products = _products.OrderByDescending(prod => prod.ProductQuantity).ToList();
-                    break;
                 default:
                     break;
             }
         }
 
-        private void RowSelected(Product product)
+        private void GetBasketItems()
         {
-            _selectedProduct = product;
-            _isProductSelected = true;
-        }
-
-        /// <summary>
-        /// Creates a popup asking if user would like to delete the selected product
-        /// if yes, the product is deleted and we rerender the page
-        /// </summary>
-        private async void DeleteProduct()
-        {
-            bool confirmed = await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you would like to delete this Product?");
-            if (confirmed)
+            foreach (OrderItem basketItem in _orderService.BasketItems)
             {
-                if (_productService.DeleteProductByProductID(_selectedProduct.ProductId) == true)
+                UpdateProductQuantity(basketItem.ProductId, basketItem.Quantity);
+            }
+
+            foreach (Product product in _products)
+            {
+                if (_productBasketQuantities.ContainsKey(product.ProductId) == false)
                 {
-                    await _jSRuntime.InvokeAsync<object>("alert", "Product successfully deleted");
-                    _navManager.NavigateTo("Home", true);
+                    _productBasketQuantities.Add(product.ProductId, 0);
                 }
             }
         }
 
-        private async void AddProduct()
+        private void UpdateProductQuantity(string productId, int quantity)
         {
-            _navManager.NavigateTo("ManageProduct", true);
+            if (_productBasketQuantities.ContainsKey(productId))
+            {
+                _productBasketQuantities[productId] = quantity;
+            }
+            else
+            {
+                _productBasketQuantities.Add(productId, quantity);
+            }
         }
 
-        private async void EditProduct(Product product)
+        private void UpdateBasket(Product product)
         {
-            _navManager.NavigateTo($"ManageProduct/{product.ProductId}", true);
+            OrderItem basketItem = new OrderItem()
+            {
+                OrderItemId = Taikandi.SequentialGuid.NewGuid().ToString(),
+                ProductId = product.ProductId,
+                Quantity = _productBasketQuantities[product.ProductId],
+                OrderPrice = _productBasketQuantities[product.ProductId] * product.Price
+            };
+
+            _orderService.AddItemToBasket(basketItem, product.Price);
         }
 
+        public void ViewBasket()
+        {
+            _navmanager.NavigateTo("ViewBasket");
+        }
     }
 }

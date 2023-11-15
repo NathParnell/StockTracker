@@ -25,6 +25,7 @@ namespace StockTrackerServer.Services.Infrastructure
         Task<Product> GetProductByProductId(string productId);
         Task<List<Product>> GetProductsBySupplierId(string supplierId);
         Task<List<Product>> GetProductsByProductIds(List<string> productIds);
+        Task<List<Product>> GetAllProductsWithStock();
         Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds);
         Task<List<Order>> GetOrderRequestsBySupplierId(string supplierId);
         Task<List<Order>> GetOrdersByUserId(string userId);

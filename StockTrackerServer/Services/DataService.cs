@@ -136,6 +136,18 @@ namespace StockTrackerServer.Services
             }
         }
 
+        public async Task<List<Product>> GetAllProductsWithStock()
+        {
+            try
+            {
+                return await _context.Products.Where(prod => prod.ProductQuantity > 0).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds)
         {
             try

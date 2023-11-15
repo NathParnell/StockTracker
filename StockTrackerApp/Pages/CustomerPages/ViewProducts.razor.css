@@ -1,0 +1,54 @@
+.productsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.sortingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.sortingContainer * {
+    margin: 0 10px 15px;
+}
+
+.productContainer {
+    display: flex;
+    flex-direction: row;
+    width: 47%;
+    justify-content: space-between;
+    border: 2px solid #ccc;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left, margin-right: auto;
+    border-radius: 5px;
+}
+
+.productDetails {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.productBasket {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.productBasket *{
+    margin: 0 0.5rem 0.5rem 0;
+}
+
+#viewBasketButton {
+    margin: 1rem auto;
+    display: block;
+    width: 40%;
+}

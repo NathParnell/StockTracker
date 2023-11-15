@@ -286,6 +286,20 @@ namespace StockTrackerServer.Services
 
         /// <summary>
         /// Method which takes in an object array which is empty and not used (Conforms with the other methods)
+        /// We make a call to the data service which retrieves all of the available products with stock
+        /// We then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string RetrieveAllProductsWithStock(object[] requestObject)
+        {
+            List<Product> products = _dataService.GetAllProductsWithStock().Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(products);
+        }
+
+        /// <summary>
+        /// Method which takes in an object array which is empty and not used (Conforms with the other methods)
         /// We make a call to the data service which retrieves all of the available products
         /// We then create and return our response
         /// </summary>

@@ -13,6 +13,7 @@ namespace StockTrackerApp.Services.Infrastructure
         List<Product> GetProductsBySupplierId(string supplierId);
         Product GetProductByProductId(string productId);
         List<Product> GetProductsByProductIds(List<string> productIds);
+        List<Product> GetAllProductsWithStock();
         List<Product> GetAllProducts();
         #endregion
 

@@ -60,6 +60,18 @@ namespace StockTrackerApp.Services
             return products;
         }
 
+        public List<Product> GetAllProductsWithStock()
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductsWithStockRequest(_clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (String.IsNullOrEmpty(jsonResponse))
+                return null;
+
+            List<Product> products = ResponseDeserializingHelper.DeserializeResponse<List<Product>>(jsonResponse).First().ToList();
+            return products;
+        }
+
         public List<Product> GetAllProducts()
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetAllProductsRequest(_clientTransportService.ConnectionPortNumber));

@@ -247,6 +247,18 @@ namespace StockTrackerCommon.Helpers
         }
 
         /// <summary>
+        /// Creates a JSON string of a get all products with stock request
+        /// </summary>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        public static string CreateGetAllProductsWithStockRequest(string portNumber)
+        {
+            string methodName = "RetrieveAllProductsWithStock";
+            object[] data = new object[] { };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
+        /// <summary>
         /// Creates a JSON string of a get all products request 
         /// </summary>
         /// <param name="categoryIds"></param>

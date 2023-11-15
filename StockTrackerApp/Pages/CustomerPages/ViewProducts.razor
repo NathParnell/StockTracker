@@ -1,0 +1,36 @@
+﻿@page "/ViewProducts"
+@using StockTrackerCommon.Models;
+
+<div class="viewProductsContainer">
+    <h1>Products</h1>
+    <div class="sortingContainer">
+        <h5>Sort By:</h5>
+        <select @onchange="SortProducts">
+            @foreach (string sortByOption in _sortByOptions)
+            {
+                <option value="@sortByOption">@sortByOption</option>
+            }
+        </select>
+    </div>
+    <div class="productsContainer">
+        @foreach (Product product in _products)
+        {
+            <div class="productContainer">
+                <div class="productDetails">
+                    <h3>@product.ProductName</h3>
+                    <h4>Brand: @product.ProductBrand</h4>
+                    <h4>Product Category: @_productCategories.FirstOrDefault(cat => cat.ProductCategoryId == product.ProductCategoryId).ProductCategoryName</h4>
+                    <h4>Price: £@product.Price</h4>
+                    <h4>Size: @(product.ProductSize.ToString() + " " + product.ProductMeasurementUnit.ToString())</h4>
+                </div>
+                <div class="productBasket">
+                    <input type="number" @bind-value="_productBasketQuantities[product.ProductId]" min="0" />
+                    <button type="button" @onclick="() => UpdateBasket(product)">
+                        @(_orderService.BasketItems.Any(item => item.ProductId == product.ProductId) ? "Update Basket" : "Add To Basket")
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+    <button id="viewBasketButton" @onclick="() => ViewBasket()">View Basket</button>
+</div>

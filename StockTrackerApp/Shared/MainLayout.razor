@@ -27,4 +27,10 @@
             <StockTrackerApp.Components.MessagePopup Message="_message"/>
         </div>
     }
+    @if (_broadcast != null)
+    {
+        <div style="position:absolute; top:5px; right:5px; z-index:1000; width:350px; height:125px;">
+            <StockTrackerApp.Components.BroadcastPopup Broadcast="_broadcast" />
+        </div>
+    }
 </div>

@@ -9,49 +9,40 @@ using System.Threading.Tasks;
 
 namespace StockTrackerApp.Components
 {
-    public partial class MessagePopup
+    public partial class BroadcastPopup
     {
-        //Inject services
+        //Inject Services
         [Inject] IAuthorizationService _authorizationService { get; set; }
         [Inject] ISupplierService _supplierService { get; set; }
         [Inject] ICustomerService _customerService { get; set; }
-        [Inject] NavigationManager _navManager { get; set; }
 
-        //declare parameters
-        [Parameter] public Message Message { get; set; }
+        //Declare Parameters
+        [Parameter] public Broadcast Broadcast { get; set; }
 
-        //declare variables
+        //Declare Variables
         private string _senderName { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            if (Message == null)
+            if (Broadcast == null)
             {
-                Message = new Message();
+                Broadcast = new Broadcast();
             }
 
             if (_authorizationService.IsLoggedIn)
             {
                 if (_authorizationService.UserType == UserType.Supplier)
                 {
-                    Customer customer = _customerService.GetCustomerByCustomerId(Message.SenderId);
+                    Customer customer = _customerService.GetCustomerByCustomerId(Broadcast.SenderId);
                     _senderName = $"{customer.FirstNames} {customer.Surname}";
                 }
                 else if (_authorizationService.UserType == UserType.Customer)
                 {
-                    Supplier supplier = _supplierService.GetSupplierBySupplierId(Message.SenderId);
+                    Supplier supplier = _supplierService.GetSupplierBySupplierId(Broadcast.SenderId);
                     _senderName = supplier.CompanyName;
                 }
             }
         }
-
-        private async Task NavigateToMessageThread()
-        {
-            _navManager.NavigateTo($"/MessageThread/{Message.SenderId}");
-            Message = new Message();
-            StateHasChanged();
-        }
-
     }
 }

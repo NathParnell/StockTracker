@@ -13,9 +13,11 @@ namespace StockTrackerApp.Shared
     {
         [Inject] private IAuthorizationService _authorizationService { get; set; }
         [Inject] private IMessageListenerService _messageListenerService { get; set; }
+        [Inject] private IBroadcastListenerService _broadcastListenerService { get; set; }
 
         //declare variables
         private static Message _message { get; set; }
+        private static Broadcast _broadcast { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -25,6 +27,8 @@ namespace StockTrackerApp.Shared
                 NewMessageReceived(this, _message);
             }
             _messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
+            _broadcastListenerService.BroadcastReceived += (sender, broadcast) => InvokeAsync(() => NewBroadcastReceived(sender, broadcast));
+
         }
 
         private async Task NewMessageReceived(object sender, Message message)
@@ -33,6 +37,15 @@ namespace StockTrackerApp.Shared
             StateHasChanged();
             await Task.Delay(8000);
             _message = null;
+            StateHasChanged();
+        }
+
+        private async Task NewBroadcastReceived(object sender, Broadcast broadcast)
+        {
+            _broadcast = broadcast;
+            StateHasChanged();
+            await Task.Delay(8000);
+            _broadcast = null;
             StateHasChanged();
         }
 

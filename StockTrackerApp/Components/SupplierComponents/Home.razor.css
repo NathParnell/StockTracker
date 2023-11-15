@@ -31,3 +31,14 @@ th{
 .unselectedRow{
     background-color:transparent;
 }
+
+.sortingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center; 
+}
+
+.sortingContainer *{
+    margin: 0 10px 15px;
+}

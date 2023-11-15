@@ -1,8 +1,14 @@
-
-
-
 <div class="productsContainer">
     <h1>Products</h1>
+    <div class="sortingContainer">
+        <h5>Sort By:</h5>
+        <select @onchange="SortProducts">
+            @foreach (string sortByOption in _sortByOptions)
+            {        
+                <option value="@sortByOption">@sortByOption</option>
+            }
+        </select>
+    </div>
     <table>
         <tr>
             <th>Category</th>
@@ -15,7 +21,7 @@
         </tr>
         @foreach(StockTrackerCommon.Models.Product product in _products)
         {
-            <tr  @onclick="() => RowSelected(product)" @ondblclick="() => EditProduct(product)" class="@(_selectedProduct == product ? "selectedRow" : "unselectedRow")">
+            <tr @onclick="() => RowSelected(product)" @ondblclick="() => EditProduct(product)" class="@(_selectedProduct == product ? "selectedRow" : "unselectedRow")">
                 <td>@_productCategories.FirstOrDefault(cat => cat.ProductCategoryId == product.ProductCategoryId).ProductCategoryName</td>
                 <td>@product.ProductCode</td>
                 <td>@product.ProductName</td>

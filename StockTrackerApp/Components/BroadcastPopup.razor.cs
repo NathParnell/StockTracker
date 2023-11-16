@@ -21,6 +21,7 @@ namespace StockTrackerApp.Components
 
         //Declare Variables
         private string _senderName { get; set; }
+        private bool _showPopup { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -43,6 +44,12 @@ namespace StockTrackerApp.Components
                     _senderName = supplier.CompanyName;
                 }
             }
+        }
+
+        private void Close()
+        {
+            _showPopup = false;
+            StateHasChanged();
         }
     }
 }

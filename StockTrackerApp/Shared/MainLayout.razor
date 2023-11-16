@@ -23,13 +23,13 @@
     </main>
     @if (_message != null)
     {
-        <div style="position:absolute; top:5px; left:5px; z-index:1000; width:350px; height:125px;">
+        <div style="position:fixed; bottom:75px; left:5px; z-index:1000; width:350px; height:80px;">
             <StockTrackerApp.Components.MessagePopup Message="_message"/>
         </div>
     }
     @if (_broadcast != null)
     {
-        <div style="position:absolute; top:5px; right:5px; z-index:1000; width:350px; height:125px;">
+        <div style="position:fixed; bottom:75px; right:5px; z-index:1000; width:350px; height:80px;">
             <StockTrackerApp.Components.BroadcastPopup Broadcast="_broadcast" />
         </div>
     }

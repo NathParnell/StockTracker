@@ -22,6 +22,7 @@ namespace StockTrackerApp.Components
 
         //declare variables
         private string _senderName { get; set; }
+        private bool _showPopup { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,6 +51,13 @@ namespace StockTrackerApp.Components
         {
             _navManager.NavigateTo($"/MessageThread/{Message.SenderId}");
             Message = new Message();
+            _showPopup = false;
+            StateHasChanged();
+        }
+
+        private void Close()
+        {
+            _showPopup = false;
             StateHasChanged();
         }
 

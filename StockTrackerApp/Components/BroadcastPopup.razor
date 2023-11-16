@@ -1,5 +1,6 @@
-<div class="broadcastPopupContainer">
+<div class="broadcastPopupContainer" hidden="@(!_showPopup)">
 <h2>@Broadcast.Subject</h2>
     <h4>@_senderName</h4>
     <p>@Broadcast.MessageBody</p>
+    <button type="button" class="broadcastPopupButton" @onclick="() => Close()">Close</button>
 </div>

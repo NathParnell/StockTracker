@@ -1,5 +1,24 @@
 .broadcastPopupContainer {
-    background-color: #fff6e1;
+    background-color: #322521;
+    color: #fff6e1;
     border: 1px solid black;
     border-radius: 6px;
+    padding-left: 2rem;
+}
+
+.broadcastPopupContainer h2 {
+    font-size: 14px;
+    margin-top: 1rem;
+}
+
+.broadcastPopupContainer h4 {
+    font-size: 13px;
+}
+
+.broadcastPopupContainer p {
+    font-size: 12px;
+}
+
+.broadcastPopupContainer button {
+    font-size: 12px;
 }

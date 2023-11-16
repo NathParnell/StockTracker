@@ -1,6 +1,9 @@
-﻿<div class="messagePopupContainer">
+﻿<div class="messagePopupContainer" hidden="@(!_showPopup)">
     <h2>@Message.Subject</h2>
     <h4>@_senderName</h4> 
     <p>@Message.MessageBody</p>
-    <button type="button" class="messagePopupButton" @onclick="() => NavigateToMessageThread()">View Message</button>
+    <div class="popupButtons">
+        <button type="button" class="messagePopupButton" @onclick="() => NavigateToMessageThread()">View Message</button>
+        <button type="button" class="messagePopupButton" @onclick="() => Close()">Close</button>
+    </div>
 </div>

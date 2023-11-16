@@ -34,54 +34,9 @@ namespace StockTrackerApp.Pages
         protected override async Task OnInitializedAsync()
         {
             _sessionHistoryService.AddWebpageToHistory("MessageThread");
-            _messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
-            Init();
+            //_messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
         }
 
-        //protected override void OnAfterRender(bool firstRender)
-        //{
-        //    base.OnAfterRender(firstRender);
-        //    if (firstRender)
-        //    {
-        //        _navManager.RegisterLocationChangingHandler(async (location) => await OnLocationChanging(location));
-        //    }
-        //}
-
-        private void Init()
-        {
-            if (ContactId != null)
-            {
-                //Get our objects based on usertype
-                if (_authorizationService.UserType == UserType.Supplier)
-                {
-                    _currentUserId = _supplierService.CurrentUser.SupplierId;
-                    _messages = _messageService.GetMessageThreads(_supplierService.CurrentUser.SupplierId , ContactId);
-                    _customer = _customerService.GetCustomerByCustomerId(ContactId);
-                }
-                else if (_authorizationService.UserType == UserType.Customer)
-                {
-                    _currentUserId = _customerService.CurrentUser.CustomerId;
-                    _messages = _messageService.GetMessageThreads(_customerService.CurrentUser.CustomerId, ContactId);
-                    _supplier = _supplierService.GetSupplierBySupplierId(ContactId);
-                }
-            }
-        }
-
-        private void SendMessage()
-        {
-            //return if there is no message
-            if (String.IsNullOrWhiteSpace(_newMessage))
-            {
-                return;
-            }
-            
-            bool messageSent = _messageService.SendMessage(ContactId, _newMessage);
-
-            if (messageSent)
-            {
-               _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
-            }
-        }
 
         private void NewMessageReceived(object sender, Message newMessage)
         {
@@ -93,16 +48,5 @@ namespace StockTrackerApp.Pages
                 }
             }      
         }
-
-        private void OnLeave(object sender, LocationChangedEventArgs args)
-        {
-            _messageListenerService.MessageReceived -= (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
-        }
-
-        //private async ValueTask OnLocationChanging(object args)
-        //{
-        //    _messageListenerService.MessageReceived -= (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
-        //    await Task.CompletedTask;
-        //}
     }
 }

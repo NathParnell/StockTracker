@@ -76,7 +76,8 @@ namespace StockTrackerApp.Components
 
         private void NewMessageReceived(object sender, Message newMessage)
         {
-            if (_sessionHistoryService.GetCurrentWebpage() == "Messages")
+            //refresh the page if we are on the message thread page and the message is from the contact we are currently viewing
+            if (_sessionHistoryService.GetCurrentWebpage() == "Messages" || _sessionHistoryService.GetCurrentWebpage() == "MessageThread")
             {
                 if (newMessage.SenderId == ContactId)
                 {

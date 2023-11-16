@@ -21,7 +21,7 @@ namespace StockTrackerApp.Services
         private Thread _broadcastListenerThread;
 
         //Define variables
-        private const string PUBLISHER_ENDPOINT = "192.168.5.122:5557";
+        private const string PUBLISHER_ENDPOINT = "192.168.0.86:5557";
 
         public void StartListener()
         {

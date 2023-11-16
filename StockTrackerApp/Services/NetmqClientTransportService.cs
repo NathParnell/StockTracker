@@ -17,8 +17,9 @@ namespace StockTrackerApp.Services
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(NetmqClientTransportService));
 
         //define variables
+        public const string SERVER_IP_ADDRESS = "192.168.5.122";
         //create a port number variable and default it to 5555 - a new port number will be determined by the server
-        public string ConnectionPortNumber { get; set; } = "5555";
+        public string ConnectionPortNumber { get; set; } = "5555";    
 
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace StockTrackerApp.Services
                 using (var requestSocket = new RequestSocket())
                 using (var responseSocket = new ResponseSocket())
                 {
-                    requestSocket.Connect("tcp://192.168.0.86:5556");
+                    requestSocket.Connect($"tcp://{SERVER_IP_ADDRESS}:5556");
 
                     Logger.Info($"TcpHandler(), The unencrypted request we will send to the client: " +
                         $"{decryptedRequest}");

@@ -20,6 +20,9 @@ namespace StockTrackerApp.Services
         //Define broadcastListenerThread
         private Thread _broadcastListenerThread;
 
+        //Define variables
+        private const string PUBLISHER_ENDPOINT = "192.168.5.122:5557";
+
         public void StartListener()
         {
             // Start a thread which will run in the background to listen for broadcasts
@@ -47,7 +50,7 @@ namespace StockTrackerApp.Services
                 using (var socket = new SubscriberSocket())
                 {
                     // Connect the socket to the publisher
-                    socket.Connect("tcp://192.168.0.86:5557");
+                    socket.Connect($"tcp://{PUBLISHER_ENDPOINT}");
 
                     // Subscribe to the topic
                     socket.Subscribe("Notification");

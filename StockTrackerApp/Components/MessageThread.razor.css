@@ -1,0 +1,83 @@
+.messageThreadsContainer {
+    background-color: #fff;
+    height: 100%;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+}
+
+.messageThreadsContactContainer{
+    height:50px;
+    width:100%;
+    background-color:#322521;
+    text-align: center;
+    position: sticky;
+}
+
+.messageThreadsContactContainer h2 {
+    color: #fff6e1;
+    text-align: center;
+}
+
+.messageThreads {
+    margin-top: 50px;
+}
+
+.messageContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    width:100%
+}
+
+.messageLeft {
+    justify-content: left;
+}
+
+.messageRight{
+    justify-content: right;
+}
+
+.userMessage {
+    justify-content: right;
+    width: 40%;
+    margin-right:1rem;
+}
+
+.userMessage p {
+    color: #fff6e1;
+    flex-wrap: wrap;
+    background-color: #322521;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.contactMessage {
+    justify-content: left;
+    width: 40%;
+    margin-left: 1rem;
+}
+
+.contactMessage p {
+    color: #322521;
+    flex-wrap: wrap;
+    background-color: #fff6e1;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.sendMessageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+.sendMessageInput {
+    width: 75%;
+}
+
+.sendMessageButton {
+    width: 20%;
+}

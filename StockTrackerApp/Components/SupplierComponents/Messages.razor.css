@@ -1,0 +1,34 @@
+.messageContactsContainer{
+    width: 80%;
+    margin: auto; 
+}
+
+.messageContact {
+    cursor: pointer;
+}
+
+.titleContainer {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.messagePageContainer{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.messageContacts{
+    display:flex;
+    flex-direction: column;
+    width: 17%;
+}
+
+.messageDialogContainer{
+    width:77%;
+    height:80vh;
+}

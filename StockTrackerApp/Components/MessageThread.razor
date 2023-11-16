@@ -1,0 +1,40 @@
+﻿@using StockTrackerCommon.Models;
+
+
+<div class="messageThreadsContainer">
+    <div class="messageThreadsContactContainer">
+        @if (_authorizationService.UserType == UserType.Supplier)
+        {
+            <h2>@_customer.FirstNames @_customer.Surname</h2>
+        }
+        else if (_authorizationService.UserType == UserType.Customer)
+        {
+            <h2>@_supplier.CompanyName</h2>
+        }
+    </div>
+    <div class="messageThreads">
+        @foreach (Message message in _messages)
+        {
+            @if (message.SenderId == _currentUserId)
+            {
+                <div class="messageContainer messageRight">
+                    <div class="userMessage">
+                        <p>@message.MessageBody</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="messageContainer messageLeft">
+                    <div class="contactMessage">
+                        <p>@message.MessageBody</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="sendMessageContainer" style="width:60%;">
+        <input type="text" class="sendMessageInput" @bind="_newMessage" placeholder="Type new message here" />
+        <button type="button" class="sendMessageButton" @onclick="() => SendMessage()">Send</button>
+    </div>
+</div>

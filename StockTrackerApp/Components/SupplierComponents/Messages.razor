@@ -1,9 +1,23 @@
 <div class="messageContactsContainer">
-    <h1>Messages</h1>
-    @foreach (var customer in _customers)
-    {
-        <div class="messageContact" @onclick="() => NavigateToMessageThread(customer.CustomerId)">
-            <h4>@customer.FirstNames @customer.Surname</h4>
+    <div class="titleContainer">
+        <h1>Messages</h1>
+    </div>
+    <div class="messagePageContainer">
+        <div class="messageContacts">
+            <h2>Contacts:</h2>
+            @foreach (var customer in _customers)
+            {
+                <div class="messageContact" @onclick="() => ViewMessageThread(customer.CustomerId)">
+                    <h4>@customer.FirstNames @customer.Surname</h4>
+                </div>
+            }
         </div>
-    }
+        <div class="messageDialogContainer">
+            @if (String.IsNullOrWhiteSpace(_selectedContactId) == false)
+            {
+                <StockTrackerApp.Components.MessageThread ContactId="@_selectedContactId"/>
+            }
+        </div>
+    </div>
+    
 </div>

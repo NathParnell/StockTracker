@@ -16,12 +16,13 @@ namespace StockTrackerApp.Components.SupplierComponents
         [Inject] private ICustomerService _customerService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
-        [Inject] private NavigationManager _navmanager { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
 
         //declare variables
         private List<string> _contactIds { get; set; }
         private List<Customer> _customers { get; set; }
+        private string _selectedContactId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,7 +30,7 @@ namespace StockTrackerApp.Components.SupplierComponents
             Init();
         }
 
-        private async Task Init()
+        private void Init()
         {
             _contactIds = _messageService.GetContactIds(_supplierService.CurrentUser.SupplierId);
             if (_contactIds != null)
@@ -40,9 +41,14 @@ namespace StockTrackerApp.Components.SupplierComponents
 
         private void NavigateToMessageThread(string contactId)
         {
-            _navmanager.NavigateTo($"/MessageThread/{contactId}");
+            _navManager.NavigateTo($"/MessageThread/{contactId}");
         }
 
+        private void ViewMessageThread(string contactId)
+        {
+            _selectedContactId = contactId;
+            StateHasChanged();
+        }
 
     }
 }

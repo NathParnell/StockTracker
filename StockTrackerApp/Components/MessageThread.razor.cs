@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
 using StockTrackerApp.Services.Infrastructure;
 using StockTrackerCommon.Models;
 using System;
@@ -8,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTrackerApp.Pages
+namespace StockTrackerApp.Components
 {
     public partial class MessageThread
     {
-        //inject services
+        //Inject Services
         [Inject] private ICustomerService _customerService { get; set; }
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IAuthorizationService _authorizationService { get; set; }
@@ -21,31 +20,23 @@ namespace StockTrackerApp.Pages
         [Inject] private IMessageListenerService _messageListenerService { get; set; }
         [Inject] private NavigationManager _navManager { get; set; }
 
-        //declare variables
+
+        //Declare Variables
         private List<Message> _messages { get; set; }
         private Supplier _supplier { get; set; }
         private Customer _customer { get; set; }
         private string _currentUserId;
         private string _newMessage { get; set; }
 
-        //declare parameters
+        //Declare Parameters
         [Parameter] public string ContactId { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
-            _sessionHistoryService.AddWebpageToHistory("MessageThread");
             _messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
             Init();
         }
-
-        //protected override void OnAfterRender(bool firstRender)
-        //{
-        //    base.OnAfterRender(firstRender);
-        //    if (firstRender)
-        //    {
-        //        _navManager.RegisterLocationChangingHandler(async (location) => await OnLocationChanging(location));
-        //    }
-        //}
 
         private void Init()
         {
@@ -55,7 +46,7 @@ namespace StockTrackerApp.Pages
                 if (_authorizationService.UserType == UserType.Supplier)
                 {
                     _currentUserId = _supplierService.CurrentUser.SupplierId;
-                    _messages = _messageService.GetMessageThreads(_supplierService.CurrentUser.SupplierId , ContactId);
+                    _messages = _messageService.GetMessageThreads(_supplierService.CurrentUser.SupplierId, ContactId);
                     _customer = _customerService.GetCustomerByCustomerId(ContactId);
                 }
                 else if (_authorizationService.UserType == UserType.Customer)
@@ -65,6 +56,7 @@ namespace StockTrackerApp.Pages
                     _supplier = _supplierService.GetSupplierBySupplierId(ContactId);
                 }
             }
+            _newMessage = String.Empty;
         }
 
         private void SendMessage()
@@ -74,35 +66,24 @@ namespace StockTrackerApp.Pages
             {
                 return;
             }
-            
-            bool messageSent = _messageService.SendMessage(ContactId, _newMessage);
 
-            if (messageSent)
+            if (_messageService.SendMessage(ContactId, _newMessage))
             {
-               _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
+                Init();
+                StateHasChanged();
             }
         }
 
         private void NewMessageReceived(object sender, Message newMessage)
         {
-            if (_sessionHistoryService.GetCurrentWebpage() == "MessageThread")
+            if (_sessionHistoryService.GetCurrentWebpage() == "Messages")
             {
                 if (newMessage.SenderId == ContactId)
                 {
-                    _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
+                    Init();
+                    StateHasChanged();
                 }
-            }      
+            }
         }
-
-        private void OnLeave(object sender, LocationChangedEventArgs args)
-        {
-            _messageListenerService.MessageReceived -= (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
-        }
-
-        //private async ValueTask OnLocationChanging(object args)
-        //{
-        //    _messageListenerService.MessageReceived -= (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
-        //    await Task.CompletedTask;
-        //}
     }
 }

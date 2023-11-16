@@ -8,7 +8,10 @@
         {
             var customer = _customers.FirstOrDefault(cust => cust.CustomerId == order.CustomerId);
             <div class="orderRequestContainer">
-                <h3>Customer: @customer.FirstNames @customer.Surname</h3>
+                <div class="orderRequestCustomerName">
+                    <h3>Customer: @customer.FirstNames @customer.Surname</h3>
+                    <span class="oi oi-chat" style="color: #322521; cursor:pointer" @onclick="() => NavigateNewMessage(customer.CustomerId)"></span>
+                </div>
                 <div class="orderItems">
                     @foreach (OrderItem orderItem in _orderItemsInRequests.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
                     {

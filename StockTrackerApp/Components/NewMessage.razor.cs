@@ -23,6 +23,10 @@ namespace StockTrackerApp.Components
         private string _newMessage { get; set; }
         private List<string> _recipientIds { get; set; }
 
+        //Declare parameters
+        [Parameter]
+        public string RecipientIdsAsString { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -32,9 +36,13 @@ namespace StockTrackerApp.Components
 
         private void Init()
         {
-            _newMessage = String.Empty;
-            _recipientIds = new List<string>();
+            if (String.IsNullOrWhiteSpace(RecipientIdsAsString) == false)
+            {
+                _recipientIds = RecipientIdsAsString.Split(',').ToList();
+                RecipientIdsAsString = String.Empty;
+            }
 
+            _newMessage = String.Empty;
             if (_authorizationService.UserType == UserType.Supplier)
             {
                 _customers = _customerService.GetAllCustomers();
@@ -78,6 +86,7 @@ namespace StockTrackerApp.Components
                 //if the message is sent successfully, then we reset the page
                 if (_messageService.SendMessage(_recipientIds, _newMessage))
                 {
+                    _recipientIds = new List<string>();
                     Init();
                     StateHasChanged();
                 }

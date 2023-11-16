@@ -19,33 +19,34 @@
             }
         }
     </select>
-    @if (_recipientIds.Count == 0)
+    @if (_recipientIds != null && _recipientIds.Count > 0)
     {
-        <p>No recipients selected</p>
+        <p>Selected Recipients:</p>
+        <div class="selectedRecipientsContainer">
+            @foreach (string recipientId in _recipientIds)
+            {
+                @if (_authorizationService.UserType == UserType.Supplier)
+                {
+                    <div class="selectedRecipient">
+                        <p>@_customers.FirstOrDefault(customer => customer.CustomerId == recipientId).FirstNames @_customers.FirstOrDefault(customer => customer.CustomerId == recipientId).Surname</p>
+                        <span class="oi oi-x" @onclick="() => RemoveRecipient(recipientId)" style="color:#322521; cursor:pointer;" aria-hidden="true" title="Remove"></span>
+                    </div>
+                }
+                else if (_authorizationService.UserType == UserType.Customer)
+                {
+                    <div class="selectedRecipient">
+                        <p>@_suppliers.FirstOrDefault(supplier => supplier.SupplierId == recipientId).CompanyName</p>
+                        <span class="oi oi-x" @onclick="() => RemoveRecipient(recipientId)" style="color:#322521; cursor:pointer;" aria-hidden="true" title="Remove"></span>
+                    </div>
+                }
+            }
+        </div>
     }
     else
     {
-        <p>Selected Recipients:</p>
+        <p>No recipients selected</p>
     }
-    <div class="selectedRecipientsContainer">
-        @foreach (string recipientId in _recipientIds)
-        {
-            @if (_authorizationService.UserType == UserType.Supplier)
-            {
-                <div class="selectedRecipient">
-                    <p>@_customers.FirstOrDefault(customer => customer.CustomerId == recipientId).FirstNames @_customers.FirstOrDefault(customer => customer.CustomerId == recipientId).Surname</p>
-                    <span class="oi oi-x" @onclick="() => RemoveRecipient(recipientId)"  style="color:#322521; cursor:pointer;" aria-hidden="true" title="Remove"></span>
-                </div>
-            }
-            else if (_authorizationService.UserType == UserType.Customer)
-            {
-                <div class="selectedRecipient">
-                    <p>@_suppliers.FirstOrDefault(supplier => supplier.SupplierId == recipientId).CompanyName</p>
-                    <span class="oi oi-x" @onclick="() => RemoveRecipient(recipientId)" style="color:#322521; cursor:pointer;" aria-hidden="true" title="Remove"></span>
-                </div>
-            }
-        }
-    </div>
+  
     <div class="sendMessageContainer">
         <input type="text" class="sendMessageInput" @bind="_newMessage" placeholder="Type new message here" />
         <button type="button" class="sendMessageButton" @onclick="() => SendMessage()">Send</button>

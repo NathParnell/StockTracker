@@ -4,6 +4,7 @@ using StockTrackerCommon.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace StockTrackerApp.Pages.SupplierPages
         [Inject] private IMessageService _messageService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IProductService _productService { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
         //Define Variables
         private List<Order> _orderRequests = new List<Order>();
@@ -92,6 +94,11 @@ namespace StockTrackerApp.Pages.SupplierPages
 
             //Refresh the page
             Refresh();
+        }
+
+        private void NavigateNewMessage(string customerId)
+        {
+            _navManager.NavigateTo($"NewMessage/{customerId}", true);
         }
     }
 }

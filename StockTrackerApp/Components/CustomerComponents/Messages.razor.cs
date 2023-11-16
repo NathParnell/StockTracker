@@ -50,5 +50,11 @@ namespace StockTrackerApp.Components.CustomerComponents
             _selectedContactId = contactId;
             StateHasChanged();
         }
+
+        private void CreateNewMessage()
+        {
+            _selectedContactId = null;
+            StateHasChanged();
+        }
     }
 }

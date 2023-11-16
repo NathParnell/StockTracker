@@ -1,0 +1,54 @@
+﻿@using StockTrackerCommon.Models;
+
+<div class="newMessagePageContainer">
+    <h1>New Message</h1>
+    <select id="addRecipientsSelect" @onchange="AddRecipient">
+        <option value="">Select a Recipient</option>
+        @if (_authorizationService.UserType == UserType.Supplier)
+        {
+            @foreach (Customer customer in _customers)
+            {
+                <option value="@customer.CustomerId">@customer.FirstNames @customer.Surname</option>
+            }
+        }
+        else if (_authorizationService.UserType == UserType.Customer)
+        {
+            @foreach (Supplier supplier in _suppliers)
+            {
+                <option value="@supplier.SupplierId">@supplier.CompanyName</option>
+            }
+        }
+    </select>
+    @if (_recipientIds.Count == 0)
+    {
+        <p>No recipients selected</p>
+    }
+    else
+    {
+        <p>Selected Recipients:</p>
+    }
+    <div class="selectedRecipientsContainer">
+        @foreach (string recipientId in _recipientIds)
+        {
+            @if (_authorizationService.UserType == UserType.Supplier)
+            {
+                <div class="selectedRecipient">
+                    <p>@_customers.FirstOrDefault(customer => customer.CustomerId == recipientId).FirstNames @_customers.FirstOrDefault(customer => customer.CustomerId == recipientId).Surname</p>
+                    <span class="oi oi-x" @onclick="() => RemoveRecipient(recipientId)"  style="color:#322521; cursor:pointer;" aria-hidden="true" title="Remove"></span>
+                </div>
+            }
+            else if (_authorizationService.UserType == UserType.Customer)
+            {
+                <div class="selectedRecipient">
+                    <p>@_suppliers.FirstOrDefault(supplier => supplier.SupplierId == recipientId).CompanyName</p>
+                    <span class="oi oi-x" @onclick="() => RemoveRecipient(recipientId)" style="color:#322521; cursor:pointer;" aria-hidden="true" title="Remove"></span>
+                </div>
+            }
+        }
+    </div>
+    <div class="sendMessageContainer">
+        <input type="text" class="sendMessageInput" @bind="_newMessage" placeholder="Type new message here" />
+        <button type="button" class="sendMessageButton" @onclick="() => SendMessage()">Send</button>
+    </div>
+
+</div>

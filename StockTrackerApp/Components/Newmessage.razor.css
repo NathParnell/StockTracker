@@ -1,0 +1,55 @@
+.newMessagePageContainer {
+    height: 100%;
+    border: 1px solid #ccc;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.newMessagePageContainer h1{
+    margin:0 auto;
+}
+
+#addRecipientsSelect{
+    width:60%;
+    margin:2rem auto;
+}
+
+.newMessagePageContainer p {
+    margin: 0 auto;
+}
+
+.selectedRecipientsContainer{
+    width:60%;
+    margin:3rem auto;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:left;
+}
+
+.selectedRecipient{
+    display:flex;
+    flex-direction:row;
+    margin:0 5px;
+}
+
+.selectedRecipient p{
+    margin:0 3px;
+}
+
+.sendMessageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:90%;
+    margin: 4rem auto;
+}
+
+.sendMessageInput {
+    width: 75%;
+}
+
+.sendMessageButton {
+    width: 20%;
+}

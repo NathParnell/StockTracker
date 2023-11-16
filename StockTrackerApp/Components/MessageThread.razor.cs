@@ -18,7 +18,6 @@ namespace StockTrackerApp.Components
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
         [Inject] private IMessageListenerService _messageListenerService { get; set; }
-        [Inject] private NavigationManager _navManager { get; set; }
 
 
         //Declare Variables

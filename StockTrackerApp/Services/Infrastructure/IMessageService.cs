@@ -13,5 +13,6 @@ namespace StockTrackerApp.Services.Infrastructure
         List<Message> GetMessageThreads(string userId, string contactId);
         bool SendMessage(string receiverId, string messageBody);
         bool SendMessage(string receiverId, string messageBody, string messageSubject);
+        bool SendMessage(List<string> receiverIds, string messageBody);
     }
 }

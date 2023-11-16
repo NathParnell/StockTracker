@@ -1,6 +1,7 @@
 <div class="messageContactsContainer">
     <div class="titleContainer">
         <h1>Messages</h1>
+        <span class="oi oi-pencil" @onclick="() => CreateNewMessage()" style="color:#322521; cursor:pointer; margin-left:1.5rem;" aria-hidden="true" title="New Message"></span>
     </div>
     <div class="messagePageContainer">
         <div class="messageContacts">
@@ -17,7 +18,10 @@
             {
                 <StockTrackerApp.Components.MessageThread ContactId="@_selectedContactId"/>
             }
+            else
+            {
+                <StockTrackerApp.Components.NewMessage/>
+            }
         </div>
     </div>
-    
 </div>

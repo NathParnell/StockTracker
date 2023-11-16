@@ -94,5 +94,47 @@ namespace StockTrackerApp.Services
 
             return messageSent;
         }
+
+        public bool SendMessage(List<string> receiverIds, string messageBody)
+        {
+            if (receiverIds == null || String.IsNullOrWhiteSpace(messageBody))
+                return false;
+
+            string messageSubject = "Message";
+
+            //set the sender id based on the current user
+            string senderId = String.Empty;
+            if (_authorizationService.UserType == UserType.Supplier)
+                senderId = _supplierService.CurrentUser.SupplierId;
+            else if (_authorizationService.UserType == UserType.Customer)
+                senderId = _customerService.CurrentUser.CustomerId;
+
+            List<Message> messages = new List<Message>();
+            foreach (string receiverId in receiverIds)
+            {
+                messages.Add(new Message()
+                {
+                    MessageId = Taikandi.SequentialGuid.NewGuid().ToString(),
+                    SentTime = DateTime.Now,
+                    ReceiverId = receiverId,
+                    SenderId = senderId,
+                    Subject = messageSubject,
+                    MessageBody = messageBody
+                });
+            }
+
+            string jsonResponse = _clientTransportService.TcpHandler(
+                RequestSerializingHelper.CreateSendPrivateMessagesRequest(messages, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (string.IsNullOrEmpty(jsonResponse))
+                return false;
+
+            //deserialize the JSON as a bool
+            bool messagesSent = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+
+            return messagesSent;
+
+        }
     }
 }

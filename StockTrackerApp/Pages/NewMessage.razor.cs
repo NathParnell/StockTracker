@@ -12,6 +12,7 @@ namespace StockTrackerApp.Pages
     {
         //Inject Services
         [Inject] ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] NavigationManager _navManager { get; set; }
 
         //Declare parameters
         [Parameter]
@@ -19,11 +20,25 @@ namespace StockTrackerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
             _sessionHistoryService.AddWebpageToHistory("NewMessage");
 
             if (String.IsNullOrWhiteSpace(RecipientIds))
             {
                 RecipientIds = "";
+            }
+        }
+
+        private void NavigatePreviousPage()
+        {
+            string previousWebpage = _sessionHistoryService.GetPreviousWebpage();
+            if (previousWebpage != null)
+            {
+                _navManager.NavigateTo(previousWebpage, true);
+            }
+            else
+            {
+                _navManager.NavigateTo("Home", true);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
-        [Inject] private NavigationManager _navmanager { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
         //declare variables
         private List<string> _contactIds { get; set; }
@@ -26,7 +26,6 @@ namespace StockTrackerApp.Components.CustomerComponents
 
         protected override async Task OnInitializedAsync()
         {
-            _sessionHistoryService.AddWebpageToHistory("Messages");
             Init();
         }
 
@@ -42,7 +41,7 @@ namespace StockTrackerApp.Components.CustomerComponents
 
         private void NavigateToMessageThread(string contactId)
         {
-            _navmanager.NavigateTo($"/MessageThread/{contactId}");
+            _navManager.NavigateTo($"/MessageThread/{contactId}");
         }
 
         private void ViewMessageThread(string contactId)

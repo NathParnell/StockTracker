@@ -21,7 +21,7 @@ namespace StockTrackerApp.Components
         private List<Customer> _customers { get; set; }
         private List<Supplier> _suppliers { get; set; }
         private string _newMessage { get; set; }
-        private List<string> _recipientIds { get; set; }
+        private List<string> _recipientIds { get; set; } = new List<string>();
 
         //Declare parameters
         [Parameter]

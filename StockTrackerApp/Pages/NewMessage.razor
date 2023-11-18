@@ -1,3 +1,10 @@
 ﻿@page "/NewMessage/{RecipientIds?}";
 
 <StockTrackerApp.Components.NewMessage RecipientIdsAsString="@RecipientIds"/>
+
+<button type="button" @onclick="() => NavigatePreviousPage()">
+    <div class="backButtonContents">
+        <span class="oi oi-arrow-circle-left" style="color: #322521;" aria-hidden="true"></span>
+        <p>Back</p>
+    </div>
+</button>

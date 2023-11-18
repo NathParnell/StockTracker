@@ -12,5 +12,13 @@ namespace StockTrackerApp.Pages
     {
         //Inject Services
         [Inject] private IAuthorizationService _authorizationService { get; set; }
+        [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            _sessionHistoryService.AddWebpageToHistory("Messages");
+        }
     }
 }

@@ -34,7 +34,6 @@ namespace StockTrackerApp.Pages
         protected override async Task OnInitializedAsync()
         {
             _sessionHistoryService.AddWebpageToHistory("MessageThread");
-            //_messageListenerService.MessageReceived += (sender, message) => InvokeAsync(() => NewMessageReceived(sender, message));
         }
 
 
@@ -48,5 +47,19 @@ namespace StockTrackerApp.Pages
                 }
             }      
         }
+
+        private void NavigatePreviousPage()
+        {
+            string previousWebpage = _sessionHistoryService.GetPreviousWebpage();
+            if (previousWebpage != null)
+            {
+                _navManager.NavigateTo(previousWebpage, true);
+            }
+            else
+            {
+                _navManager.NavigateTo("Home", true);
+            }
+        }
+
     }
 }

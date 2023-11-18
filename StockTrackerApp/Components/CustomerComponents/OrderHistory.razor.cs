@@ -20,6 +20,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IProductService _productService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
 
         //Define Variables
@@ -43,6 +44,11 @@ namespace StockTrackerApp.Components.CustomerComponents
                 _suppliers = _supplierService.GetSuppliersBySupplierIDs(_orders.Select(x => x.SupplierId).Distinct().ToList());
                 _orderedProducts = _productService.GetProductsByProductIds(_orderItems.Select(x => x.ProductId).Distinct().ToList());
             }
+        }
+
+        private void NavigateNewMessage(string customerId)
+        {
+            _navManager.NavigateTo($"NewMessage/{customerId}", true);
         }
 
     }

@@ -17,7 +17,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
-        [Inject] private NavigationManager _navmanager { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
         // Define Variables
         private List<Product> _products = new List<Product>();
@@ -136,7 +136,13 @@ namespace StockTrackerApp.Pages.CustomerPages
 
         public void ViewBasket()
         {
-            _navmanager.NavigateTo("ViewBasket");
+            _navManager.NavigateTo("ViewBasket");
         }
+
+        private void NavigateNewMessage(string customerId)
+        {
+            _navManager.NavigateTo($"NewMessage/{customerId}", true);
+        }
+
     }
 }

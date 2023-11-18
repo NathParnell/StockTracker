@@ -15,9 +15,14 @@
     <div class="productsContainer">
         @foreach (Product product in _products)
         {
+            Supplier supplier = _suppliers.FirstOrDefault(supp => supp.SupplierId == product.SupplierId);
             <div class="productContainer">
                 <div class="productDetails">
                     <h3>@product.ProductName</h3>
+                    <div class="supplierName">
+                        <h4>Supplier: @supplier.CompanyName</h4>
+                        <span class="oi oi-chat" style="color: #322521; cursor:pointer; margin-left:2rem;" @onclick="() => NavigateNewMessage(supplier.SupplierId)" title="Message"></span>
+                    </div>
                     <h4>Brand: @product.ProductBrand</h4>
                     <h4>Product Category: @_productCategories.FirstOrDefault(cat => cat.ProductCategoryId == product.ProductCategoryId).ProductCategoryName</h4>
                     <h4>Price: £@product.Price</h4>

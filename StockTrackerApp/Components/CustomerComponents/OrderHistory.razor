@@ -8,7 +8,11 @@
             <h2>Accepted Orders</h2>
             @foreach (Order order in _orders.Where(order => order.OrderStatus == OrderStatus.Accepted))
             {
-                <h3>Supplier: @_suppliers.FirstOrDefault(supp => supp.SupplierId == order.SupplierId).CompanyName</h3>
+                Supplier supplier = _suppliers.FirstOrDefault(supp => supp.SupplierId == order.SupplierId);
+                <div class="orderHistorySupplierName">
+                    <h3>Supplier: @supplier.CompanyName</h3>
+                    <span class="oi oi-chat" style="color: #322521; cursor:pointer; margin-left:2rem;" @onclick="() => NavigateNewMessage(supplier.SupplierId)" title="Message"></span>
+                </div>
                 @foreach (OrderItem orderItem in _orderItems.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
                 {
                     <div class="orderItem">
@@ -30,7 +34,11 @@
             <h2>Pending Orders</h2>
             @foreach (Order order in _orders.Where(order => order.OrderStatus == OrderStatus.Pending))
             {
-                <h3>Supplier: @_suppliers.FirstOrDefault(supp => supp.SupplierId == order.SupplierId).CompanyName</h3>
+                Supplier supplier = _suppliers.FirstOrDefault(supp => supp.SupplierId == order.SupplierId);
+                <div class="orderHistorySupplierName">
+                    <h3>Supplier: @supplier.CompanyName</h3>
+                    <span class="oi oi-chat" style="color: #322521; cursor:pointer; margin-left:2rem;" @onclick="() => NavigateNewMessage(supplier.SupplierId)" title="Message"></span>
+                </div>
                 @foreach (OrderItem orderItem in _orderItems.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
                 {
                     <div class="orderItem">
@@ -52,7 +60,11 @@
         <h2>Rejected Orders</h2>
         @foreach (Order order in _orders.Where(order => order.OrderStatus == OrderStatus.Rejected))
         {
-            <h3>Supplier: @_suppliers.FirstOrDefault(supp => supp.SupplierId == order.SupplierId).CompanyName</h3>
+            Supplier supplier = _suppliers.FirstOrDefault(supp => supp.SupplierId == order.SupplierId);
+            <div class="orderHistorySupplierName">
+                <h3>Supplier: @supplier.CompanyName</h3>
+                <span class="oi oi-chat" style="color: #322521; cursor:pointer; margin-left:2rem;" @onclick="() => NavigateNewMessage(supplier.SupplierId)" title="Message"></span>
+            </div>
             @foreach (OrderItem orderItem in _orderItems.Where(oi => order.OrderItemIds.Contains(oi.OrderItemId)))
             {
                 <div class="orderItem">

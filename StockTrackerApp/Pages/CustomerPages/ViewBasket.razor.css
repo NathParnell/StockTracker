@@ -1,0 +1,5 @@
+.basketSupplierName {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}

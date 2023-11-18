@@ -21,7 +21,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
-        [Inject] private NavigationManager _navmanager { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
         //Define Variables
         List<Supplier> _suppliers = new List<Supplier>();
@@ -95,7 +95,7 @@ namespace StockTrackerApp.Pages.CustomerPages
             _orderService.AddItemToBasket(basketItem, product.Price);
 
             //we reload the page to update the basket
-            _navmanager.NavigateTo("ViewBasket", true);
+            _navManager.NavigateTo("ViewBasket", true);
         }
 
         private async Task CreateOrderFromSupplierAsync(Supplier supplier)
@@ -122,10 +122,14 @@ namespace StockTrackerApp.Pages.CustomerPages
                     {
                         _orderService.BasketItems.RemoveAll(item => item.OrderItemId == orderItem.OrderItemId);
                     }
-                    _navmanager.NavigateTo("ViewBasket", true);
+                    _navManager.NavigateTo("ViewBasket", true);
                 }
             }
 
+        }
+        private void NavigateNewMessage(string customerId)
+        {
+            _navManager.NavigateTo($"NewMessage/{customerId}", true);
         }
     }
 }

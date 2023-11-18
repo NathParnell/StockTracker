@@ -37,3 +37,8 @@
     border: 1px solid black;
 }
 
+.orderHistorySupplierName {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}

@@ -36,18 +36,6 @@ namespace StockTrackerApp.Pages
             _sessionHistoryService.AddWebpageToHistory("MessageThread");
         }
 
-
-        private void NewMessageReceived(object sender, Message newMessage)
-        {
-            if (_sessionHistoryService.GetCurrentWebpage() == "MessageThread")
-            {
-                if (newMessage.SenderId == ContactId)
-                {
-                    _navManager.NavigateTo($"/MessageThread/{ContactId}", true);
-                }
-            }      
-        }
-
         private void NavigatePreviousPage()
         {
             string previousWebpage = _sessionHistoryService.GetPreviousWebpage();

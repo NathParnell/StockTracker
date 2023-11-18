@@ -15,6 +15,10 @@
     color: #fdf7f7;
 }
 
+.link span{
+    margin-top:1px;
+}
+
 .link p {
     margin-left: 1rem;
     margin-bottom: 0;

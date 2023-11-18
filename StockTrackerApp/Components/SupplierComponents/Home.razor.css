@@ -42,3 +42,16 @@ th{
 .sortingContainer *{
     margin: 0 10px 15px;
 }
+
+button{
+    margin-top: 1rem;
+}
+
+.productActionButtonContents{
+    display:flex;
+    flex-direction:row;
+}
+
+.productActionButtonContents p{
+    margin: 0 0.5rem;
+}

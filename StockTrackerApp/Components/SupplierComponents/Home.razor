@@ -36,7 +36,22 @@
 
     </table>
 </div>
-<button type="button" id="deleteProductButton" title="Delete Product" hidden="@(!_isProductSelected)" @onclick="() => DeleteProduct()"><i class="oi oi-minus" style="color: #3e67ac;"></i></button>
-<button type="button" id="editProductButton" title="View/Edit Product" hidden="@(!_isProductSelected)" @onclick="() => EditProduct(_selectedProduct)"><i class="oi oi-pencil" style="color: #3e67ac;"></i></button>
-<button type="button" id="addProductButton" title="Add New Product" @onclick="() => AddProduct()"><i class="oi oi-plus" style="color: #3e67ac;"></i></button>
+<button type="button" id="deleteProductButton" title="Delete Product" hidden="@(!_isProductSelected)" @onclick="() => DeleteProduct()">
+    <div class="productActionButtonContents">
+        <i class="oi oi-trash" style="color: #3e67ac;"></i>
+        <p>Delete Product</p>
+    </div>
+</button>
+<button type="button" id="editProductButton" title="View/Edit Product" hidden="@(!_isProductSelected)" @onclick="() => EditProduct(_selectedProduct)">
+    <div class="productActionButtonContents">
+        <i class="oi oi-pencil" style="color: #3e67ac;"></i>
+        <p>Edit Product</p>
+    </div>
+</button>
+<button type="button" id="addProductButton" title="Add New Product" @onclick="() => AddProduct()">
+    <div class="productActionButtonContents">
+        <i class="oi oi-plus" style="color: #3e67ac;"></i>
+        <p>Add Product</p>
+    </div>
+</button>
 

@@ -6,9 +6,19 @@
         @foreach (Supplier supplier in _suppliers)
         {
             <div class="supplier">
-                <span id="SupplierNameLabel" @onclick="() => NavigateToViewSupplierPage(supplier.SupplierId)">
-                    <p>@supplier.Email</p>
-                </span>
+                <div class="supplierName">
+                    <h3>Supplier: @supplier.CompanyName</h3>
+                    <span class="oi oi-chat" style="color: #322521; cursor:pointer; margin-left:2rem;" @onclick="() => NavigateNewMessage(supplier.SupplierId)" title="Message"></span>
+                </div>
+                <div class="supplierDetails">
+                    <p>Email: @supplier.Email</p>
+                    <p>Telephone Number: @supplier.TelephoneNumber</p>
+                    <p>Based in: @supplier.City</p>
+                </div>
+                <div class="supplierNavigateButton">
+                    <button type="button" @onclick="() => NavigateToViewSupplierPage(supplier.SupplierId)">View Products</button>
+                </div>
+                
             </div>
         }
     </div>

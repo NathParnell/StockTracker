@@ -46,5 +46,10 @@ namespace StockTrackerApp.Components.CustomerComponents
             _navManager.NavigateTo($"/ViewSupplier/{supplierId}");
         }
 
+        private void NavigateNewMessage(string customerId)
+        {
+            _navManager.NavigateTo($"NewMessage/{customerId}", true);
+        }
+
     }
 }

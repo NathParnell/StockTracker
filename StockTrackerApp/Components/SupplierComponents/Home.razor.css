@@ -50,6 +50,7 @@ button{
 .productActionButtonContents{
     display:flex;
     flex-direction:row;
+    align-items:center;
 }
 
 .productActionButtonContents p{

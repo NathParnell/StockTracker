@@ -3,15 +3,12 @@
     margin: auto;
 }
 
-.titleContainer{
-    display:flex;
-    flex-direction:row;
-    justify-content:left;
-    align-items:center;
-}
-
 .messageContact {
     cursor: pointer;
+}
+
+.messageContact:hover {
+    background-color: #fff6e1;
 }
 
 .titleContainer {
@@ -20,10 +17,33 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+
+.newMessage {
+    cursor: pointer;
+    color: #322521;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.newMessage:hover {
+    background-color: #ccc4b4;
+}
+
+.newMessage p {
+    margin: 0 0.5rem;
+}
+
 
 .messagePageContainer {
     width: 100%;
+    height: 100%;
+    background-color: #ccc4b4;
+    border-radius:5px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -33,6 +53,8 @@
     display: flex;
     flex-direction: column;
     width: 17%;
+    height:100%;
+    margin-left:1rem;
 }
 
 .messageDialogContainer {

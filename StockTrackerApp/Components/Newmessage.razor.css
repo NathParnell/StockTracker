@@ -1,9 +1,10 @@
 .newMessagePageContainer {
     height: 100%;
     border: 1px solid #ccc;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff6e1;
 }
 
 .newMessagePageContainer h1{

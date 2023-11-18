@@ -1,11 +1,14 @@
 <div class="messageContactsContainer">
     <div class="titleContainer">
         <h1>Messages</h1>
-        <span class="oi oi-pencil" @onclick="() => CreateNewMessage()" style="color:#322521; cursor:pointer; margin-left:1.5rem;" aria-hidden="true" title="New Message"></span>
+        <div class="newMessage" @onclick="() => CreateNewMessage()">
+            <span class="oi oi-pencil" style="color:#322521; cursor:pointer; margin-left:1.5rem;" aria-hidden="true" title="New Message"></span>
+            <p>New Message</p>
+        </div>
     </div>
     <div class="messagePageContainer">
         <div class="messageContacts">
-            <h2>Contacts:</h2>
+            <h2>Select Conversation:</h2>
             @foreach (var customer in _customers)
             {
                 <div class="messageContact" @onclick="() => ViewMessageThread(customer.CustomerId)">

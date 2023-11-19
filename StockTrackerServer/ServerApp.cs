@@ -19,10 +19,12 @@ namespace StockTrackerServer
 
         //define services
         private readonly IServerTransportService _transportServiceServer;
+        private readonly IBroadcastingService _broadcastingService;
 
-        public ServerApp(IServerTransportService transportServiceServer) 
+        public ServerApp(IServerTransportService transportServiceServer, IBroadcastingService broadcastingService)
         {
             _transportServiceServer = transportServiceServer;
+            _broadcastingService = broadcastingService;
         }
 
         /// <summary>
@@ -35,6 +37,8 @@ namespace StockTrackerServer
 
             Thread listenerThread = new Thread(() => _transportServiceServer.ListenThread());
             listenerThread.Start();
+
+            _broadcastingService.StartProductBroadcasterThread();
         }
     }
 }

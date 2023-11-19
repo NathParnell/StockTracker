@@ -9,6 +9,8 @@ namespace StockTrackerServer.Services.Infrastructure
 {
     public interface IBroadcastingService
     {
-        bool BroadcastMessage(Broadcast broadcastMessage);
+        void StartProductBroadcasterThread();
+        void StopProductBroadcasterThread();
+        bool BroadcastMessage(Broadcast broadcastMessage, string topic);
     }
 }

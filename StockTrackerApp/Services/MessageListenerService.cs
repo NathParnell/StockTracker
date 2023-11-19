@@ -26,8 +26,6 @@ namespace StockTrackerApp.Services
             // Start a thread which will run in the background to listen for messages
             Thread messageListenerThread = new Thread(() => MessageListenerThread());
             messageListenerThread.Start();
-
-            return;
         }
 
         public void StopListener()

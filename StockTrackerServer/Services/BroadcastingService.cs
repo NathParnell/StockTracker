@@ -52,7 +52,7 @@ namespace StockTrackerServer.Services
                     Broadcast broadcast = new Broadcast()
                     {
                         SenderId = product.SupplierId,
-                        Subject = product.ProductName,
+                        Subject = "Stock Update - " + product.ProductName,
                         MessageBody = $"In Stock: {product.ProductQuantity}, Price: £{product.Price}"
                     };
 

@@ -22,24 +22,37 @@ namespace StockTrackerApp.Services
 
         //Define variables
         private const string PUBLISHER_ENDPOINT = "192.168.0.86:5557";
+        private List<string> _customerSubscriptions = new List<string>();
 
-        public void StartListener()
+        public void StartListener(List<string> customerSubscriptions)
         {
+            //get the customers subscriptions
+            _customerSubscriptions = customerSubscriptions;
+            //if the customer has no subscriptions, there is no need to start the listener
+            if (_customerSubscriptions == null || _customerSubscriptions.Count < 1)
+            {
+                return;
+            }
+
             // Start a thread which will run in the background to listen for broadcasts
             _broadcastListenerThread = new Thread(() => BroadcastListenerThread());
             _broadcastListenerThread.Start();
-
-            return;
         }
 
         public void StopListener()
         {
+            //if the customer has no subscriptions, there is no need to stop the listener as none will be running
+            if (_customerSubscriptions == null || _customerSubscriptions.Count < 1)
+            {
+                return;
+            }
+
             //if the thread is running, end it by adding a thread timeout of 10ms
             if (_broadcastListenerThread != null && _broadcastListenerThread.IsAlive)
             {
+                _customerSubscriptions = null;
                 _broadcastListenerThread.Join(10);
             }
-            return;
         }
 
         private void BroadcastListenerThread()
@@ -52,8 +65,11 @@ namespace StockTrackerApp.Services
                     // Connect the socket to the publisher
                     socket.Connect($"tcp://{PUBLISHER_ENDPOINT}");
 
-                    // Subscribe to the topic
-                    socket.Subscribe("Notification");
+                    // subscribe to each of the customers subscriptions
+                    foreach (string subscription in _customerSubscriptions)
+                    {
+                        socket.Subscribe(subscription);
+                    }
 
                     while (true)
                     {
@@ -68,7 +84,6 @@ namespace StockTrackerApp.Services
                             broadcastHandlerThread.Start();
                         }
                     }
-                    //socket.Disconnect("tcp://192.168.0.86:5557");
                 }
             }
             catch (Exception ex)

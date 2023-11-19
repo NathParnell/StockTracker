@@ -11,7 +11,7 @@ namespace StockTrackerApp.Services.Infrastructure
     {
         event EventHandler<Broadcast> BroadcastReceived;
 
-        void StartListener();
+        void StartListener(List<string> customerSubscriptions);
         void StopListener();
     }
 }

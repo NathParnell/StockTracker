@@ -120,7 +120,7 @@ namespace StockTrackerApp.Services
             _messageListenerService.StartListener();
 
             // Start listening for Broadcasts
-            _broadcastListenerService.StartListener();
+            _broadcastListenerService.StartListener(CurrentUser.ProductSubscriptions);
         }
 
         private void DropCommunicationPorts(string customerId)

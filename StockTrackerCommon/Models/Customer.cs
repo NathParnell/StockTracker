@@ -16,6 +16,7 @@ namespace StockTrackerCommon.Models
         public string CustomerId { get; set; }
         public string FirstNames { get; set; }
         public string Surname { get; set; }
+        public List<string> ProductSubscriptions { get; set; }
 
     }
 }

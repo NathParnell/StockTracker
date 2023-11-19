@@ -18,7 +18,7 @@ namespace StockTrackerCommon.Database
         /// </summary>
         public static void EnsureSeedData(this StockTrackerDbContext context)
         {
-            //Ensure that we dont already have a mock db
+            //Ensure that we don't already have a mock db
             if (!seeded && context.Customers.Count() == 0
                 && context.Suppliers.Count() == 0
                 && context.Products.Count() == 0 
@@ -75,7 +75,8 @@ namespace StockTrackerCommon.Database
                     City = "Leeds",
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
-                    TelephoneNumber = "0113 123 4564"
+                    TelephoneNumber = "0113 123 4564",
+                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" }
                 },
                 new Customer
                 {
@@ -88,7 +89,8 @@ namespace StockTrackerCommon.Database
                     City = "Leeds",
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
-                    TelephoneNumber = "0113 123 4565"
+                    TelephoneNumber = "0113 123 4565",
+                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" }
                 },
                 new Customer
                 {
@@ -101,7 +103,8 @@ namespace StockTrackerCommon.Database
                     City = "Leeds",
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
-                    TelephoneNumber = "0113 123 4566"
+                    TelephoneNumber = "0113 123 4566",
+                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" }
                 }
             };
         }

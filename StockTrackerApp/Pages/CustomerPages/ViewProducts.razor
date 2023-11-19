@@ -19,6 +19,16 @@
             <div class="productContainer">
                 <div class="productDetails">
                     <h3>@product.ProductName</h3>
+                    <button type="button" @onclick="() => ManageProductSubscription(product.ProductId)">
+                        @if (_customerService.CurrentUser.ProductSubscriptions.Contains(product.ProductId))
+                        {
+                            <p>Unsubscribe from product notifications</p>
+                        }
+                        else
+                        {
+                            <p>Subscribe to product notifications</p>
+                        }
+                    </button>
                     <div class="supplierName">
                         <h4>Supplier: @supplier.CompanyName</h4>
                         <span class="oi oi-chat" style="color: #322521; cursor:pointer; margin-left:2rem;" @onclick="() => NavigateNewMessage(supplier.SupplierId)" title="Message"></span>

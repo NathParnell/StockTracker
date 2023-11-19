@@ -519,6 +519,22 @@ namespace StockTrackerServer.Services
             //make response
             return ResponseSerializingHelper.CreateResponse(editConfirmation);
         }
+
+        /// <summary>
+        /// Method which takes in an object array and turns it into a customer object
+        /// With this information we can make a call to the data service to update the customer
+        /// we then create and return our response
+        /// </summary>
+        /// <param name="requestObject"></param>
+        /// <returns></returns>
+        public string UpdateCustomer(object[] requestObject)
+        {
+            Request request = (Request)requestObject[0];
+            Customer customer = JsonSerializer.Deserialize<List<Customer>>(request.Data.ToString()).First();
+            bool editConfirmation = _dataService.UpdateCustomer(customer).Result;
+            //make response
+            return ResponseSerializingHelper.CreateResponse(editConfirmation);
+        }
         #endregion
 
     }

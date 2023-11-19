@@ -16,6 +16,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private IProductService _productService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private ISupplierService _supplierService { get; set; }
+        [Inject] private ICustomerService _customerService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
         [Inject] private NavigationManager _navManager { get; set; }
 
@@ -142,6 +143,26 @@ namespace StockTrackerApp.Pages.CustomerPages
         private void NavigateNewMessage(string customerId)
         {
             _navManager.NavigateTo($"NewMessage/{customerId}", true);
+        }
+
+        private void ManageProductSubscription(string productId)
+        {
+            Customer currentCustomer = _customerService.CurrentUser;
+            if (currentCustomer.ProductSubscriptions.Contains(productId))
+            {
+                currentCustomer.ProductSubscriptions.Remove(productId);
+            }
+            else
+            {
+                currentCustomer.ProductSubscriptions.Add(productId);
+            }
+
+            //if the customer gets updated then we need to refresh the page
+            if (_customerService.UpdateCustomer(currentCustomer))
+            {
+                Init();
+                StateHasChanged();
+            }
         }
 
     }

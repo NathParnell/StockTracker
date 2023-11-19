@@ -325,6 +325,36 @@ namespace StockTrackerServer.Services
 
         #region "Update Methods"
 
+        public async Task<bool> UpdateCustomer(Customer updatedCustomer)
+        {
+            try
+            {
+                var customer = _context.Customers.FirstOrDefault(cust => cust.CustomerId == updatedCustomer.CustomerId);
+                if (customer != null)
+                {
+                    //update customer values
+                    customer.FirstNames = updatedCustomer.FirstNames;
+                    customer.Surname = updatedCustomer.Surname;
+                    customer.Email = updatedCustomer.Email;
+                    customer.TelephoneNumber = updatedCustomer.TelephoneNumber;
+                    customer.Address = updatedCustomer.Address;
+                    customer.City = updatedCustomer.City;
+                    customer.Postcode = updatedCustomer.Postcode;
+                    customer.CountryCode = updatedCustomer.CountryCode;
+                    customer.ProductSubscriptions = updatedCustomer.ProductSubscriptions;
+
+                    _context.Entry(customer).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> UpdateProduct(Product updatedProduct)
         {
             try

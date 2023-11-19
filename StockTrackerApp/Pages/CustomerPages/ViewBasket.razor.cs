@@ -17,7 +17,6 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private IJSRuntime _jSRuntime { get; set; }
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IProductService _productService { get; set; }
-        [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IMessageService _messageService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }

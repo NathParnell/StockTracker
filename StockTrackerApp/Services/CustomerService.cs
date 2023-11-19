@@ -146,8 +146,9 @@ namespace StockTrackerApp.Services
             }        
         }
 
-        #endregion 
+        #endregion
 
+        #region "Get Methods"
         public Customer GetCustomerByCustomerId(string customerId)
         {
             string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateGetCustomerByCustomerIdRequest(customerId, _clientTransportService.ConnectionPortNumber));
@@ -183,6 +184,29 @@ namespace StockTrackerApp.Services
             List<Customer> customers = ResponseDeserializingHelper.DeserializeResponse<List<Customer>>(jsonResponse).First().ToList();
             return customers;
         }
+        #endregion
+
+        #region "Update Methods"
+
+        public bool UpdateCustomer(Customer customer)
+        {
+            string jsonResponse = _clientTransportService.TcpHandler(RequestSerializingHelper.CreateUpdateCustomerRequest(customer, _clientTransportService.ConnectionPortNumber));
+
+            //if the method we tried to call did not exist
+            if (string.IsNullOrWhiteSpace(jsonResponse))
+                return false;
+
+            bool success = ResponseDeserializingHelper.DeserializeResponse<bool>(jsonResponse).First();
+
+            if (success)
+            {
+                SetCurrentUser(customer);
+            }
+
+            return success;
+        }
+
+        #endregion
 
     }
 }

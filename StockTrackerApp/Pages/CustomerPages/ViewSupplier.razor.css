@@ -68,6 +68,10 @@
     flex-direction:column;
 }
 
+.productDetails button {
+    margin-bottom: 0.5rem;
+}
+
 .productBasket{
     display:flex;
     flex-direction:column;

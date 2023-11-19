@@ -14,10 +14,11 @@ namespace StockTrackerApp.Pages.CustomerPages
         //Inject Services
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private IProductService _productService { get; set; }
+        [Inject] private ICustomerService _customerService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
-        [Inject] private NavigationManager _navmanager { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
 
         //Define Parameters
         [Parameter] public string SupplierId { get; set; }
@@ -85,7 +86,27 @@ namespace StockTrackerApp.Pages.CustomerPages
 
         public void ViewBasket()
         {
-            _navmanager.NavigateTo("ViewBasket");
+            _navManager.NavigateTo("ViewBasket");
+        }
+
+        private void ManageProductSubscription(string productId)
+        {
+            Customer currentCustomer = _customerService.CurrentUser;
+            if (currentCustomer.ProductSubscriptions.Contains(productId))
+            {
+                currentCustomer.ProductSubscriptions.Remove(productId);
+            }
+            else
+            {
+                currentCustomer.ProductSubscriptions.Add(productId);
+            }
+
+            //if the customer gets updated then we need to refresh the page
+            if (_customerService.UpdateCustomer(currentCustomer))
+            {
+                Init();
+                StateHasChanged();
+            }
         }
 
     }

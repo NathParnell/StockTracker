@@ -207,6 +207,13 @@ namespace StockTrackerCommon.Helpers
             return CreateRequest(methodName, data, portNumber);
         }
 
+        public static string CreateUpdateCustomerRequest(Customer customer, string portNumber)
+        {
+            string methodName = "UpdateCustomer";
+            object[] data = new object[] { customer };
+            return CreateRequest(methodName, data, portNumber);
+        }
+
         #endregion
 
         #region "Product Requests"

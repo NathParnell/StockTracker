@@ -15,5 +15,6 @@ namespace StockTrackerApp.Services.Infrastructure
         Customer GetCustomerByCustomerId(string customerId);
         List<Customer> GetAllCustomers();
         List<Customer> GetCustomersByCustomerIds(List<string> customerIds);
+        bool UpdateCustomer(Customer customer);
     }
 }

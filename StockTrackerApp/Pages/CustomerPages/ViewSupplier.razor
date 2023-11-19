@@ -21,6 +21,16 @@
                     <div class="productContainer">
                         <div class="productDetails">
                             <h3>@product.ProductName</h3>
+                            <button type="button" @onclick="() => ManageProductSubscription(product.ProductId)">
+                                @if (_customerService.CurrentUser.ProductSubscriptions.Contains(product.ProductId))
+                                {
+                                    <p style="margin: 0 auto;">Unsubscribe from product notifications</p>
+                                }
+                                else
+                                {
+                                    <p style="margin: 0 auto;">Subscribe to product notifications</p>
+                                }
+                            </button>
                             <h4>Brand: @product.ProductBrand</h4>
                             <h4>Price: £@product.Price</h4>
                             <h4>Size: @(product.ProductSize.ToString() + " " + product.ProductMeasurementUnit.ToString())</h4>

@@ -19,7 +19,6 @@ namespace StockTrackerServer.Services
         private readonly IDataService _dataService;
 
         private readonly PublisherSocket _publisherSocket;
-        private List<Product> _products = new List<Product>();
         private bool _productBroadcasterThreadRunning = false;
 
         public BroadcastingService(IDataService dataService)
@@ -31,7 +30,6 @@ namespace StockTrackerServer.Services
 
         public void StartProductBroadcasterThread()
         {
-            _products = _dataService.GetAllProducts().Result;
             _productBroadcasterThreadRunning = true;
             Thread productBroadcasterThread = new Thread(() => ProductBroadcasterThread());
             productBroadcasterThread.Start();
@@ -40,14 +38,16 @@ namespace StockTrackerServer.Services
         public void StopProductBroadcasterThread()
         {
             _productBroadcasterThreadRunning = false;
-            _products = new List<Product>();
         }
 
         private void ProductBroadcasterThread()
         {
             while (_productBroadcasterThreadRunning == true)
             {
-                foreach (Product product in _products)
+                List<Product> products = _dataService.GetAllProducts().Result;
+
+                //loop through each product and send a broadcast message
+                foreach (Product product in products)
                 {
                     Broadcast broadcast = new Broadcast()
                     {

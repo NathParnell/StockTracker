@@ -22,11 +22,10 @@ namespace StockTrackerApp.Components.SupplierComponents
         //declare variables
         private List<string> _contactIds { get; set; }
         private List<Customer> _customers { get; set; }
-        private string _selectedContactId { get; set; }
+        private static string _selectedContactId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            _sessionHistoryService.AddWebpageToHistory("Messages");
             Init();
         }
 
@@ -39,15 +38,10 @@ namespace StockTrackerApp.Components.SupplierComponents
             }
         }
 
-        private void NavigateToMessageThread(string contactId)
-        {
-            _navManager.NavigateTo($"/MessageThread/{contactId}");
-        }
-
         private void ViewMessageThread(string contactId)
         {
             _selectedContactId = contactId;
-            StateHasChanged();
+            _navManager.NavigateTo("/Messages", true);
         }
 
         private void CreateNewMessage()

@@ -21,7 +21,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         //declare variables
         private List<string> _contactIds { get; set; }
         private List<Supplier> _suppliers { get; set; }
-        private string _selectedContactId { get; set; }
+        private static string _selectedContactId { get; set; }
 
 
         protected override async Task OnInitializedAsync()
@@ -39,15 +39,10 @@ namespace StockTrackerApp.Components.CustomerComponents
 
         }
 
-        private void NavigateToMessageThread(string contactId)
-        {
-            _navManager.NavigateTo($"/MessageThread/{contactId}");
-        }
-
         private void ViewMessageThread(string contactId)
         {
             _selectedContactId = contactId;
-            StateHasChanged();
+            _navManager.NavigateTo("/Messages", true);
         }
 
         private void CreateNewMessage()

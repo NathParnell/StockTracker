@@ -56,9 +56,8 @@ namespace StockTrackerServer.Services
                         MessageBody = $"In Stock: {product.ProductQuantity}, Price: £{product.Price}"
                     };
 
-                    //run the broadcast message method in a new thread
-                    Thread broadcastMessageThread = new Thread(() => BroadcastMessage(broadcast, product.ProductId));
-                    broadcastMessageThread.Start();
+                    //run the broadcast message method
+                    BroadcastMessage(broadcast, product.ProductId);
                 }
                 // Block the current thread for 45 seconds
                 Thread.Sleep(45000);

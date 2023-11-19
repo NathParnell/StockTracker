@@ -39,6 +39,11 @@ namespace StockTrackerApp.Components.CustomerComponents
         {
             _navManager.NavigateTo("Messages", true);
         }
+
+        private async Task NavigateNotifications()
+        {
+            _navManager.NavigateTo("Notifications", true);
+        }
         private async Task Logout()
         {
             if (_customerService.Logout())

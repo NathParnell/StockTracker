@@ -10,7 +10,7 @@ namespace StockTrackerApp.Services.Infrastructure
     public interface IBroadcastListenerService
     {
         event EventHandler<Broadcast> BroadcastReceived;
-
+        List<Broadcast> Broadcasts { get; set; }
         void StartListener(List<string> customerSubscriptions);
         void StopListener();
     }

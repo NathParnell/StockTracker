@@ -23,6 +23,7 @@ namespace StockTrackerApp.Services
         //Define variables
         private const string PUBLISHER_ENDPOINT = "192.168.0.86:5557";
         private List<string> _customerSubscriptions = new List<string>();
+        public List<Broadcast> Broadcasts { get; set; } = new List<Broadcast>();
 
         public void StartListener(List<string> customerSubscriptions)
         {
@@ -101,6 +102,9 @@ namespace StockTrackerApp.Services
 
                 //deserialize the broadcast
                 Broadcast broadcast = JsonSerializer.Deserialize<Broadcast>(decryptedBroadcast);
+
+                //Add broadcast to the start of the list of broadcasts
+                Broadcasts.Insert(0, broadcast);
 
                 //raise the broadcast received event
                 BroadcastReceived?.Invoke(this, broadcast);

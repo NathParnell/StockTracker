@@ -1,0 +1,16 @@
+﻿@page "/notifications"
+@using StockTrackerCommon.Models;
+
+<div class="notificationsPageContainer">
+    <h1>Notifications</h1>
+    <div class="notificationsContainer">
+        @foreach (Broadcast broadcast in _broadcastListenerService.Broadcasts)
+        {
+            <div class="notification">
+                <h3>Sender: @_suppliers.FirstOrDefault(supp => supp.SupplierId == broadcast.SenderId).CompanyName</h3>
+                <h3>Subject: @broadcast.Subject</h3>
+                <p>Message: @broadcast.MessageBody</p>
+            </div>
+        }
+    </div>
+</div>

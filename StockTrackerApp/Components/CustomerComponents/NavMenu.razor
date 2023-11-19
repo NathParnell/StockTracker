@@ -20,9 +20,13 @@
             <span class="oi oi-list" style="color: #fdf7f7;" aria-hidden="true"></span>
             <p>Order History</p>
         </div>
-        <div id="navMessages" class="link" @onclick="() => NavigateMessages()" title="Private Messaging">
+        <div id="navMessages" class="link" @onclick="() => NavigateMessages()" title="Messages">
             <span class="oi oi-chat" style="color: #fdf7f7;" aria-hidden="true"></span>
             <p>Messages</p>
+        </div>
+        <div id="navNotifications" class="link" @onclick="() => NavigateNotifications()" title="Notifications">
+            <span class="oi oi-envelope-open" style="color: #fdf7f7;" aria-hidden="true"></span>
+            <p>Notifications</p>
         </div>
         <div id="navLogout" class="link" @onclick="() => Logout()" title="Logout">
             <span class="oi oi-account-logout" style="color: #fdf7f7;" aria-hidden="true"></span>

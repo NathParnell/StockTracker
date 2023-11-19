@@ -7,7 +7,10 @@ namespace StockTrackerServer.Services
 {
     public class DataService : IDataService
     {
+        //Set up Logger
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(DataService));
 
+        //Define DBContext
         private readonly StockTrackerDbContext _context;
 
         public DataService()
@@ -28,7 +31,7 @@ namespace StockTrackerServer.Services
         public async Task<List<Product>> GetAllProducts() => await _context.Products.ToListAsync();
         #endregion
 
-        public async Task<Supplier> GetSupplierByEmail(string email)
+        public async Task<Supplier?> GetSupplierByEmail(string email)
         {
             try
             {
@@ -36,11 +39,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetSupplierByEmail(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<Supplier> GetSupplierBySupplierId(string supplierId)
+        public async Task<Supplier?> GetSupplierBySupplierId(string supplierId)
         {
             try
             {
@@ -48,11 +52,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetSupplierBySupplierId(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Supplier>> GetSuppliersBySupplierIds(List<string> supplierIds)
+        public async Task<List<Supplier>?> GetSuppliersBySupplierIds(List<string> supplierIds)
         {
             try
             {
@@ -60,11 +65,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetSuppliersBySupplierIds(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<Customer> GetCustomerByEmail(string email)
+        public async Task<Customer?> GetCustomerByEmail(string email)
         {
             try
             {
@@ -72,11 +78,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetCustomerByEmail(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<Customer> GetCustomerByCustomerId(string customerId)
+        public async Task<Customer?> GetCustomerByCustomerId(string customerId)
         {
             try
             {
@@ -84,11 +91,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetCustomerByCustomerId(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Customer>> GetCustomersByCustomerIds(List<string> customerIds)
+        public async Task<List<Customer>?> GetCustomersByCustomerIds(List<string> customerIds)
         {
             try
             {
@@ -96,11 +104,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetCustomersByCustomerIds(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<Product> GetProductByProductId(string productId)
+        public async Task<Product?> GetProductByProductId(string productId)
         {
             try
             {
@@ -108,11 +117,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetProductByProductId(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Product>> GetProductsBySupplierId(string supplierId)
+        public async Task<List<Product>?> GetProductsBySupplierId(string supplierId)
         {
             try
             {
@@ -120,11 +130,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetProductsBySupplierId(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Product>> GetProductsByProductIds(List<string> productIds)
+        public async Task<List<Product>?> GetProductsByProductIds(List<string> productIds)
         {
             try
             {
@@ -132,11 +143,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetProductsByProductIds(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Product>> GetAllProductsWithStock()
+        public async Task<List<Product>?> GetAllProductsWithStock()
         {
             try
             {
@@ -144,11 +156,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetAllProductsWithStock(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<ProductCategory>> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds)
+        public async Task<List<ProductCategory>?> GetProductCategoriesByProductCategoryIds(List<string> productCategoryIds)
         {
             try
             {
@@ -156,11 +169,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetProductCategoriesByProductCategoryIds(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Order>> GetOrderRequestsBySupplierId(string supplierId)
+        public async Task<List<Order>?> GetOrderRequestsBySupplierId(string supplierId)
         {
             try
             {
@@ -168,11 +182,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetOrderRequestsBySupplierId(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Order>> GetOrdersByUserId(string userId)
+        public async Task<List<Order>?> GetOrdersByUserId(string userId)
         {
             try
             {
@@ -180,11 +195,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetOrdersByUserId(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<OrderItem>> GetOrderItemsByOrderItemIds(List<string> orderItemIds)
+        public async Task<List<OrderItem>?> GetOrderItemsByOrderItemIds(List<string> orderItemIds)
         {
             try
             {
@@ -192,11 +208,12 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetOrderItemsByOrderItemIds(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<string>> GetContactIds(string userId)
+        public async Task<List<string>?> GetContactIds(string userId)
         {
             try
             {
@@ -210,11 +227,12 @@ namespace StockTrackerServer.Services
             }
             catch(Exception ex)
             {
+                _logger.Warn($"GetContactIds(), Error: {ex.Message}", ex);
                 return null;
             }
         }
 
-        public async Task<List<Message>> GetMessageThreads(string userId, string contactId)
+        public async Task<List<Message>?> GetMessageThreads(string userId, string contactId)
         {
             try
             {
@@ -227,6 +245,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"GetMessageThreads(), Error: {ex.Message}", ex);
                 return null;
             }
         }
@@ -261,6 +280,7 @@ namespace StockTrackerServer.Services
             }
             catch(Exception ex)
             {
+                _logger.Warn($"AddProduct(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -275,6 +295,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"AddProductCategory(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -289,6 +310,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"AddOrder(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -303,6 +325,7 @@ namespace StockTrackerServer.Services
             }
             catch(Exception ex)
             {
+                _logger.Warn($"AddOrderItems(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -317,6 +340,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"AddMessage(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -351,6 +375,7 @@ namespace StockTrackerServer.Services
             }
             catch(Exception ex)
             {
+                _logger.Warn($"UpdateCustomer(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -381,6 +406,7 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"UpdateProduct(), Error: {ex.Message}", ex);
                 return false;
             }
         }
@@ -405,11 +431,11 @@ namespace StockTrackerServer.Services
             }
             catch (Exception ex)
             {
+                _logger.Warn($"UpdateOrder(), Error: {ex.Message}", ex);
                 return false;
             }
         }
 
         #endregion
-
     }
 }

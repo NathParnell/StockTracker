@@ -1,0 +1,10 @@
+﻿@page "/CreateBroadcast"
+
+<div class="newBroadcastPageContainer">
+    <h1>New Broadcast</h1>
+    <div class="sendBroadcastContainer">
+        <input type="text" class="sendBroadcastSubject" @bind="_broadcastSubject" placeholder="Type Subject Here" />
+        <input type="text" class="sendBroadcastMessage" @bind="_broadcastMessageBody" placeholder="Type Message Here" />
+        <button type="button" class="sendBroadcastButton" @onclick="() => SendBroadcast()">Send</button>
+    </div>
+</div>

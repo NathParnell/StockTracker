@@ -26,3 +26,12 @@
     width:60%;
     margin-bottom:1rem;
 }
+
+.supplier button{
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+}
+
+.supplier button p {
+    margin: 0 auto;
+}

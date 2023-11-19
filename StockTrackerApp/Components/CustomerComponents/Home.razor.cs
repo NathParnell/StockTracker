@@ -16,7 +16,8 @@ namespace StockTrackerApp.Components.CustomerComponents
     {
         //Inject Services
         [Inject] private ISupplierService _supplierService { get; set; }
-        [Inject]private NavigationManager _navManager { get; set; }
+        [Inject] private NavigationManager _navManager { get; set; }
+        [Inject] private ICustomerService _customerService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
 
@@ -34,7 +35,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         /// Method called on initialisation which gets all of the suppliers and product categories
         /// </summary>
         /// <returns></returns>
-        private async Task Init()
+        private void Init()
         {
             //Gets all of the suppliers
             _suppliers = _supplierService.GetAllSuppliers();
@@ -49,6 +50,26 @@ namespace StockTrackerApp.Components.CustomerComponents
         private void NavigateNewMessage(string customerId)
         {
             _navManager.NavigateTo($"NewMessage/{customerId}", true);
+        }
+
+        private void ManageSupplierSubscription(string supplierId)
+        {
+            Customer currentCustomer = _customerService.CurrentUser;
+            if (currentCustomer.SupplierSubscriptions.Contains(supplierId))
+            {
+                currentCustomer.SupplierSubscriptions.Remove(supplierId);
+            }
+            else
+            {
+                currentCustomer.SupplierSubscriptions.Add(supplierId);
+            }
+
+            //if the customer gets updated then we need to refresh the page
+            if (_customerService.UpdateCustomer(currentCustomer))
+            {
+                Init();
+                StateHasChanged();
+            }
         }
 
     }

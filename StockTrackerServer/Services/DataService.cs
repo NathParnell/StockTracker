@@ -366,6 +366,7 @@ namespace StockTrackerServer.Services
                     customer.Postcode = updatedCustomer.Postcode;
                     customer.CountryCode = updatedCustomer.CountryCode;
                     customer.ProductSubscriptions = updatedCustomer.ProductSubscriptions;
+                    customer.SupplierSubscriptions = updatedCustomer.SupplierSubscriptions;
 
                     _context.Entry(customer).State = EntityState.Modified;
                     _context.SaveChanges();

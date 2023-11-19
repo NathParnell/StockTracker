@@ -47,6 +47,13 @@ namespace StockTrackerCommon.Database
                     v => string.Join(";", v), // Convert List<string> to a delimited string
                     v => v.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList() // Convert string back to List<string>
                 );
+
+            modelBuilder.Entity<Customer>()
+                .Property(e => e.SupplierSubscriptions)
+                .HasConversion(
+                    v => string.Join(";", v), // Convert List<string> to a delimited string
+                    v => v.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList() // Convert string back to List<string>
+                );
         }
     }
 }

@@ -76,7 +76,8 @@ namespace StockTrackerCommon.Database
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
                     TelephoneNumber = "0113 123 4564",
-                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" }
+                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" },
+                    SupplierSubscriptions = new List<string> { "15c30fdd-e762-4e22-9d9c-08dbc77c7200" }
                 },
                 new Customer
                 {
@@ -90,7 +91,8 @@ namespace StockTrackerCommon.Database
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
                     TelephoneNumber = "0113 123 4565",
-                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" }
+                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" },
+                    SupplierSubscriptions = new List<string> { "15c30fdd-e762-4e22-9d9c-08dbc77c7200" }
                 },
                 new Customer
                 {
@@ -104,7 +106,8 @@ namespace StockTrackerCommon.Database
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
                     TelephoneNumber = "0113 123 4566",
-                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" }
+                    ProductSubscriptions = new List<string>() { "56692403-07f3-46a4-c187-08dbd596aa89", "b2c13aaa-d8e6-4ed1-9dbd-08dbc77c7200" },
+                    SupplierSubscriptions = new List<string> { "15c30fdd-e762-4e22-9d9c-08dbc77c7200" }
                 }
             };
         }

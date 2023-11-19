@@ -17,7 +17,7 @@ namespace StockTrackerServer.Services
     public class NetmqServerTransportService : IServerTransportService
     {
         //Set up Logger
-        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(NetmqServerTransportService));
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(NetmqServerTransportService));
 
         //define services
         private readonly IRequestService _requestService;
@@ -37,6 +37,7 @@ namespace StockTrackerServer.Services
         /// </summary>
         public void ListenThread()
         {
+            _logger.Info($"ListenThread() - Listen thread Started");
             var mqServer = new ResponseSocket();
             mqServer.Bind($"tcp://*:{_serverPortNumber}");
 
@@ -68,25 +69,25 @@ namespace StockTrackerServer.Services
 
                 //decrypt request from client
                 string decryptedRequest = EncryptionHelper.Decrypt(encryptedRequest);
-                Logger.Info("TcpClientHandlerThread(), Server has received encrypted request from unknown client: " +
+                _logger.Info("TcpClientHandlerThread(), Server has received and decrypted a request from unknown client: " +
                     $"{decryptedRequest}");
 
                 //process Message and perform actions and get the prepared response
                 string decryptedResponse = _requestService.ProcessRequest(decryptedRequest, ref clientIpAddress, ref clientPortNumber);
-                Logger.Info($"TcpClientHandlerThread(), The unencrypted response we will send to the client " +
+                _logger.Info($"TcpClientHandlerThread(), The unencrypted response we will send to the client " +
                     $"{clientIpAddress}: {clientPortNumber}: {decryptedRequest}");
 
                 //Encrypt response for client
                 string encryptedResponse = EncryptionHelper.Encrypt(decryptedResponse);
-                Logger.Info($"TcpClientHandlerThread(), the encrypted response we will send to the client " +
-                    $"{clientIpAddress}: {clientPortNumber}: {decryptedRequest}");
+                _logger.Info($"TcpClientHandlerThread(), the encrypted response we will send to the client " +
+                    $"{clientIpAddress}: {clientPortNumber}: {encryptedResponse}");
 
                 //Send encrypted response to client
                 WriteClientResponse(encryptedResponse, clientIpAddress, clientPortNumber);
             }
             catch (Exception ex)
             {
-                Logger.Warn($"TcpClientHandlerThread(), Error: {ex.Message}", ex);
+                _logger.Warn($"TcpClientHandlerThread(), Error: {ex.Message}", ex);
             }
         }
 
@@ -103,21 +104,21 @@ namespace StockTrackerServer.Services
             try
             {
                 //Wait for an incoming message
-                Logger.Info("ReadClientRequest(), Listening for NetMQ Clients...");
+                _logger.Info("ReadClientRequest(), Listening for NetMQ Clients...");
 
                 string dataReceived = socket.ReceiveFrameString();
                 socket.SendFrame("Message received by server");
 
                 if (String.IsNullOrWhiteSpace(dataReceived))
                 {
-                    Logger.Info("ReadClientRequest(), No data received from client");
+                    _logger.Info("ReadClientRequest(), No data received from client");
                 }
 
                 return dataReceived;
             }
             catch (Exception ex)
             {
-                Logger.Warn($"ReadClientRequest(), Error: {ex.Message}", ex);
+                _logger.Warn($"ReadClientRequest(), Error: {ex.Message}", ex);
             }
 
             return null;
@@ -144,12 +145,12 @@ namespace StockTrackerServer.Services
                     socket.Connect($"tcp://{clientIp}:{clientPort}");
                     socket.SendFrame(responseMessage);
                     string responseConfirmation = socket.ReceiveFrameString();
-                    Logger.Info($"WriteClientResponse(), {responseConfirmation}");
+                    _logger.Info($"WriteClientResponse(), {responseConfirmation}");
                 }
             }
             catch (Exception ex)
             {
-                Logger.Warn($"WriteClientResponse(), Error: {ex.Message}", ex);
+                _logger.Warn($"WriteClientResponse(), Error: {ex.Message}", ex);
             }
         }
         #endregion

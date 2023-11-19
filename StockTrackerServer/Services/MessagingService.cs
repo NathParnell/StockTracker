@@ -1,4 +1,5 @@
-﻿using NetMQ;
+﻿using log4net.Repository.Hierarchy;
+using NetMQ;
 using NetMQ.Sockets;
 using StockTrackerCommon.Helpers;
 using StockTrackerCommon.Models;
@@ -14,6 +15,9 @@ namespace StockTrackerServer.Services
 {
     public class MessagingService : IMessagingService
     {
+        //Set up Logger
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(MessagingService));
+
         //Define Services
         private IPortService _portService { get; set; }
         private IDataService _dataService { get; set; }
@@ -28,6 +32,7 @@ namespace StockTrackerServer.Services
         {
             try
             {
+                _logger.Info($"SendMessage(), Sending Message to user:{message.ReceiverId}");
                 //save the message to the database
                 bool messagedSaved = _dataService.AddMessage(message).Result;
 
@@ -50,21 +55,17 @@ namespace StockTrackerServer.Services
 
                         //receive confirmation
                         string confirmation = messageSocket.ReceiveFrameString();
-
+                        _logger.Info($"SendMessage(), Send Message Confirmation received: {confirmation}");
                     }
                 }
                 //Always return true here as the message will have been saved to the database even if the message didnt send to the receiver
-                return true;
-                
+                return true;   
             }
             catch (Exception ex)
             {
+                _logger.Warn($"SendMessage(), Error: {ex.Message}", ex);
                 return false;
-            }
-            
+            }   
         }
-
-
-
     }
 }

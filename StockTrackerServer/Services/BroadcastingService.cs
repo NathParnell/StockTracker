@@ -15,6 +15,9 @@ namespace StockTrackerServer.Services
 {
     public class BroadcastingService : IBroadcastingService
     {
+        //Set up Logger
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(BroadcastingService));
+
         //Inject services
         private readonly IDataService _dataService;
 
@@ -31,6 +34,7 @@ namespace StockTrackerServer.Services
         public void StartProductBroadcasterThread()
         {
             _productBroadcasterThreadRunning = true;
+            _logger.Info($"StartProductBroadcasterThread() - Product Broadcaster thread Started");
             Thread productBroadcasterThread = new Thread(() => ProductBroadcasterThread());
             productBroadcasterThread.Start();
         }
@@ -44,7 +48,10 @@ namespace StockTrackerServer.Services
         {
             while (_productBroadcasterThreadRunning == true)
             {
+                //get all products
                 List<Product> products = _dataService.GetAllProducts().Result;
+
+                _logger.Info("ProductBroadcasterThread(), Sending Stock Update Broadcasts");
 
                 //loop through each product and send a broadcast message
                 foreach (Product product in products)

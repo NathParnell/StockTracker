@@ -23,8 +23,7 @@
                             <h3>@product.ProductName</h3>
                             <h4>Brand: @product.ProductBrand</h4>
                             <h4>Price: £@product.Price</h4>
-                            <h4>Size: @product.ProductSize</h4>
-                            <h4>Measurement Unit: @product.ProductMeasurementUnit</h4>
+                            <h4>Size: @(product.ProductSize.ToString() + " " + product.ProductMeasurementUnit.ToString())</h4>
                         </div>
                         <div class="productBasket">
                             <input type="number" @bind-value="_productBasketQuantities[product.ProductId]" min="0" />

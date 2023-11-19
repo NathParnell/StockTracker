@@ -119,8 +119,12 @@ namespace StockTrackerApp.Services
             _messageListenerService.MessagePortNumber = ports[1];
             _messageListenerService.StartListener();
 
+            // Create one list with all of the customers subscriptions
+            List<string> customerSubscriptions = new List<string>();
+            customerSubscriptions.AddRange(CurrentUser.ProductSubscriptions);
+            customerSubscriptions.AddRange(CurrentUser.SupplierSubscriptions);
             // Start listening for Broadcasts
-            _broadcastListenerService.StartListener(CurrentUser.ProductSubscriptions);
+            _broadcastListenerService.StartListener(customerSubscriptions);
         }
 
         private void DropCommunicationPorts(string customerId)

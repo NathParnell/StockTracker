@@ -11,6 +11,9 @@ namespace StockTrackerCommon.Models
     {
         public Broadcast() { }
 
+        [JsonPropertyName("topic")]
+        public string Topic { get; set; }
+
         [JsonPropertyName("senderId")]
         public string SenderId { get; set; }
 

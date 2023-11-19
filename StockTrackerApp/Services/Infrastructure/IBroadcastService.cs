@@ -8,6 +8,6 @@ namespace StockTrackerApp.Services.Infrastructure
 {
     public interface IBroadcastService
     {
-        bool BroadcastMessage(string broadcastMessageBody, string broadcastSubject);
+        bool BroadcastMessage(string topic, string broadcastMessageBody, string broadcastSubject);
     }
 }

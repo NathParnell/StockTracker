@@ -58,20 +58,21 @@ namespace StockTrackerServer.Services
                 {
                     Broadcast broadcast = new Broadcast()
                     {
+                        Topic = product.ProductId,
                         SenderId = product.SupplierId,
                         Subject = "Stock Update - " + product.ProductName,
                         MessageBody = $"In Stock: {product.ProductQuantity}, Price: £{product.Price}"
                     };
 
                     //run the broadcast message method
-                    BroadcastMessage(broadcast, product.ProductId);
+                    BroadcastMessage(broadcast);
                 }
                 // Block the current thread for 45 seconds
                 Thread.Sleep(45000);
             }
         }
 
-        public bool BroadcastMessage(Broadcast broadcastMessage, string topic)
+        public bool BroadcastMessage(Broadcast broadcastMessage)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace StockTrackerServer.Services
                 string encryptedBroadcast = EncryptionHelper.Encrypt(unencryptedBroadcast);
 
                 //send the broadcast message
-                _publisherSocket.SendMoreFrame(topic).SendFrame(encryptedBroadcast);
+                _publisherSocket.SendMoreFrame(broadcastMessage.Topic).SendFrame(encryptedBroadcast);
                 return true;
             }
             catch (Exception ex)

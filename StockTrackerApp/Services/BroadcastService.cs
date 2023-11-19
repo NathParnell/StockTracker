@@ -25,7 +25,7 @@ namespace StockTrackerApp.Services
             _authorizationService = authorizationService;
         }
 
-        public bool BroadcastMessage(string broadcastMessageBody, string broadcastSubject)
+        public bool BroadcastMessage(string topic, string broadcastMessageBody, string broadcastSubject)
         {
             // ensure that the user is a supplier
             if (_authorizationService.UserType != StockTrackerCommon.Models.UserType.Supplier)
@@ -37,6 +37,7 @@ namespace StockTrackerApp.Services
 
             Broadcast broadcast = new Broadcast()
             {
+                Topic = topic,
                 SenderId = senderId,
                 MessageBody = broadcastMessageBody,
                 Subject = broadcastSubject

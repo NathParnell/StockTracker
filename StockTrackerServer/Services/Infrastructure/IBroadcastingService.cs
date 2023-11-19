@@ -11,6 +11,6 @@ namespace StockTrackerServer.Services.Infrastructure
     {
         void StartProductBroadcasterThread();
         void StopProductBroadcasterThread();
-        bool BroadcastMessage(Broadcast broadcastMessage, string topic);
+        bool BroadcastMessage(Broadcast broadcastMessage);
     }
 }

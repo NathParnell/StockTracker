@@ -141,19 +141,14 @@ namespace StockTrackerApp.Pages.SupplierPages
                 //if the product has been added, send broadcast to all customers informing them of new product
                 if (actionSuccess)
                 {
-                    bool x = _broadcastService.BroadcastMessage($"A new item has product has landed in our shop: {_product.ProductName}", "New Product Added");
+                    bool x = _broadcastService.BroadcastMessage(_supplierService.CurrentUser.SupplierId, $"A new item has product has landed in our shop: {_product.ProductName}",
+                        "New Product Added");
                 }
             }
             //if the user is updating an existing product, then we attempt to validate and update the product
             else if (_pageState == ManageProductPageState.EditProductMode)
             {
                 prompt = _productService.ValidateAndUpdateProduct(_product, _existingProducts, _productCategories, ref actionSuccess);
-
-                //if the product has been added, send broadcast to all customers informing them of new product
-                if (actionSuccess)
-                {
-                    bool x = _broadcastService.BroadcastMessage($"The following item has been updated in our shop!: {_product.ProductName}", "Product Updated");
-                }
             }
 
             await _jSRuntime.InvokeAsync<object>("alert", prompt);

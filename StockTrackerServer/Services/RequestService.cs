@@ -92,7 +92,7 @@ namespace StockTrackerServer.Services
         {
             Request request = (Request)requestObject[0];
             Broadcast broadcast = JsonSerializer.Deserialize<List<Broadcast>>(request.Data.ToString()).First();
-            bool success = _broadcastingService.BroadcastMessage(broadcast, "Notification");
+            bool success = _broadcastingService.BroadcastMessage(broadcast);
             //make response
             return ResponseSerializingHelper.CreateResponse(success);
         }

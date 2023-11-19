@@ -10,15 +10,18 @@ namespace StockTrackerServer.Services
 {
     public class PortService : IPortService
     {
+        //Set up Logger
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(PortService));
+
         //Define variables
         private Dictionary<string, string> _assignedRequestClientEndpoints = new Dictionary<string, string>();
         private Dictionary<string, string> _assignedMessagingClientEndpoints = new Dictionary<string, string>();
 
         public string GenerateClientRequestPort(string clientId, string ipAddress)
         {
-            //if the user already has a port assigned, return that port
+            //if the user already has a port assigned, replace the port assigned with a new port
             if (_assignedRequestClientEndpoints.ContainsKey(clientId) == true)
-                return _assignedRequestClientEndpoints[clientId].ToString();
+                _assignedRequestClientEndpoints.Remove(clientId);
 
             int minPort = 49152;
             int maxPort = 57343;
@@ -38,6 +41,8 @@ namespace StockTrackerServer.Services
                     endpoint = $"{ipAddress}:{port.ToString()}";
                 }
 
+                _logger.Info($"GenerateClientRequestPort() - Generated Client Request Endpoint {port.ToString()} for client {clientId}");
+
                 _assignedRequestClientEndpoints.Add(clientId, endpoint);
                 return port.ToString();
             }
@@ -47,7 +52,7 @@ namespace StockTrackerServer.Services
         {
             //if the user already has a port assigned, return that port
             if (_assignedMessagingClientEndpoints.ContainsKey(clientId) == true)
-                return _assignedMessagingClientEndpoints[clientId].ToString();
+                _assignedMessagingClientEndpoints.Remove(clientId);
 
             int minPort = 57344;
             int maxPort = 65535;
@@ -66,6 +71,8 @@ namespace StockTrackerServer.Services
                     port = random.Next(minPort, maxPort);
                     endpoint = $"{ipAddress}:{port.ToString()}";
                 }
+
+                _logger.Info($"GenerateClientMessagingPort() - Generated Client Messaging Endpoint {port.ToString()} for client {clientId}");
 
                 _assignedMessagingClientEndpoints.Add(clientId, endpoint);
                 return port.ToString();
@@ -95,6 +102,7 @@ namespace StockTrackerServer.Services
             lock (_assignedRequestClientEndpoints)
             {
                 _assignedRequestClientEndpoints.Remove(clientId);
+                _logger.Info($"UnassignClientsRequestPort() - Unassigned Client Request Endpoint for client {clientId}");
                 return true;
             }
         }
@@ -109,6 +117,7 @@ namespace StockTrackerServer.Services
             lock (_assignedMessagingClientEndpoints)
             {
                 _assignedMessagingClientEndpoints.Remove(clientId);
+                _logger.Info($"UnassignClientsMessagingPort() - Unassigned Client Messaging Endpoint for client {clientId}");
                 return true;
             }
         }

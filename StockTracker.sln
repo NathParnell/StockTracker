@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrackerCommon", "Stock
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrackerApp", "StockTrackerApp\StockTrackerApp.csproj", "{3FE94A3B-A1B6-4421-91D7-5B1016AA5676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTrackerServerTests", "StockTrackerServerTests\StockTrackerServerTests.csproj", "{5F3CB820-44B2-4891-88E7-8322CC480E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrackerServerTests", "StockTrackerServerTests\StockTrackerServerTests.csproj", "{5F3CB820-44B2-4891-88E7-8322CC480E27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTrackerCommonTests", "StockTrackerCommonTests\StockTrackerCommonTests.csproj", "{0008708C-BB17-4FBE-ABF2-16623D1ED867}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{5F3CB820-44B2-4891-88E7-8322CC480E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F3CB820-44B2-4891-88E7-8322CC480E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F3CB820-44B2-4891-88E7-8322CC480E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0008708C-BB17-4FBE-ABF2-16623D1ED867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0008708C-BB17-4FBE-ABF2-16623D1ED867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0008708C-BB17-4FBE-ABF2-16623D1ED867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0008708C-BB17-4FBE-ABF2-16623D1ED867}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace StockTrackerApp.Components.CustomerComponents
 {
@@ -18,6 +19,7 @@ namespace StockTrackerApp.Components.CustomerComponents
         [Inject] private ISupplierService _supplierService { get; set; }
         [Inject] private NavigationManager _navManager { get; set; }
         [Inject] private ICustomerService _customerService { get; set; }
+        [Inject] private IBroadcastListenerService _broadcastListenerService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
 
@@ -67,6 +69,14 @@ namespace StockTrackerApp.Components.CustomerComponents
             //if the customer gets updated then we need to refresh the page
             if (_customerService.UpdateCustomer(currentCustomer))
             {
+                // Create one list with all of the customers subscriptions
+                List<string> customerSubscriptions = new List<string>();
+                customerSubscriptions.AddRange(_customerService.CurrentUser.ProductSubscriptions);
+                customerSubscriptions.AddRange(_customerService.CurrentUser.SupplierSubscriptions);
+
+                // Restart the Broadcast Listener
+                _broadcastListenerService.RestartListener(customerSubscriptions);
+
                 Init();
                 StateHasChanged();
             }

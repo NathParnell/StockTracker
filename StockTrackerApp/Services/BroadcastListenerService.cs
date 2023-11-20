@@ -21,7 +21,7 @@ namespace StockTrackerApp.Services
         private Thread _broadcastListenerThread;
 
         //Define variables
-        private const string PUBLISHER_ENDPOINT = "192.168.0.86:5557";
+        private const string PUBLISHER_ENDPOINT = "127.0.0.1:5557";
         private List<string> _customerSubscriptions = new List<string>();
         public List<Broadcast> Broadcasts { get; set; } = new List<Broadcast>();
 
@@ -52,8 +52,21 @@ namespace StockTrackerApp.Services
             if (_broadcastListenerThread != null && _broadcastListenerThread.IsAlive)
             {
                 _customerSubscriptions = null;
-                _broadcastListenerThread.Join(10);
             }
+        }
+
+        /// <summary>
+        /// Method stops the listener, waits for the thread to definetely end, and then restarts the listener
+        /// </summary>
+        /// <param name="customerSubscriptions"></param>
+        public void RestartListener(List<string> customerSubscriptions)
+        {
+            //stop the listener
+            StopListener();
+            // Block the current thread to allow the BroadcastListener thread to end before we ever tru to reopen it;
+            Thread.Sleep(100);
+            //start the listener
+            StartListener(customerSubscriptions);
         }
 
         private void BroadcastListenerThread()
@@ -72,10 +85,18 @@ namespace StockTrackerApp.Services
                         socket.Subscribe(subscription);
                     }
 
-                    while (true)
+                    // While the customer has subscriptions, listen for broadcasts
+                    while (_customerSubscriptions != null && _customerSubscriptions.Count > 0)
                     {
-                        var topic = socket.ReceiveFrameString();
-                        var message = socket.ReceiveFrameString();
+                        string topic;
+                        string message;
+
+                        socket.TryReceiveFrameString(TimeSpan.FromMilliseconds(100), out topic);
+                        //if we have not received a topic then we continue and listen again
+                        if (String.IsNullOrWhiteSpace(topic))
+                            continue;
+                        //if we have received a topic, we also need to receive a message
+                        socket.TryReceiveFrameString(TimeSpan.FromMilliseconds(100), out message);
 
                         //Ensure that a broadcast was received
                         if (String.IsNullOrWhiteSpace(message) == false)

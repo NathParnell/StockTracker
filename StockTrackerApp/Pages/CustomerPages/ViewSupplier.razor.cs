@@ -17,6 +17,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         [Inject] private ICustomerService _customerService { get; set; }
         [Inject] private IProductCategoryService _productCategoryService { get; set; }
         [Inject] private ISessionHistoryService _sessionHistoryService { get; set; }
+        [Inject] private IBroadcastListenerService _broadcastListenerService { get; set; }
         [Inject] private IOrderService _orderService { get; set; }
         [Inject] private NavigationManager _navManager { get; set; }
 
@@ -35,7 +36,7 @@ namespace StockTrackerApp.Pages.CustomerPages
             Init();
         }
 
-        private async Task Init()
+        private void Init()
         {
             _supplier = _supplierService.GetSupplierBySupplierId(SupplierId);
             _productCategories = _productCategoryService.GetAllProductCategories();
@@ -104,6 +105,14 @@ namespace StockTrackerApp.Pages.CustomerPages
             //if the customer gets updated then we need to refresh the page
             if (_customerService.UpdateCustomer(currentCustomer))
             {
+                // Create one list with all of the customers subscriptions
+                List<string> customerSubscriptions = new List<string>();
+                customerSubscriptions.AddRange(_customerService.CurrentUser.ProductSubscriptions);
+                customerSubscriptions.AddRange(_customerService.CurrentUser.SupplierSubscriptions);
+
+                // Restart the Broadcast Listener
+                _broadcastListenerService.RestartListener(customerSubscriptions);
+
                 Init();
                 StateHasChanged();
             }

@@ -13,5 +13,6 @@ namespace StockTrackerApp.Services.Infrastructure
         List<Broadcast> Broadcasts { get; set; }
         void StartListener(List<string> customerSubscriptions);
         void StopListener();
+        void RestartListener(List<string> customerSubscriptions);
     }
 }

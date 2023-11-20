@@ -94,7 +94,7 @@ namespace StockTrackerServer.Services
 
         public bool UnassignClientsRequestPort(string clientId)
         {
-            //if the user doesnt already have a port assigned, return false
+            //if the user doesn't already have a port assigned, return false
             if (_assignedRequestClientEndpoints.ContainsKey(clientId) == false)
                 return true;
 

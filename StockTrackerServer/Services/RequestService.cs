@@ -136,7 +136,7 @@ namespace StockTrackerServer.Services
 
         #endregion
 
-        #region "Validate Login Methods"
+        #region "Authentication Methods"
         /// <summary>
         /// Method which takes an object array and turns it into a email and password
         /// With this information we call our AuthenticateSupplier method which returns the supplier who has just logged in (or null if invalid user creds)

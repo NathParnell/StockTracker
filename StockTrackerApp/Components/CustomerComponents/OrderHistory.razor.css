@@ -42,3 +42,9 @@
     flex-direction: row;
     justify-content: left;
 }
+
+.orderContainer {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 1rem;
+}

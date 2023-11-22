@@ -26,6 +26,7 @@ namespace StockTrackerApp.Pages.CustomerPages
         List<Supplier> _suppliers = new List<Supplier>();
         List<Product> _basketProducts = new List<Product>();
         private Dictionary<string, int>? _productBasketQuantities = new Dictionary<string, int>();
+        private Dictionary<string, decimal> _totalBasketPrices = new Dictionary<string, decimal>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -51,6 +52,7 @@ namespace StockTrackerApp.Pages.CustomerPages
             }
 
             GetBasketItems();
+            GetTotalPrices();
         }
 
         private void GetBasketItems()
@@ -65,6 +67,22 @@ namespace StockTrackerApp.Pages.CustomerPages
                 if (_productBasketQuantities.ContainsKey(product.ProductId) == false)
                 {
                     _productBasketQuantities.Add(product.ProductId, 0);
+                }
+            }
+        }
+
+        private void GetTotalPrices()
+        {
+            foreach (Supplier supplier in _suppliers)
+            {
+                if (_totalBasketPrices.ContainsKey(supplier.SupplierId) == false)
+                {
+                    decimal basketPrice = 0;
+                    foreach (Product product in _basketProducts.Where(prod => prod.SupplierId == supplier.SupplierId))
+                    {
+                        basketPrice += product.Price * _productBasketQuantities[product.ProductId];
+                    }
+                    _totalBasketPrices.Add(supplier.SupplierId, basketPrice);
                 }
             }
         }

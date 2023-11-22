@@ -15,6 +15,7 @@ namespace StockTrackerCommon.Models
 
         public string SupplierId { get; set; }
         public string CompanyName { get; set; }
+        public string Description { get; set; }
 
     }
 }

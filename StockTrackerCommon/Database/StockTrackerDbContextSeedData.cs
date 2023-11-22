@@ -130,7 +130,8 @@ namespace StockTrackerCommon.Database
                     City = "Leeds",
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
-                    TelephoneNumber = "0113 123 4567"
+                    TelephoneNumber = "0113 123 4567",
+                    Description = "We are a catering supplier who sells pizza bases, cheese, toppings etc"
                 },
                 new Supplier
                 {
@@ -142,7 +143,8 @@ namespace StockTrackerCommon.Database
                     City = "Leeds",
                     Postcode = "LS1 1AA",
                     CountryCode = "UK",
-                    TelephoneNumber = "0113 123 4568"
+                    TelephoneNumber = "0113 123 4568",
+                    Description = "We are a catering supplier who sells pizza bases, cheese, toppings etc"
                 }
             };        
         }

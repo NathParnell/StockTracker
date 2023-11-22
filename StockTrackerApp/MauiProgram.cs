@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using StockTrackerApp.Data;
 using StockTrackerApp.Services;
 using StockTrackerApp.Services.Infrastructure;
 
@@ -26,7 +25,6 @@ namespace StockTrackerApp
     		builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<ICustomerService, CustomerService>();
             builder.Services.AddSingleton<ISupplierService, SupplierService>();
             builder.Services.AddSingleton<IProductCategoryService, ProductCategoryService>();

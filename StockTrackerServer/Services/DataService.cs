@@ -17,7 +17,6 @@ namespace StockTrackerServer.Services
         {
             var options = new DbContextOptionsBuilder<StockTrackerDbContext>()
                 .UseInMemoryDatabase("StockTracker")
-                //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .Options;
 
             _context = new StockTrackerDbContext(options);

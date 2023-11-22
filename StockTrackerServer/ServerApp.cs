@@ -38,7 +38,7 @@ namespace StockTrackerServer
             Thread listenerThread = new Thread(() => _transportServiceServer.ListenThread());
             listenerThread.Start();
 
-            _broadcastingService.StartProductBroadcasterThread();
+            _broadcastingService.StartProductBroadcasterThreads();
         }
     }
 }

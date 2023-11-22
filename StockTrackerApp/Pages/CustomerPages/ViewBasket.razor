@@ -13,9 +13,10 @@
             </div>
             @foreach(Product product in _basketProducts.Where(prod => prod.SupplierId == supplier.SupplierId))
             {
-                <div class="basketProductContainer">
+                <div class="basketProductContainer" style="margin:1rem 0;">
                     <div class="productDetails">
                         <h4>@product.ProductName</h4>
+                        <h4>£@product.Price</h4>
                     </div>
                     <div class="productBasket">
                         <input type="number" @bind-value="_productBasketQuantities[product.ProductId]" min="0" />

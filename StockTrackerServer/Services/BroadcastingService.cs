@@ -22,7 +22,7 @@ namespace StockTrackerServer.Services
         private readonly IDataService _dataService;
 
         private readonly PublisherSocket _publisherSocket;
-        private bool _productBroadcasterThreadRunning = false;
+        private bool _productBroadcasterThreadsRunning = false;
 
         public BroadcastingService(IDataService dataService)
         {
@@ -31,47 +31,65 @@ namespace StockTrackerServer.Services
             _dataService = dataService;
         }
 
-        public void StartProductBroadcasterThread()
+        public void StartProductBroadcasterThreads()
         {
-            _productBroadcasterThreadRunning = true;
-            _logger.Info($"StartProductBroadcasterThread() - Product Broadcaster thread Started");
-            Thread productBroadcasterThread = new Thread(() => ProductBroadcasterThread());
-            productBroadcasterThread.Start();
+            _productBroadcasterThreadsRunning = true;
+            _logger.Info($"StartProductBroadcasterThread() - Product Broadcaster threads Started");
+            //start the thread for hourly notifications
+            Thread hourlyProductBroadcasterThread = new Thread(() => ProductBroadcasterThread(45000, "Hourly"));
+            hourlyProductBroadcasterThread.Start();
+
+            //start the thread for daily notifications
+            Thread dailyProductBroadcasterThread = new Thread(() => ProductBroadcasterThread(45000, "Daily"));
+            dailyProductBroadcasterThread.Start(300000);
         }
 
-        public void StopProductBroadcasterThread()
+        public void StopProductBroadcasterThreads()
         {
-            _productBroadcasterThreadRunning = false;
+            _productBroadcasterThreadsRunning = false;
         }
 
-        private void ProductBroadcasterThread()
+        private void ProductBroadcasterThread(int broadcastInterval, string broadcastType)
         {
-            while (_productBroadcasterThreadRunning == true)
+            try
             {
-                //get all products
-                List<Product> products = _dataService.GetAllProducts().Result;
-
-                _logger.Info("ProductBroadcasterThread(), Sending Stock Update Broadcasts");
-
-                //loop through each product and send a broadcast message
-                foreach (Product product in products)
+                //continuously loop through the products and send a broadcast message until we stop the thread
+                while (_productBroadcasterThreadsRunning == true)
                 {
-                    Broadcast broadcast = new Broadcast()
-                    {
-                        Topic = product.ProductId,
-                        SenderId = product.SupplierId,
-                        Subject = "Stock Update - " + product.ProductName,
-                        MessageBody = $"In Stock: {product.ProductQuantity}, Price: £{product.Price}"
-                    };
+                    //get all products
+                    List<Product> products = _dataService.GetAllProducts().Result;
 
-                    //run the broadcast message method
-                    BroadcastMessage(broadcast);
+                    _logger.Info("ProductBroadcasterThread(), Sending Stock Update Broadcasts");
+
+                    //loop through each product and send a broadcast message
+                    foreach (Product product in products)
+                    {
+                        Broadcast broadcast = new Broadcast()
+                        {
+                            Topic = product.ProductId,
+                            SenderId = product.SupplierId,
+                            Subject = $"{broadcastType} Stock Update - " + product.ProductName,
+                            MessageBody = $"In Stock: {product.ProductQuantity}, Price: £{product.Price}"
+                        };
+
+                        //run the broadcast message method
+                        BroadcastMessage(broadcast);
+                    }
+                    // Block the current thread for 45 seconds
+                    Thread.Sleep(broadcastInterval);
                 }
-                // Block the current thread for 45 seconds
-                Thread.Sleep(45000);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"ProductBroadcasterThread() - Error: {ex.Message}", ex);
             }
         }
 
+        /// <summary>
+        /// Method which sends an encrypted broadcast message to all subscribers
+        /// </summary>
+        /// <param name="broadcastMessage"></param>
+        /// <returns></returns>
         public bool BroadcastMessage(Broadcast broadcastMessage)
         {
             try

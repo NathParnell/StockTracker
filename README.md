@@ -50,3 +50,8 @@ I have implemented symmetric encryption into this project using Microsofts "Syst
 HASHING:
 I have created a "HashingHelper" class which hashes data. This has not been used within the code as I didnt find it necessary with me storing using very simple passwords within the mock database, but If i were to implement a real database into the project, I would implement this class to increase the security of the program.
 To learn more about hashing, read this article - "https://www.techtarget.com/searchdatamanagement/definition/hashing"
+
+UNIT TESTING (and mocking):
+I have implemented unit tests into this application using the XUnit unite testing framework. I have implemented unit tests within the applciation using XUnit and I have mocked services using Moq, a library which allows you to mock services. All of the unit tests pass.
+
+

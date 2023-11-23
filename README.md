@@ -10,7 +10,7 @@ The client application is a .Net MAUI Blazor Hybrid application built in .NET 7.
 
 RUNNING THE PROJECT:
 
-To run the application, open either Visual Studio or Rider on your computer and clone the StockTracker Repository.
+To run the application, open either Visual Studio or Rider on your computer and clone the StockTracker Repository (Or open the solution from your files)
 Following this, the solution should load within your IDE.
 Open a powershell/terminal within your IDE and run the command "dotnet restore" - This will restore all of the nuget packages used within the solution.
 I would then recommend that you run the command "dotnet build" which will build the solution.

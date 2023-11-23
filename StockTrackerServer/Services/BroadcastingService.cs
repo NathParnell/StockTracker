@@ -35,11 +35,11 @@ namespace StockTrackerServer.Services
         {
             _productBroadcasterThreadsRunning = true;
             _logger.Info($"StartProductBroadcasterThread() - Product Broadcaster threads Started");
-            //start the thread for hourly notifications
+            //start the thread for hourly notifications - 45 seconds
             Thread hourlyProductBroadcasterThread = new Thread(() => ProductBroadcasterThread(45000, "Hourly"));
             hourlyProductBroadcasterThread.Start();
 
-            //start the thread for daily notifications
+            //start the thread for daily notifications - 5 mins
             Thread dailyProductBroadcasterThread = new Thread(() => ProductBroadcasterThread(45000, "Daily"));
             dailyProductBroadcasterThread.Start(300000);
         }
